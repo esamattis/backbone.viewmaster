@@ -33,6 +33,7 @@
       render: function() {
 
         this.$el.html(this.template(this.viewJSON()));
+        this.rendered = true;
 
         var key, selector;
         for (key in this.elements) {
@@ -138,7 +139,6 @@
         this.eachView(function(containerSelector, view) {
           if (opts.force || !view.rendered) {
             view.render(opts);
-            view.rendered = true;
           }
         });
 

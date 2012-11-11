@@ -183,6 +183,20 @@ describe("Backbone.ViewMaster", function(){
 
   });
 
+
+  it("does not render already rendered views", function(){
+    var master = new Master();
+    var child = new Puppet();
+    child.render = chai.spy(child.render);
+    child.render();
+
+    master.setViews(".container", child);
+    master.render();
+
+    expect(child.render).to.have.been.called.once;
+    expect(master.$el).to.have(child.$el);
+  });
+
   it("removeViews() removes view", function(){
     var m = new Master();
     var views = [
