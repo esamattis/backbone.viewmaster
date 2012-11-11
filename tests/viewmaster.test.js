@@ -91,6 +91,28 @@ describe("Backbone.ViewMaster", function(){
     expect(spy).to.have.been.called.once;
   });
 
+
+  it("only new child views are rendered on ViewMaster#render()", function(){
+    var m = new Master();
+    var first = new Puppet({ name: "first" });
+    first.render = chai.spy(first.render);
+
+    m.setViews(".container", first);
+    m.render();
+
+    var second = new Puppet({ name: "second" });
+    second.render = chai.spy(second.render);
+    m.appendViews(".container", second);
+    m.renderViews();
+
+    expect(first.render).to.have.been.called.once;
+    expect(second.render).to.have.been.called.once;
+
+    expect(m.$el).to.have(first.$el);
+    expect(m.$el).to.have(second.$el);
+  });
+
+
   it("force option renders child views", function(){
     var m = new Master();
     var p = new Puppet();
