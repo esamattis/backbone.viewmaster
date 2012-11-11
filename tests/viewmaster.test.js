@@ -213,7 +213,7 @@ describe("Backbone.ViewMaster", function(){
         new Puppet({ name: "second" })
       ];
 
-      var spy = children[1].render = chai.spy(children.render);
+      var spy = children[1].render = chai.spy(children[1].render);
 
       var list = new ViewList({
         views: {
@@ -241,7 +241,7 @@ describe("Backbone.ViewMaster", function(){
         new Puppet({ name: "second" })
       ];
 
-      var spy = children[1].render = chai.spy(children.render);
+      var spy = children[1].render = chai.spy(children[1].render);
 
       var list = new ViewList({
         views: {
