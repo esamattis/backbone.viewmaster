@@ -213,7 +213,7 @@
       factory(Backbone, _);
       return PuppetView;
     });
-    define("puppetview", ["backbone", "underscore"], function(Backbone, _) {
+    define("viewmaster", ["backbone", "underscore"], function(Backbone, _) {
       factory(Backbone, _);
       return ViewMaster;
     });
