@@ -234,7 +234,7 @@ describe("Backbone.ViewMaster", function(){
 
     });
 
-    it("option force call nested views twice", function(){
+    it("option force calls nested views twice", function(){
 
       var children = [
         new Puppet({ name: "first" }),
