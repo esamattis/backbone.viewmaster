@@ -3,10 +3,18 @@
 
 describe("Backbone.PuppetView", function(){
 
-
   it("is installed to Backbone namespace", function(){
     expect(Backbone.PuppetView).to.be.ok;
   });
+
+  it("Adds model to instance", function(){
+    var model = new Backbone.Model();
+    var view = new Backbone.PuppetView({
+      model: model
+    });
+    expect(view.model === model).to.be.ok;
+  });
+
 
   describe("event binding", function() {
 
