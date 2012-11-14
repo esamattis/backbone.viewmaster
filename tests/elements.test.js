@@ -5,8 +5,8 @@ describe("Elements object", function(){
 
   var View = Backbone.ViewMaster.extend({
     elements: {
-      "title": "h1",
-      "items": "li"
+      "$title": "h1",
+      "$items": "li"
     },
 
     template: function() {
@@ -17,13 +17,13 @@ describe("Elements object", function(){
 
   it("fetches elements to view instance after render", function(){
     var view = new View();
-    expect(view.title).to.be.not.ok;
+    expect(view.$title).to.be.not.ok;
     view.render();
 
-    expect(view.title).to.be.ok;
-    expect(view.title.text()).to.eq("Elements test");
+    expect(view.$title).to.be.ok;
+    expect(view.$title.text()).to.eq("Elements test");
 
-    expect(view.items.size()).to.eq(2);
+    expect(view.$items.size()).to.eq(2);
 
   });
 
