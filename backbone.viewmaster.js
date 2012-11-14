@@ -209,11 +209,7 @@
   }
 
   if (typeof define === "function" && define.amd) {
-    define("puppetview", ["backbone", "underscore"], function(Backbone, _) {
-      factory(Backbone, _);
-      return PuppetView;
-    });
-    define("viewmaster", ["backbone", "underscore"], function(Backbone, _) {
+    define(["backbone", "underscore"], function(Backbone, _) {
       factory(Backbone, _);
       return ViewMaster;
     });
