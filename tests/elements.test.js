@@ -27,6 +27,22 @@ describe("Elements object", function(){
 
   });
 
+  it("refreshElements()", function() {
+    var view = new View();
+    view.elements = {
+      "$test": ".test"
+    };
+
+    view.render();
+    expect(view.$test.size()).to.eq(0);
+
+    view.$el.append("<div class=test></div>");
+    view.refreshElements();
+
+    expect(view.$test.size()).to.eq(1);
+
+  });
+
   it("cannot access child views", function(){
     var view = new Backbone.ViewMaster();
     var child = new Backbone.ViewMaster();

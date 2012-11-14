@@ -33,10 +33,17 @@
 
       elements: {},
 
-
       viewJSON: function() {
         if (this.model) return this.model.toJSON();
         return {};
+      },
+
+      refreshElements: function() {
+        var key, selector;
+        for (key in this.elements) {
+          selector = this.elements[key];
+          this[key] = this.$(selector);
+        }
       },
 
       render: function(opts) {
@@ -47,13 +54,9 @@
         opts.detach = false;
 
         this.$el.html(this.template(this.viewJSON()));
-        this.rendered = true;
+        this.refreshElements();
 
-        var key, selector;
-        for (key in this.elements) {
-          selector = this.elements[key];
-          this[key] = this.$(selector);
-        }
+        this.rendered = true;
 
         this.renderViews(opts);
 
