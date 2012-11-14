@@ -3,7 +3,7 @@
 
 describe("Elements object", function(){
 
-  var View = Backbone.PuppetView.extend({
+  var View = Backbone.ViewMaster.extend({
     elements: {
       "title": "h1",
       "items": "li"
