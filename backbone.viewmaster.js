@@ -27,11 +27,46 @@
       },
 
 
+
+      // Managed event bind
+      bindTo: function(emitter, event, callback, context) {
+        var binding;
+        context = context || this;
+        if (typeof callback === "string") {
+          callback = this[callback];
+        }
+        if (!emitter || !event || !callback) {
+          throw new Error("Bad arguments. The signature is <emitter>, <event>, <callback / callback name>, [context]");
+        }
+        emitter.on(event, callback, context);
+        binding = {
+          emitter: emitter,
+          context: context,
+          callback: callback,
+          event: event
+        };
+        this._eventBindings.push(binding);
+        return binding;
+      },
+
+      // Unbind all event bound with bindTo
+      unbindAll: function() {
+        var binding, i;
+        for (i = 0; i < this._eventBindings.length; i += 1) {
+          binding = this._eventBindings[i];
+          binding.emitter.off(binding.event, binding.callback, binding.context);
+        }
+        this._eventBindings = [];
+      },
+
+
+
+      elements: {},
+
       template: function(){
         throw new Error("Template function not defined!");
       },
 
-      elements: {},
 
       viewJSON: function() {
         if (this.model) return this.model.toJSON();
@@ -56,63 +91,13 @@
         this.$el.html(this.template(this.viewJSON()));
         this.refreshElements();
 
+        // Mark this view as rendered. Parent view wont try to render this
+        // anymore unless force:true is passed
         this.rendered = true;
 
         this.renderViews(opts);
 
         return this;
-      },
-
-      bindTo: function(emitter, event, callback, context) {
-        var binding;
-        context = context || this;
-        if (typeof callback === "string") {
-          callback = this[callback];
-        }
-        if (!emitter || !event || !callback) {
-          throw new Error("Bad arguments. The signature is <emitter>, <event>, <callback / callback name>, [context]");
-        }
-        emitter.on(event, callback, context);
-        binding = {
-          emitter: emitter,
-          context: context,
-          callback: callback,
-          event: event
-        };
-        this._eventBindings.push(binding);
-        return binding;
-      },
-
-      unbindAll: function() {
-        var binding, i;
-        for (i = 0; i < this._eventBindings.length; i += 1) {
-          binding = this._eventBindings[i];
-          binding.emitter.off(binding.event, binding.callback, binding.context);
-        }
-        this._eventBindings = [];
-      },
-
-      remove: function() {
-        Backbone.View.prototype.remove.apply(this, arguments);
-        this.unbindAll();
-        return this;
-      },
-
-      eachView: function(fn) {
-        var self = this;
-        _.keys(this.views).forEach(function(containerSelector) {
-          var views = self.views[containerSelector];
-          if (!views) return;
-          views.forEach(function(view) {
-            fn(containerSelector, view);
-          });
-        });
-      },
-
-      _detachViews: function() {
-        this.eachView(function(containerSelector, view) {
-          view.$el.detach();
-        });
       },
 
 
@@ -135,6 +120,23 @@
         });
 
         return this;
+      },
+
+      eachView: function(fn) {
+        var self = this;
+        _.keys(this.views).forEach(function(containerSelector) {
+          var views = self.views[containerSelector];
+          if (!views) return;
+          views.forEach(function(view) {
+            fn(containerSelector, view);
+          });
+        });
+      },
+
+      _detachViews: function() {
+        this.eachView(function(containerSelector, view) {
+          view.$el.detach();
+        });
       },
 
       setViews: function(containerSelector, currentViews) {
@@ -175,7 +177,8 @@
 
         toBeRemoved = ensureArray(toBeRemoved);
 
-        this.views[containerSelector] = _.reject(this.views[containerSelector], function(view) {
+        this.views[containerSelector] =
+          _.reject(this.views[containerSelector], function(view) {
           return _.contains(toBeRemoved, view);
         });
 
@@ -183,6 +186,12 @@
           self._remove.push(view);
         });
 
+        return this;
+      },
+
+      remove: function() {
+        Backbone.View.prototype.remove.apply(this, arguments);
+        this.unbindAll();
         return this;
       }
 
