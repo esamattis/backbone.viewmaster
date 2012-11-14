@@ -1,5 +1,5 @@
 /*global Backbone:true,  _:true, define:true */
-/*jshint boss:true */
+/*jshint boss:true, browser:true */
 
 (function() {
   var ViewMaster;
@@ -201,7 +201,7 @@
 
   if (typeof Backbone === "object" && typeof _ === "function") {
     factory(Backbone, _);
-    Backbone.ViewMaster = ViewMaster;
+    window.ViewMaster = Backbone.ViewMaster = ViewMaster;
   }
 
   if (typeof define === "function" && define.amd) {
