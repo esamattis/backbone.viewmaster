@@ -1,18 +1,31 @@
 /*global Backbone:true,  _:true, define:true */
+/*jshint boss:true */
 
 (function() {
+  var ViewMaster;
 
-  var PuppetView, ViewMaster;
-
+  function ensureArray(ob){
+    return _.isArray(ob) ? ob : [ob];
+  }
 
   function factory(Backbone, _) {
-    if (PuppetView && ViewMaster) return;
+    if (ViewMaster) return;
 
-    function ensureArray(ob){
-      return _.isArray(ob) ? ob : [ob];
-    }
+    ViewMaster = Backbone.View.extend({
 
-    PuppetView = Backbone.View.extend({
+      constructor: function(opts) {
+        Backbone.View.prototype.constructor.apply(this, arguments);
+        if (opts) this.views = opts.views;
+        var views = this.views = this.views || {};
+        this._eventBindings = [];
+
+        _.keys(views).forEach(function(key){
+          views[key] = ensureArray(views[key]);
+        });
+
+        this._remove = [];
+      },
+
 
       template: function(){
         throw new Error("Template function not defined!");
@@ -20,17 +33,18 @@
 
       elements: {},
 
-      constructor: function() {
-        Backbone.View.prototype.constructor.apply(this, arguments);
-        this._eventBindings = [];
-      },
 
       viewJSON: function() {
         if (this.model) return this.model.toJSON();
         return {};
       },
 
-      render: function() {
+      render: function(opts) {
+        opts = _.extend({}, opts);
+
+        // Remove subviews with detach. This way they don't lose event handlers
+        this._detachViews();
+        opts.detach = false;
 
         this.$el.html(this.template(this.viewJSON()));
         this.rendered = true;
@@ -40,6 +54,8 @@
           selector = this.elements[key];
           this[key] = this.$(selector);
         }
+
+        this.renderViews(opts);
 
         return this;
       },
@@ -77,24 +93,6 @@
         Backbone.View.prototype.remove.apply(this, arguments);
         this.unbindAll();
         return this;
-      }
-
-    });
-
-
-
-    ViewMaster = PuppetView.extend({
-
-      constructor: function(opts) {
-        PuppetView.prototype.constructor.apply(this, arguments);
-        if (opts) this.views = opts.views;
-        var views = this.views = this.views || {};
-
-        _.keys(views).forEach(function(key){
-          views[key] = ensureArray(views[key]);
-        });
-
-        this._remove = [];
       },
 
       eachView: function(fn) {
@@ -114,19 +112,6 @@
         });
       },
 
-      render: function(opts) {
-        opts = _.extend({}, opts);
-
-        // Remove subviews with detach. This way they don't lose event handlers
-        this._detachViews();
-        opts.detach = false;
-
-        PuppetView.prototype.render.apply(this, arguments);
-
-        this.renderViews(opts);
-
-        return this;
-      },
 
       renderViews: function(opts) {
         var self = this;
@@ -204,7 +189,6 @@
 
   if (typeof Backbone === "object" && typeof _ === "function") {
     factory(Backbone, _);
-    Backbone.PuppetView = PuppetView;
     Backbone.ViewMaster = ViewMaster;
   }
 
