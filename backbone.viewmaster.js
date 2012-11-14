@@ -15,8 +15,8 @@
 
       constructor: function(opts) {
         Backbone.View.prototype.constructor.apply(this, arguments);
-        if (opts) this.views = opts.views;
-        var views = this.views = this.views || {};
+        if (opts) this._views = opts.views;
+        var views = this._views = this._views || {};
         this._eventBindings = [];
 
         _.keys(views).forEach(function(key){
@@ -124,8 +124,8 @@
 
       eachView: function(fn) {
         var self = this;
-        _.keys(this.views).forEach(function(containerSelector) {
-          var views = self.views[containerSelector];
+        _.keys(this._views).forEach(function(containerSelector) {
+          var views = self._views[containerSelector];
           if (!views) return;
           views.forEach(function(view) {
             fn(containerSelector, view);
@@ -144,41 +144,41 @@
         var previousViews;
         currentViews = ensureArray(currentViews);
 
-        if (previousViews = this.views[containerSelector]) {
+        if (previousViews = this._views[containerSelector]) {
           var removedViews = _.difference(previousViews, currentViews);
           removedViews.forEach(function(view) {
             self._remove.push(view);
           });
         }
 
-        this.views[containerSelector] = currentViews;
+        this._views[containerSelector] = currentViews;
         return this;
       },
 
       getViews: function(containerSelector) {
-        return this.views[containerSelector];
+        return this._views[containerSelector];
       },
 
       appendViews: function(containerSelector, views) {
-        this.views[containerSelector] =
-          (this.views[containerSelector] || []).concat(ensureArray(views));
+        this._views[containerSelector] =
+          (this._views[containerSelector] || []).concat(ensureArray(views));
         return this;
       },
 
       prependViews: function(containerSelector, views) {
-        this.views[containerSelector] =
-          (ensureArray(views)).concat(this.views[containerSelector] || []);
+        this._views[containerSelector] =
+          (ensureArray(views)).concat(this._views[containerSelector] || []);
         return this;
       },
 
       removeViews: function(containerSelector, toBeRemoved){
         var self = this;
-        if (!this.views[containerSelector]) return this;
+        if (!this._views[containerSelector]) return this;
 
         toBeRemoved = ensureArray(toBeRemoved);
 
-        this.views[containerSelector] =
-          _.reject(this.views[containerSelector], function(view) {
+        this._views[containerSelector] =
+          _.reject(this._views[containerSelector], function(view) {
           return _.contains(toBeRemoved, view);
         });
 
