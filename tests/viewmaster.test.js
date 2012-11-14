@@ -1,7 +1,7 @@
 /*global window:true,describe:true, it:true, expect: true, Backbone: true, beforeEach: true, chai:true*/
 /*jshint expr:true */
 
-describe("Backbone.ViewMaster", function(){
+describe("ViewMaster", function(){
 
   var Puppet = Backbone.ViewMaster.extend({
     name: "puppet",
@@ -27,6 +27,14 @@ describe("Backbone.ViewMaster", function(){
 
   it("is installed to Backbone namespace", function(){
     expect(Backbone.ViewMaster).to.be.ok;
+  });
+
+  it("Adds model to instance", function(){
+    var model = new Backbone.Model();
+    var view = new Backbone.ViewMaster({
+      model: model
+    });
+    expect(view.model === model).to.be.ok;
   });
 
   it("Adds model to instance", function(){
