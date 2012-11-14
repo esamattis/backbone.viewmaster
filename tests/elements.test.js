@@ -27,5 +27,29 @@ describe("Elements object", function(){
 
   });
 
+  it("cannot access child views", function(){
+    var view = new Backbone.ViewMaster();
+    var child = new Backbone.ViewMaster();
+
+    view.template = function() {
+      return "<div class=container></div>";
+    };
+
+    child.template = function() {
+      return "<div class=child>Child!</div>";
+    };
+
+    view.setViews(".container", child);
+
+    view.elements = {
+      "$child": ".child"
+    };
+
+    view.render();
+
+    expect(view.$child).to.be.ok;
+    expect(view.$child.size()).to.eq(0);
+
+  });
 
 });
