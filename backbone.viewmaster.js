@@ -109,14 +109,14 @@
         while (oldView = this._remove.shift()) oldView.remove();
         if (opts.detach) this._detachViews();
 
-        this.eachView(function(containerSelector, view) {
+        this.eachView(function(containerSel, view) {
           if (opts.force || !view.rendered) {
             view.render(opts);
           }
         });
 
-        this.eachView(function(containerSelector, view) {
-          self.$(containerSelector).append(view.el);
+        this.eachView(function(containerSel, view) {
+          self.$(containerSel).append(view.el);
         });
 
         return this;
@@ -124,61 +124,61 @@
 
       eachView: function(fn) {
         var self = this;
-        _.keys(this._views).forEach(function(containerSelector) {
-          var views = self._views[containerSelector];
+        _.keys(this._views).forEach(function(containerSel) {
+          var views = self._views[containerSel];
           if (!views) return;
           views.forEach(function(view) {
-            fn(containerSelector, view);
+            fn(containerSel, view);
           });
         });
       },
 
       _detachViews: function() {
-        this.eachView(function(containerSelector, view) {
+        this.eachView(function(containerSel, view) {
           view.$el.detach();
         });
       },
 
-      setViews: function(containerSelector, currentViews) {
+      setViews: function(containerSel, currentViews) {
         var self = this;
         var previousViews;
         currentViews = ensureArray(currentViews);
 
-        if (previousViews = this._views[containerSelector]) {
+        if (previousViews = this._views[containerSel]) {
           var removedViews = _.difference(previousViews, currentViews);
           removedViews.forEach(function(view) {
             self._remove.push(view);
           });
         }
 
-        this._views[containerSelector] = currentViews;
+        this._views[containerSel] = currentViews;
         return this;
       },
 
-      getViews: function(containerSelector) {
-        return this._views[containerSelector];
+      getViews: function(containerSel) {
+        return this._views[containerSel];
       },
 
-      appendViews: function(containerSelector, views) {
-        this._views[containerSelector] =
-          (this._views[containerSelector] || []).concat(ensureArray(views));
+      appendViews: function(containerSel, views) {
+        this._views[containerSel] =
+          (this._views[containerSel] || []).concat(ensureArray(views));
         return this;
       },
 
-      prependViews: function(containerSelector, views) {
-        this._views[containerSelector] =
-          (ensureArray(views)).concat(this._views[containerSelector] || []);
+      prependViews: function(containerSel, views) {
+        this._views[containerSel] =
+          (ensureArray(views)).concat(this._views[containerSel] || []);
         return this;
       },
 
-      removeViews: function(containerSelector, toBeRemoved){
+      removeViews: function(containerSel, toBeRemoved){
         var self = this;
-        if (!this._views[containerSelector]) return this;
+        if (!this._views[containerSel]) return this;
 
         toBeRemoved = ensureArray(toBeRemoved);
 
-        this._views[containerSelector] =
-          _.reject(this._views[containerSelector], function(view) {
+        this._views[containerSel] =
+          _.reject(this._views[containerSel], function(view) {
           return _.contains(toBeRemoved, view);
         });
 
