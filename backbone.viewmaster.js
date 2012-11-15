@@ -67,8 +67,7 @@
         throw new Error("Template function not defined!");
       },
 
-
-      viewJSON: function() {
+      context: function() {
         if (this.model) return this.model.toJSON();
         return {};
       },
@@ -88,7 +87,7 @@
         this._detachViews();
         opts.detach = false;
 
-        this.$el.html(this.template(this.viewJSON()));
+        this.$el.html(this.template(this.context()));
         this.refreshElements();
 
         // Mark this view as rendered. Parent view wont try to render this
