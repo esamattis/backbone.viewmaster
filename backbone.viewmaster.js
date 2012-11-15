@@ -109,6 +109,11 @@
         if (opts.detach) this._detachViews();
 
         this.eachView(function(containerSel, view) {
+
+          view.bindTo(view, "all", function(eventName, arg) {
+            self.trigger(eventName, view, arg);
+          }, this);
+
           if (opts.force || !view.rendered) {
             view.render(opts);
           }
