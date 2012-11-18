@@ -1,5 +1,5 @@
-/*global describe:true, it:true, expect: true, Backbone: true, beforeEach: true, chai:true*/
-/*jshint expr:true */
+/*global describe:true, it:true, expect: true, Backbone: true, beforeEach: true, chai:true, _:true*/
+/*jshint expr:true, browser:true */
 
 
 describe("Events", function() {
@@ -47,6 +47,18 @@ describe("Events", function() {
       model.trigger("test");
     });
 
+  });
+
+  it("unbindFrom(binding) removes binding", function(done) {
+    var view = new Backbone.ViewMaster();
+    var emitter = new Backbone.Model();
+    var binding = view.bindTo(emitter, "throw", function() {
+      throw new Error("Event not unbound!");
+    });
+
+    view.unbindFrom(binding);
+    emitter.trigger("throw");
+    setTimeout(done, 1);
   });
 
 
