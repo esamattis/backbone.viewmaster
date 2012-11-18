@@ -57,6 +57,7 @@
           binding.emitter.off(binding.event, binding.callback, binding.context);
         }
         this._eventBindings = [];
+        return this;
       },
 
       unbindFrom: function(binding) {
