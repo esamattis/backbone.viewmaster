@@ -46,12 +46,8 @@
 
       // Unbind all event bound with bindTo
       unbindAll: function() {
-        var binding, i;
-        for (i = 0; i < this._eventBindings.length; i += 1) {
-          binding = this._eventBindings[i];
-          binding.emitter.off(binding.event, binding.callback, binding.context);
-        }
-        this._eventBindings = [];
+        var binding;
+        while(binding = this._eventBindings.shift()) this.unbindFrom(binding);
         return this;
       },
 
@@ -105,14 +101,10 @@
         if (opts.detach) this._detachViews();
 
         this.eachView(function(containerSel, view) {
-
           view.bindTo(view, "all", function(eventName, arg) {
             self.trigger(eventName, view, arg);
           }, this);
-
-          if (opts.force || !view.rendered) {
-            view.render(opts);
-          }
+          if (opts.force || !view.rendered) view.render(opts);
         });
 
         this.eachView(function(containerSel, view) {
