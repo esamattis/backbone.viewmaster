@@ -22,26 +22,20 @@ describe("Elements object", function(){
 
     expect(view.$title).to.be.ok;
     expect(view.$title.text()).to.eq("Elements test");
-
     expect(view.$items.size()).to.eq(2);
-
   });
 
-  it("refreshElements()", function() {
+  it("refreshes elements on render", function(){
     var view = new View();
-    view.elements = {
-      "$test": ".test"
-    };
-
+    expect(view.$title).to.be.not.ok;
     view.render();
-    expect(view.$test.size()).to.eq(0);
-
-    view.$el.append("<div class=test></div>");
-    view.refreshElements();
-
-    expect(view.$test.size()).to.eq(1);
-
+    view.template = function() {
+      return "<h1>New content</h1>";
+    };
+    view.render();
+    expect(view.$title.text()).to.eq("New content");
   });
+
 
   it("cannot access child views", function(){
     var view = new Backbone.ViewMaster();
