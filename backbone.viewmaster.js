@@ -15,14 +15,9 @@
 
       constructor: function(opts) {
         Backbone.View.prototype.constructor.apply(this, arguments);
-        if (opts) this._views = opts.views;
-        var views = this._views = this._views || {};
+
+        this._views = {};
         this._eventBindings = [];
-
-        _.keys(views).forEach(function(key){
-          views[key] = ensureArray(views[key]);
-        });
-
         this._remove = [];
       },
 

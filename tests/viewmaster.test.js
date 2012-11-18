@@ -67,26 +67,6 @@ describe("ViewMaster", function(){
     expect(m.$el).to.have.text("puppet");
   });
 
-  it("renders child view from constructor", function(){
-    var m = new Master({
-      views: {
-        ".container": new Puppet()
-      }
-    });
-    m.render();
-    expect(m.$el).to.have.text("puppet");
-  });
-
-  it("renders child view from constructor using an array", function(){
-    var m = new Master({
-      views: {
-        ".container": [new Puppet()]
-      }
-    });
-    m.render();
-    expect(m.$el).to.have.text("puppet");
-  });
-
 
   it("does not render child views twice", function(){
     var m = new Master();
@@ -246,16 +226,10 @@ describe("ViewMaster", function(){
         new Puppet({ name: "first" }),
         new Puppet({ name: "second" })
       ];
-      var list = new ViewList({
-        views: {
-          ".items": children
-        }
-      });
-      var layout = new Layout({
-        views: {
-          ".container": list
-        }
-      });
+      var list = new ViewList();
+      list.setViews(".items", children);
+      var layout = new Layout();
+      layout.setViews(".container", list);
 
       layout.render();
 
@@ -274,17 +248,11 @@ describe("ViewMaster", function(){
 
       var spy = children[1].render = chai.spy(children[1].render);
 
-      var list = new ViewList({
-        views: {
-          ".items": children
-        }
-      });
+      var list = new ViewList();
+      list.setViews(".items", children);
 
-      var layout = new Layout({
-        views: {
-          ".container": list
-        }
-      });
+      var layout = new Layout();
+      layout.setViews(".container", list);
 
       layout.render();
       layout.render();
@@ -302,17 +270,11 @@ describe("ViewMaster", function(){
 
       var spy = children[1].render = chai.spy(children[1].render);
 
-      var list = new ViewList({
-        views: {
-          ".items": children
-        }
-      });
+      var list = new ViewList();
+      list.setViews(".items", children);
 
-      var layout = new Layout({
-        views: {
-          ".container": list
-        }
-      });
+      var layout = new Layout();
+      layout.setViews(".container", list);
 
       layout.render();
       layout.render({ force: true });
