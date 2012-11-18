@@ -37,21 +37,6 @@ describe("ViewMaster", function(){
     expect(view.model === model).to.be.ok;
   });
 
-  it("Adds model to instance", function(){
-    var model = new Backbone.Model();
-    var View = Backbone.ViewMaster.extend({
-
-      constructor: function() {
-        Backbone.ViewMaster.prototype.constructor.apply(this, arguments);
-      }
-
-    });
-    var view = new View({
-      model: model
-    });
-    expect(view.model === model).to.be.ok;
-  });
-
 
   it("renders child view from setViews", function(){
     var m = new Master();
@@ -204,6 +189,18 @@ describe("ViewMaster", function(){
 
   });
 
+  it("child.remove() removes from parent", function(){
+    var parent = new Master();
+    var child = new Puppet({ name: "first" });
+
+    parent.setViews(".container", child);
+    parent.render();
+
+    child.remove();
+    parent.render();
+    expect(parent.$el).to.not.have(child.$el);
+  });
+
 
   describe("with deeply nested views", function(){
 
@@ -280,6 +277,33 @@ describe("ViewMaster", function(){
       layout.render({ force: true });
 
       expect(spy).to.have.been.called.twice;
+
+    });
+
+    it("can move child to other parent", function(){
+      var Parent = Backbone.ViewMaster.extend({
+        template: function() {
+          return "<div class=container></div>";
+        }
+      });
+
+      var parent1 = new Parent();
+      var parent2 = new Parent();
+      var child = new Backbone.ViewMaster();
+      child.template = function() {
+        return "<span class=child>child</span>";
+      };
+
+      parent1.setViews(".container", child);
+      parent1.render();
+
+      parent2.setViews(".container", child);
+
+      parent2.render();
+      parent1.render();
+
+      expect(parent2.$el).to.have(child.$el);
+      expect(parent1.$el).to.not.have(child.$el);
 
     });
 

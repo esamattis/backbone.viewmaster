@@ -47,24 +47,19 @@ describe("Events", function() {
       model.trigger("test");
     });
 
-  });
+    it("unbindFrom(binding) removes binding", function(done) {
+      var view = new Backbone.ViewMaster();
+      var emitter = new Backbone.Model();
+      var binding = view.bindTo(emitter, "throw", function() {
+        throw new Error("Event not unbound!");
+      });
 
-  it("unbindFrom(binding) removes binding", function(done) {
-    var view = new Backbone.ViewMaster();
-    var emitter = new Backbone.Model();
-    var binding = view.bindTo(emitter, "throw", function() {
-      throw new Error("Event not unbound!");
+      view.unbindFrom(binding);
+      emitter.trigger("throw");
+      setTimeout(done, 1);
     });
 
-    view.unbindFrom(binding);
-    emitter.trigger("throw");
-    setTimeout(done, 1);
-  });
-
-
-  describe("management", function() {
-
-    it("should remove binding on view.remove()", function(){
+    it("should be removed on view.remove()", function(){
       var model = new Backbone.Model();
       var view = new Backbone.ViewMaster();
       var spy = chai.spy();
@@ -78,5 +73,95 @@ describe("Events", function() {
     });
 
   });
+
+
+
+  describe("bubble", function() {
+
+    it("from children to parent", function(){
+      var child = new Backbone.ViewMaster();
+      child.template = function() {
+        return "<p>child</p>";
+      };
+
+      var parent = new Backbone.ViewMaster();
+      parent.template = function() {
+        return "<div class=container ></div>";
+      };
+
+      // to make sure there are no double event bindings
+      parent.setViews(".container", child);
+      parent.setViews(".container", child);
+
+      parent.render();
+
+      var spy = chai.spy();
+      parent.on("test", spy);
+      child.trigger("test");
+      expect(spy).to.have.been.called.once;
+    });
+
+
+    _.each(["setViews", "appendViews", "prependViews"], function(viewMethod) {
+      it("to new parent after a parent change with " + viewMethod, function(){
+        var Parent = Backbone.ViewMaster.extend({
+          template: function() {
+            return "<div class=container></div>";
+          }
+        });
+
+        var parent1 = new Parent();
+        var parent2 = new Parent();
+        var child = new Backbone.ViewMaster();
+        child.template = function() {
+          return "<span class=child>child</span>";
+        };
+
+        parent1[viewMethod](".container", child);
+        parent1.render();
+
+        parent2[viewMethod](".container", child);
+
+        parent2.render();
+        parent1.render();
+
+        parent1.on("test", function() {
+          throw new Error("Event on old parent");
+        });
+
+        var spy = chai.spy();
+        parent2.on("test", spy);
+        child.trigger("test");
+
+        expect(spy).to.have.been.called.once;
+      });
+    });
+
+    it("is unbound on remove()", function(){
+      var child = new Backbone.ViewMaster();
+      child.template = function() {
+        return "<p>child</p>";
+      };
+
+      var parent = new Backbone.ViewMaster();
+      parent.template = function() {
+        return "<div class=container ></div>";
+      };
+
+      parent.setViews(".container", child);
+      parent.render();
+      child.remove();
+
+      var spy = chai.spy();
+      parent.on("test", spy);
+      child.trigger("test");
+
+      expect(spy).to.not.have.been.called;
+    });
+
+
+  });
+
+
 
 });

@@ -19,6 +19,8 @@
         this._views = {};
         this._eventBindings = [];
         this._remove = [];
+        this._parent = null;
+        this._bubble = null;
       },
 
 
@@ -33,13 +35,14 @@
         if (!emitter || !event || !callback) {
           throw new Error("Bad arguments. The signature is <emitter>, <event>, <callback / callback name>, [context]");
         }
-        emitter.on(event, callback, context);
         binding = {
           emitter: emitter,
           context: context,
           callback: callback,
           event: event
         };
+
+        emitter.on(event, callback, context);
         this._eventBindings.push(binding);
         return binding;
       },
@@ -101,9 +104,8 @@
         if (opts.detach) this._detachViews();
 
         this.eachView(function(containerSel, view) {
-          view.bindTo(view, "all", function(eventName, arg) {
-            self.trigger(eventName, view, arg);
-          }, this);
+
+
           if (opts.force || !view.rendered) view.render(opts);
         });
 
@@ -112,6 +114,41 @@
         });
 
         return this;
+      },
+
+      detachParent: function() {
+
+        if (!this._parent) return;
+
+        var key;
+        for (key in this._parent._views) {
+          this._parent._views[key] = _.without(
+            this._parent._views[key], this
+          );
+        }
+
+        this.unbindFrom(this._bubble);
+        this._bubble = null;
+        this._parent = null;
+      },
+
+      _prepareViews: function(views) {
+        var self = this;
+        ensureArray(views).forEach(function(view) {
+
+          // when parent is changing remove it from previous
+          if (view._parent && view._parent !== self) {
+            view.detachParent();
+          }
+
+          if (!view._bubble) {
+            view._bubble = view.bindTo(view, "all", function(eventName, arg) {
+              self.trigger(eventName, view, arg);
+            }, view);
+          }
+
+          view._parent = self;
+        });
       },
 
       eachView: function(fn) {
@@ -141,6 +178,7 @@
           );
         }
 
+        this._prepareViews(currentViews);
         this._views[containerSel] = currentViews;
         return this;
       },
@@ -150,6 +188,7 @@
       },
 
       appendViews: function(containerSel, views) {
+        this._prepareViews(views);
         this._views[containerSel] = (this._views[containerSel] || []).concat(
           ensureArray(views)
         );
@@ -157,6 +196,7 @@
       },
 
       prependViews: function(containerSel, views) {
+        this._prepareViews(views);
         this._views[containerSel] = ensureArray(views).concat(
           this._views[containerSel] || []
         );
@@ -179,6 +219,7 @@
       remove: function() {
         Backbone.View.prototype.remove.apply(this, arguments);
         this.unbindAll();
+        this.detachParent();
         return this;
       }
 
