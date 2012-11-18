@@ -76,13 +76,6 @@
         return {};
       },
 
-      refreshElements: function() {
-        var key, selector;
-        for (key in this.elements) {
-          selector = this.elements[key];
-          this[key] = this.$(selector);
-        }
-      },
 
       render: function(opts) {
         opts = _.extend({}, opts);
@@ -92,7 +85,11 @@
         opts.detach = false;
 
         this.$el.html(this.template(this.context()));
-        this.refreshElements();
+        var key, selector;
+        for (key in this.elements) {
+          selector = this.elements[key];
+          this[key] = this.$(selector);
+        }
 
         // Mark this view as rendered. Parent view wont try to render this
         // anymore unless force:true is passed
