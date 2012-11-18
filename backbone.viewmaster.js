@@ -26,6 +26,7 @@
     constructor: function(opts) {
       Backbone.View.prototype.constructor.apply(this, arguments);
 
+      this.rendered = false;
       this._views = {};
       this._eventBindings = [];
       this._remove = [];
