@@ -115,12 +115,7 @@
       if (opts.detach) this._detachViews();
 
       this.eachView(function(containerSel, view) {
-
-
         if (opts.force || !view.rendered) view.render(opts);
-      });
-
-      this.eachView(function(containerSel, view) {
         self.$(containerSel).append(view.el);
       });
 
