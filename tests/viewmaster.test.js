@@ -195,6 +195,7 @@ describe("ViewMaster", function(){
 
     parent.setViews(".container", child);
     parent.render();
+    expect(_.contains(parent.getViews(".container"), child)).to.be.ok;
 
     child.remove();
     parent.render();
