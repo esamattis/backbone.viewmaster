@@ -231,6 +231,9 @@
       Backbone.View.prototype.remove.apply(this, arguments);
       this.unbindAll();
       this.detachParent();
+      this.eachView(function(containerSel, view) {
+        view.remove();
+      });
       return this;
     }
 

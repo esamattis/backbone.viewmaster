@@ -1,4 +1,4 @@
-/*global window:true,describe:true, it:true, expect: true, Backbone: true, beforeEach: true, chai:true*/
+/*global window:true,describe:true, it:true, expect: true, Backbone: true, beforeEach: true, chai:true, _:true*/
 /*jshint expr:true */
 
 describe("ViewMaster", function(){
@@ -199,7 +199,10 @@ describe("ViewMaster", function(){
     child.remove();
     parent.render();
     expect(parent.$el).to.not.have(child.$el);
+    expect(_.contains(parent.getViews(".container"), child)).to.not.be.ok;
   });
+
+
 
 
   describe("with deeply nested views", function(){

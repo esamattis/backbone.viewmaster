@@ -72,6 +72,30 @@ describe("Events", function() {
       expect(spy).to.have.been.called.once;
     });
 
+    it("is unbound on parent.remove()", function(){
+      var child = new Backbone.ViewMaster();
+      child.template = function() {
+        return "<p>child</p>";
+      };
+
+      var parent = new Backbone.ViewMaster();
+      parent.template = function() {
+        return "<div class=container ></div>";
+      };
+
+      parent.setViews(".container", child);
+      parent.render();
+
+      var spy = chai.spy();
+      var emitter = new Backbone.Model();
+      child.bindTo(emitter, "test", spy);
+
+      parent.remove();
+
+      emitter.trigger("test");
+      expect(spy).to.not.have.been.called.once;
+    });
+
   });
 
 
@@ -156,7 +180,31 @@ describe("Events", function() {
       parent.on("test", spy);
       child.trigger("test");
 
-      expect(spy).to.not.have.been.called;
+      expect(spy).to.not.have.been.called.once;
+    });
+
+    it("is unbound when parent is removed", function(){
+      var child = new Backbone.ViewMaster();
+      child.template = function() {
+        return "<p>child</p>";
+      };
+
+      var parent = new Backbone.ViewMaster();
+      parent.template = function() {
+        return "<div class=container ></div>";
+      };
+
+      parent.setViews(".container", child);
+      parent.render();
+
+      var spy = chai.spy();
+      parent.on("test", spy);
+
+      parent.remove();
+
+      child.trigger("test");
+
+      expect(spy).to.not.have.been.called.once;
     });
 
 
