@@ -125,6 +125,31 @@ describe("Events", function() {
       expect(spy).to.have.been.called.once;
     });
 
+    it("dont break dom bubbling", function(){
+      var child = new Backbone.ViewMaster();
+      child.template = function() {
+        return "<p>child</p>";
+      };
+
+      var parent = new Backbone.ViewMaster();
+      parent.template = function() {
+        return "<div class=container ></div>";
+      };
+
+      // to make sure there are no double event bindings
+      parent.setViews(".container", child);
+      parent.setViews(".container", child);
+
+      parent.render();
+
+      var spy = chai.spy();
+
+      parent.$el.on("click", spy);
+      child.$("p").click();
+      expect(spy).to.have.been.called.once;
+
+    });
+
 
     _.each(["setViews", "appendViews", "prependViews"], function(viewMethod) {
       it("to new parent after a parent change with " + viewMethod, function(){
