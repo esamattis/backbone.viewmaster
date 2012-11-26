@@ -1,9 +1,15 @@
 /*jshint node:true*/
 
 module.exports = function(grunt) {
+  grunt.loadNpmTasks('grunt-exec');
 
   grunt.initConfig({
 
+    exec: {
+      doc: {
+        command: "yuidoc"
+      }
+    },
     min: {
       dist: {
         src: ["backbone.viewmaster.js"],
@@ -18,5 +24,5 @@ module.exports = function(grunt) {
 
   });
 
-  grunt.registerTask("default", "min");
+  grunt.registerTask("default", "min exec");
 };
