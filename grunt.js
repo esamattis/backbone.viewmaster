@@ -1,15 +1,30 @@
 /*jshint node:true*/
 
 module.exports = function(grunt) {
+  grunt.loadNpmTasks('grunt-contrib-yuidoc');
   grunt.loadNpmTasks('grunt-exec');
+  var pkg = require("./package.json");
 
   grunt.initConfig({
-
     exec: {
-      doc: {
-        command: "yuidoc"
+      pushdoc: {
+        command: "git push -f origin master:gh-pages"
       }
     },
+    yuidoc: {
+      compile: {
+        name: pkg.name,
+        description: pkg.description,
+        version: pkg.version,
+        logo: "../../assets/logo.png",
+        url: "https://github.com/epeli/backbone.viewmaster",
+        options: {
+          paths: "lib",
+          outdir: "docs"
+        }
+      }
+    },
+
     min: {
       dist: {
         src: ["backbone.viewmaster.js"],
@@ -24,5 +39,5 @@ module.exports = function(grunt) {
 
   });
 
-  grunt.registerTask("default", "min exec");
+  grunt.registerTask("default", "min yuidoc");
 };
