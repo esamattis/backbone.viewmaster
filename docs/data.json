@@ -1,0 +1,338 @@
+{
+    "project": {
+        "name": "Backbone.ViewMaster",
+        "description": "Few tested opinions on how to handle deeply nested views in Backbone.js focusing on encapsulation and reusability.",
+        "version": "1.0.0",
+        "logo": "../../assets/logo.png",
+        "url": "https://github.com/epeli/backbone.viewmaster"
+    },
+    "files": {
+        "lib/backbone.viewmaster.js": {
+            "name": "lib/backbone.viewmaster.js",
+            "modules": {},
+            "classes": {
+                "Backbone.ViewMaster": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {
+        "Backbone.ViewMaster": {
+            "name": "Backbone.ViewMaster",
+            "shortname": "Backbone.ViewMaster",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "lib/backbone.viewmaster.js",
+            "line": 24,
+            "description": "Few tested opinions on how to handle deeply nested views in Backbone.js focusing on encapsulation and reusability.\n\n<https://github.com/epeli/backbone.viewmaster>\n\n***NOTE**: Most important methods `setView`, `appendView`, `prependView`\nand `removeView` are protected methods.*",
+            "extends": "Backbone.View"
+        }
+    },
+    "classitems": [
+        {
+            "file": "lib/backbone.viewmaster.js",
+            "line": 41,
+            "description": "Boolean indicating whether this view has been rendered at least once.\nSet by the `render` method and used by the parent view.",
+            "itemtype": "property",
+            "name": "rendered",
+            "type": "Boolean",
+            "class": "Backbone.ViewMaster"
+        },
+        {
+            "file": "lib/backbone.viewmaster.js",
+            "line": 59,
+            "description": "Bind a callback function to a given Backbone event emitter for the\nlifetime of the view.",
+            "itemtype": "method",
+            "name": "bindTo",
+            "params": [
+                {
+                    "name": "emitter",
+                    "description": "Any Backbone events object",
+                    "type": "Object"
+                },
+                {
+                    "name": "event",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "callback",
+                    "description": "Callback function or view method as string",
+                    "type": "Function/String"
+                },
+                {
+                    "name": "context",
+                    "description": "Callback context. Defaults to view instance",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "binding",
+                "type": "Object"
+            },
+            "class": "Backbone.ViewMaster"
+        },
+        {
+            "file": "lib/backbone.viewmaster.js",
+            "line": 93,
+            "description": "Unbind all event callbacks this view has bound with `bindTo`. Internally\ncalled by `remove`.",
+            "itemtype": "method",
+            "name": "unbindAll",
+            "return": {
+                "description": "this",
+                "type": "Object"
+            },
+            "class": "Backbone.ViewMaster"
+        },
+        {
+            "file": "lib/backbone.viewmaster.js",
+            "line": 107,
+            "description": "Unbind single `binding` bound with `bindTo`.",
+            "itemtype": "method",
+            "name": "unbindFrom",
+            "params": [
+                {
+                    "name": "binding",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "Backbone.ViewMaster"
+        },
+        {
+            "file": "lib/backbone.viewmaster.js",
+            "line": 118,
+            "description": "TODO: doc me",
+            "itemtype": "property",
+            "name": "elements",
+            "class": "Backbone.ViewMaster"
+        },
+        {
+            "file": "lib/backbone.viewmaster.js",
+            "line": 126,
+            "description": "Template function. User must override this!",
+            "itemtype": "method",
+            "name": "template",
+            "params": [
+                {
+                    "name": "context",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "rendered template",
+                "type": "String / DOM object"
+            },
+            "class": "Backbone.ViewMaster"
+        },
+        {
+            "file": "lib/backbone.viewmaster.js",
+            "line": 137,
+            "description": "Returns the context object for the `template` method.\n\nDefault: this.model.toJSON() or an empty object if view has no model.",
+            "itemtype": "method",
+            "name": "context",
+            "return": {
+                "description": "context",
+                "type": "Object"
+            },
+            "class": "Backbone.ViewMaster"
+        },
+        {
+            "file": "lib/backbone.viewmaster.js",
+            "line": 151,
+            "description": "Render view with `this.template(this.context())` and call\n`this.renderViews(options)` to render childViews.",
+            "itemtype": "method",
+            "name": "render",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "force",
+                            "description": "force rerendering of child views",
+                            "type": "Boolean",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "this",
+                "type": "Object"
+            },
+            "class": "Backbone.ViewMaster"
+        },
+        {
+            "file": "lib/backbone.viewmaster.js",
+            "line": 185,
+            "description": "Render child views only.",
+            "itemtype": "method",
+            "name": "renderViews",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "force",
+                            "description": "force rerendering of child views",
+                            "type": "Boolean",
+                            "optional": true
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "this",
+                "type": "Object"
+            },
+            "class": "Backbone.ViewMaster"
+        },
+        {
+            "file": "lib/backbone.viewmaster.js",
+            "line": 211,
+            "description": "Detach view from its parent.",
+            "itemtype": "method",
+            "name": "detachParent",
+            "return": {
+                "description": "this",
+                "type": "Object"
+            },
+            "class": "Backbone.ViewMaster"
+        },
+        {
+            "file": "lib/backbone.viewmaster.js",
+            "line": 255,
+            "description": "Iterate each child view.",
+            "itemtype": "method",
+            "name": "eachView",
+            "params": [
+                {
+                    "name": "iterator",
+                    "description": "",
+                    "type": "Function",
+                    "props": [
+                        {
+                            "name": "selector",
+                            "description": "CSS selector for the view container",
+                            "type": "String"
+                        },
+                        {
+                            "name": "view",
+                            "description": "The view object",
+                            "type": "Object"
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "this",
+                "type": "Object"
+            },
+            "class": "Backbone.ViewMaster"
+        },
+        {
+            "file": "lib/backbone.viewmaster.js",
+            "line": 281,
+            "description": "Set a view or an array of views to a given view container.",
+            "itemtype": "method",
+            "name": "setView",
+            "access": "protected",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "selector",
+                    "description": "CSS selector for the view container",
+                    "type": "String"
+                },
+                {
+                    "name": "view(s)",
+                    "description": "View object or an array of view objects",
+                    "type": "Object/Array"
+                }
+            ],
+            "class": "Backbone.ViewMaster"
+        },
+        {
+            "file": "lib/backbone.viewmaster.js",
+            "line": 308,
+            "description": "Append a view or an array of views to a given view container.",
+            "itemtype": "method",
+            "name": "appendView",
+            "access": "protected",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "selector",
+                    "description": "CSS selector for the view container",
+                    "type": "String"
+                },
+                {
+                    "name": "view(s)",
+                    "description": "View object or an array of view objects",
+                    "type": "Object/Array"
+                }
+            ],
+            "class": "Backbone.ViewMaster"
+        },
+        {
+            "file": "lib/backbone.viewmaster.js",
+            "line": 324,
+            "description": "Prepend a view or an array of views to a given view container.",
+            "itemtype": "method",
+            "name": "prependView",
+            "access": "protected",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "selector",
+                    "description": "CSS selector for the view container",
+                    "type": "String"
+                },
+                {
+                    "name": "view(s)",
+                    "description": "View object or an array of view objects",
+                    "type": "Object/Array"
+                }
+            ],
+            "class": "Backbone.ViewMaster"
+        },
+        {
+            "file": "lib/backbone.viewmaster.js",
+            "line": 340,
+            "description": "Remove a view or an array of views from this view.",
+            "itemtype": "method",
+            "name": "removeView",
+            "access": "protected",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "selector",
+                    "description": "CSS selector for the view container",
+                    "type": "String"
+                },
+                {
+                    "name": "view(s)",
+                    "description": "View or array of views",
+                    "type": "Object/Array"
+                }
+            ],
+            "return": {
+                "description": "this",
+                "type": "Object"
+            },
+            "class": "Backbone.ViewMaster"
+        }
+    ],
+    "warnings": []
+}
