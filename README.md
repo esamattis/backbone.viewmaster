@@ -174,8 +174,6 @@ constructor: function(){
 },
 
 addItem: function(model){
-  // The trivial TodoItem implementation is omitteted here. You can find it
-  // from the examples direcotry
   this.appendView(".todo-container", new TodoItem({
     model: model
   }));
@@ -198,7 +196,7 @@ Any view, parent or child, can be discarded anytime with the [remove][] method.
 It removes automatically all the Backbone and DOM event callbacks. If the view
 is a parent to other views it will call remove on them also.
 
-TODO: todo example code
+TODO: TodoItem example with remove
 
 Views can be also removed by replacing them with [setView][]. ViewMaster
 automatically figures out which views was left out and calls [remove][] on them
