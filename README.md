@@ -12,6 +12,9 @@ methods: [setView][], [appendView][], [prependView][] and [insertView][]. They
 work also with arrays of views. There is no separate concept of layouts or list
 views. It's just a humble Backbone view boosted with nesting capabilities.
 
+The main idea behind Backbone.ViewMaster is that views should be small and
+independent building components of application UI.
+
 
 # Download
 
@@ -112,9 +115,9 @@ var AddView = Backbone.ViewMaster.extend({
 
 Nested views are also extended from `Backbone.ViewMaster`. Any ViewMaster view
 can be nested in any ViewMaster view and you can do as deep nesting as you
-want. You could also nest plain Backbone views if you handle manually event
-callback unbinding and make sure that it won't collide with the [rendered][]
-property.
+want. You could also nest plain Backbone views as the leaf views if you handle
+manually event callback unbinding and make sure that it won't collide with the
+[rendered][] property.
 
 Since we wanted this to be the view for the `addview-container` and because
 it's an element of `TodoLayout` — it is the responsibility of `TodoLayout` to
