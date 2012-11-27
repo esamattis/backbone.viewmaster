@@ -174,8 +174,8 @@ constructor: function(){
 },
 
 addItem: function(model){
-  // The trivial TodoItem implementation is omitteted here. See the examples
-  // directory
+  // The trivial TodoItem implementation is omitteted here. You can find it
+  // from the examples direcotry
   this.appendView(".todo-container", new TodoItem({
     model: model
   }));
