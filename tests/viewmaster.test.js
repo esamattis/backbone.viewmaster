@@ -38,16 +38,16 @@ describe("ViewMaster", function(){
   });
 
 
-  it("renders child view from setViews", function(){
+  it("renders child view from setView", function(){
     var m = new Master();
-    m.setViews(".container", new Puppet());
+    m.setView(".container", new Puppet());
     m.render();
     expect(m.$el).to.have.text("puppet");
   });
 
-  it("renders child view from setViews using an array", function(){
+  it("renders child view from setView using an array", function(){
     var m = new Master();
-    m.setViews(".container", [new Puppet()]);
+    m.setView(".container", [new Puppet()]);
     m.render();
     expect(m.$el).to.have.text("puppet");
   });
@@ -58,7 +58,7 @@ describe("ViewMaster", function(){
     var p = new Puppet();
     var spy = p.render = chai.spy(p.render);
 
-    m.setViews(".container", p);
+    m.setView(".container", p);
     m.render();
     m.render();
     expect(spy).to.have.been.called.once;
@@ -70,12 +70,12 @@ describe("ViewMaster", function(){
     var first = new Puppet({ name: "first" });
     first.render = chai.spy(first.render);
 
-    m.setViews(".container", first);
+    m.setView(".container", first);
     m.render();
 
     var second = new Puppet({ name: "second" });
     second.render = chai.spy(second.render);
-    m.appendViews(".container", second);
+    m.appendView(".container", second);
     m.renderViews();
 
     expect(first.render).to.have.been.called.once;
@@ -91,18 +91,18 @@ describe("ViewMaster", function(){
     var p = new Puppet();
     var spy = p.render = chai.spy(p.render);
 
-    m.setViews(".container", p);
+    m.setView(".container", p);
     m.render();
     m.render({ force: true });
     expect(spy).to.have.been.called.twice;
   });
 
-  it("can add new views with appendViews() after initial render", function(){
+  it("can add new views with appendView() after initial render", function(){
     var m = new Master();
-    m.setViews(".container", new Puppet());
+    m.setView(".container", new Puppet());
     m.render();
 
-    m.appendViews(".container", new Puppet({ name: "newview" }));
+    m.appendView(".container", new Puppet({ name: "newview" }));
     m.render();
     var childs = m.$(".child");
 
@@ -110,12 +110,12 @@ describe("ViewMaster", function(){
     expect(childs[1].innerHTML).to.eq("newview");
   });
 
-  it("can add new views with prependViews() after initial render", function(){
+  it("can add new views with prependView() after initial render", function(){
     var m = new Master();
-    m.setViews(".container", new Puppet());
+    m.setView(".container", new Puppet());
     m.render();
 
-    m.prependViews(".container", new Puppet({ name: "newview" }));
+    m.prependView(".container", new Puppet({ name: "newview" }));
     m.renderViews();
     var childs = m.$(".child");
     expect(childs[1].innerHTML).to.eq("puppet");
@@ -127,10 +127,10 @@ describe("ViewMaster", function(){
     var first = new Puppet({ name: "first" });
     var second = new Puppet({ name: "second" });
 
-    m.setViews(".container", [first, second]);
+    m.setView(".container", [first, second]);
     m.render();
 
-    m.setViews(".container", [second, first]);
+    m.setView(".container", [second, first]);
     m.renderViews();
 
     var childs = m.$(".child");
@@ -138,17 +138,17 @@ describe("ViewMaster", function(){
     expect(childs[1].innerHTML).to.eq("first");
   });
 
-  it("setViews&renderViews() removes old views", function(){
+  it("setView&renderViews() removes old views", function(){
     var m = new Master();
     var views = [
       new Puppet({ name: "first" }),
       new Puppet({ name: "second" })
     ];
 
-    m.setViews(".container", views);
+    m.setView(".container", views);
     m.render();
 
-    m.setViews(".container", views[1]);
+    m.setView(".container", views[1]);
     m.renderViews();
 
     expect(m.$el).to.not.have(views[0].$el);
@@ -163,7 +163,7 @@ describe("ViewMaster", function(){
     child.render = chai.spy(child.render);
     child.render();
 
-    master.setViews(".container", child);
+    master.setView(".container", child);
     master.render();
 
     expect(child.render).to.have.been.called.once;
@@ -177,7 +177,7 @@ describe("ViewMaster", function(){
       new Puppet({ name: "second" })
     ];
 
-    m.setViews(".container", views);
+    m.setView(".container", views);
     m.render();
 
     m.removeViews(".container", views[0]);
@@ -193,7 +193,7 @@ describe("ViewMaster", function(){
     var parent = new Master();
     var child = new Puppet({ name: "first" });
 
-    parent.setViews(".container", child);
+    parent.setView(".container", child);
     parent.render();
     expect(_.contains(parent.getViews(".container"), child)).to.be.ok;
 
@@ -228,9 +228,9 @@ describe("ViewMaster", function(){
         new Puppet({ name: "second" })
       ];
       var list = new ViewList();
-      list.setViews(".items", children);
+      list.setView(".items", children);
       var layout = new Layout();
-      layout.setViews(".container", list);
+      layout.setView(".container", list);
 
       layout.render();
 
@@ -250,10 +250,10 @@ describe("ViewMaster", function(){
       var spy = children[1].render = chai.spy(children[1].render);
 
       var list = new ViewList();
-      list.setViews(".items", children);
+      list.setView(".items", children);
 
       var layout = new Layout();
-      layout.setViews(".container", list);
+      layout.setView(".container", list);
 
       layout.render();
       layout.render();
@@ -272,10 +272,10 @@ describe("ViewMaster", function(){
       var spy = children[1].render = chai.spy(children[1].render);
 
       var list = new ViewList();
-      list.setViews(".items", children);
+      list.setView(".items", children);
 
       var layout = new Layout();
-      layout.setViews(".container", list);
+      layout.setView(".container", list);
 
       layout.render();
       layout.render({ force: true });
@@ -298,10 +298,10 @@ describe("ViewMaster", function(){
         return "<span class=child>child</span>";
       };
 
-      parent1.setViews(".container", child);
+      parent1.setView(".container", child);
       parent1.render();
 
-      parent2.setViews(".container", child);
+      parent2.setView(".container", child);
 
       parent2.render();
       parent1.render();

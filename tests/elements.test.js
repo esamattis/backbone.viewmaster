@@ -49,7 +49,7 @@ describe("Elements object", function(){
       return "<div class=child>Child!</div>";
     };
 
-    view.setViews(".container", child);
+    view.setView(".container", child);
 
     view.elements = {
       "$child": ".child"

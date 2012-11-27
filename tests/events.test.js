@@ -83,7 +83,7 @@ describe("Events", function() {
         return "<div class=container ></div>";
       };
 
-      parent.setViews(".container", child);
+      parent.setView(".container", child);
       parent.render();
 
       var spy = chai.spy();
@@ -114,8 +114,8 @@ describe("Events", function() {
       };
 
       // to make sure there are no double event bindings
-      parent.setViews(".container", child);
-      parent.setViews(".container", child);
+      parent.setView(".container", child);
+      parent.setView(".container", child);
 
       parent.render();
 
@@ -137,8 +137,8 @@ describe("Events", function() {
       };
 
       // to make sure there are no double event bindings
-      parent.setViews(".container", child);
-      parent.setViews(".container", child);
+      parent.setView(".container", child);
+      parent.setView(".container", child);
 
       parent.render();
 
@@ -151,7 +151,7 @@ describe("Events", function() {
     });
 
 
-    _.each(["setViews", "appendViews", "prependViews"], function(viewMethod) {
+    _.each(["setView", "appendView", "prependView"], function(viewMethod) {
       it("to new parent after a parent change with " + viewMethod, function(){
         var Parent = Backbone.ViewMaster.extend({
           template: function() {
@@ -197,7 +197,7 @@ describe("Events", function() {
         return "<div class=container ></div>";
       };
 
-      parent.setViews(".container", child);
+      parent.setView(".container", child);
       parent.render();
       child.remove();
 
@@ -219,7 +219,7 @@ describe("Events", function() {
         return "<div class=container ></div>";
       };
 
-      parent.setViews(".container", child);
+      parent.setView(".container", child);
       parent.render();
 
       var spy = chai.spy();
