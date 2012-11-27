@@ -22,7 +22,7 @@ it's encouraged.
   - [backbone.viewmaster.js][dev] **5.9K**
   - [backbone.viewmaster.min.js][production] **2.8K**
 
-# API
+# API Docs
 
 [Here][api]
 
