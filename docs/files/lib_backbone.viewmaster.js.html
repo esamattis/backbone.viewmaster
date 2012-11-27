@@ -162,8 +162,7 @@
 
 
     &#x2F;**
-     * Unbind all event callbacks this view has bound with &#x60;bindTo&#x60;. Internally
-     * called by &#x60;remove&#x60;.
+     * Unbind all event callbacks this view has bound with &#x60;bindTo&#x60;.
      *
      * @method unbindAll
      * @return {Object} this
@@ -220,8 +219,8 @@
 
 
     &#x2F;**
-     * Render view with &#x60;this.template(this.context())&#x60; and call
-     * &#x60;this.renderViews(options)&#x60; to render childViews.
+     * Render this view with &#x60;this.template(this.context())&#x60; and child views
+     * with &#x60;this.renderViews(options)&#x60;.
      *
      * @method render
      * @param {Object} options
@@ -237,6 +236,8 @@
       opts.detach = false;
 
       this.$el.html(this.template(this.context()));
+
+      &#x2F;&#x2F; Set element properties from this.elements
       var key, selector;
       for (key in this.elements) {
         selector = this.elements[key];
@@ -305,6 +306,14 @@
     },
 
 
+    &#x2F;**
+     * Prepare views to be nested in this view. Set up event bubbling and
+     * remove possible previous parent.
+     *
+     * @private
+     * @method _prepareViews
+     * @param {Object&#x2F;Array} view(s) View object or an array of view objects
+     **&#x2F;
     _prepareViews: function(views) {
       var self = this;
       ensureArray(views).forEach(function(view) {
@@ -377,6 +386,25 @@
       return this;
     },
 
+    &#x2F;**
+     * Insert view or array of views to specific index in the view array.
+     *
+     * @protected
+     * @method insertView
+     * @param {String} selector CSS selector for the view container
+     * @param {Number} index Index to insert view(s)
+     * @param {Object&#x2F;Array} view(s) View object or an array of view objects
+     **&#x2F;
+    insertView: function(containerSel, index, views) {
+      var current;
+      if (current = this._views[containerSel]) {
+        current.splice.apply(current, [index, 0].concat(ensureArray(views)));
+      }
+      else {
+        this._views[containerSel] = ensureArray(views);
+      }
+      return this;
+    },
 
     &#x2F;**
      * Append a view or an array of views to a given view container.
@@ -415,6 +443,7 @@
      *
      * @protected
      * @method getViews
+     * @param {String} selector container CSS selector
      * @return {Array} views
      **&#x2F;
     getViews: function(containerSel) {
@@ -436,7 +465,7 @@
 
     &#x2F;**
      * Discard this view and all its children for good. Clears all events bound
-     * for this view.  Use &#x60;detach&#x60; instead if you need to use the view again
+     * for the view. Use &#x60;detach&#x60; instead if you need to use the view again
      * some time later.
      *
      * @method remove
