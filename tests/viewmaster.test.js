@@ -216,6 +216,33 @@ describe("ViewMaster", function(){
     expect(_.contains(parent.getViews(".container"), child)).to.not.be.ok;
   });
 
+  it("child.detach() does not clear dom events", function(){
+    var child = new (Backbone.ViewMaster.extend({
+
+      template: function() {
+        return "<button>child</button>";
+      },
+
+      events: {
+        "click button": "spy"
+      },
+
+      spy: chai.spy()
+
+    }))();
+
+    var parent = new Backbone.ViewMaster();
+    parent.template = function() {
+      return "<div class=container ></div>";
+    };
+
+    parent.setView(".container", child);
+    parent.render();
+
+    child.detach();
+    child.$("button").click();
+    expect(child.spy).to.have.been.called.once;
+  });
 
 
   describe("with deeply nested views", function(){
