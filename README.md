@@ -116,9 +116,9 @@ var AddView = Backbone.ViewMaster.extend({
 
 Nested views are also extended from `Backbone.ViewMaster`. Any ViewMaster view
 can be nested in any ViewMaster view and you can do as deep nesting as you
-want. You could also nest plain Backbone views as the leaf views if you handle
-manually event callback unbinding and make sure that it won't collide with the
-[rendered][] property.
+want. You could also nest plain Backbone views as the leaf views if you
+manually handle event callback unbinding and make sure that it won't collide
+with the [rendered][] property.
 
 Since we wanted this to be the view for the `addview-container` and because
 it's an element of `TodoLayout` — it is the responsibility of `TodoLayout` to
