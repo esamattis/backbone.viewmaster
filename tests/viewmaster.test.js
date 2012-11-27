@@ -170,25 +170,6 @@ describe("ViewMaster", function(){
     expect(master.$el).to.have(child.$el);
   });
 
-  it("removeViews() removes view", function(){
-    var m = new Master();
-    var views = [
-      new Puppet({ name: "first" }),
-      new Puppet({ name: "second" })
-    ];
-
-    m.setView(".container", views);
-    m.render();
-
-    m.removeViews(".container", views[0]);
-
-    m.renderViews();
-
-    expect(m.$el).to.not.have(views[0].$el);
-    expect(m.$el).to.have(views[1].$el);
-
-  });
-
   it("child.remove() removes from parent", function(){
     var parent = new Master();
     var child = new Puppet({ name: "first" });
