@@ -17,7 +17,7 @@ module.exports = function(grunt) {
         description: pkg.description,
         version: pkg.version,
         logo: "../../assets/logo.png",
-        url: "https://github.com/epeli/backbone.viewmaster",
+        url: pkg.url,
         options: {
           paths: "lib",
           outdir: "docs"
