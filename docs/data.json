@@ -3,8 +3,8 @@
         "name": "Backbone.ViewMaster",
         "description": "Few tested opinions on how to handle deeply nested views in Backbone.js focusing on encapsulation and reusability.",
         "version": "1.0.0",
-        "logo": "../../assets/logo.png",
-        "url": "https://github.com/epeli/backbone.viewmaster"
+        "url": "https://github.com/epeli/backbone.viewmaster",
+        "themedir": ".yuidoc_theme"
     },
     "files": {
         "lib/backbone.viewmaster.js": {
