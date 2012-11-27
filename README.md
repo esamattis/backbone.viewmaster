@@ -198,7 +198,7 @@ Views can be also removed by replacing them with [setView][]. ViewMaster
 automatically figures out which views was left out and calls [remove][] on them
 on the next [renderViews][] call.
 
-If you need to use the view or its children again some time later use the
+If you need to use the view and its children again some time later use the
 [detach][] method. It removes the view from in its parent view, but leaves the
 event callbacks untouched and children untouched.
 
