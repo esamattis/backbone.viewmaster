@@ -27,8 +27,8 @@ module.exports = function(grunt) {
 
     min: {
       dist: {
-        src: ["backbone.viewmaster.js"],
-        dest: "backbone.viewmaster.min.js"
+        src: ["lib/backbone.viewmaster.js"],
+        dest: "lib/backbone.viewmaster.min.js"
       }
     },
 
