@@ -7,10 +7,10 @@ several Backbone.js applications and by carefully picking the recurring
 patterns seen on them.
 
 Backbone.ViewMaster is a single View extended from Backbone.View. Views created
-from it can be infinitely nested with each others using the three nesting
-methods: [setView][], [appendView][] and [prependView][]. They work also with
-arrays of views. There is no separate concept of layouts or list views. It's
-just a Backbone view boosted with nesting capabilities.
+from it can be infinitely nested with each others using the four nesting
+methods: [setView][], [appendView][], [prependView][] and [insertView][]. They
+work also with arrays of views. There is no separate concept of layouts or list
+views. It's just a humble Backbone view boosted with nesting capabilities.
 
 
 # Download
@@ -132,12 +132,12 @@ constructor: function(){
 ```
 
 Here it's important to notice that [setView][] and its friends, [appendView][],
-[prependView][] and [getViews][] should be considered in Java terms as
-protected methods. Which means you should use them only from within the view
-definition. This is because they all take a CSS selector as the first argument
-and because the CSS selectors are very implementation specific details of your
-view. If you need to set the view from the outside create a setter method for
-it to keep your views encapsulated and maintainable.
+[prependView][], [insertView][] and [getViews][] should be considered in Java
+terms as protected methods. Which means you should use them only from within
+the view definition. This is because they all take a CSS selector as the first
+argument and because the CSS selectors are very implementation specific details
+of your view. If you need to set the view from the outside create a setter
+method for it to keep your views encapsulated and maintainable.
 
 
 ## Rendering
@@ -181,10 +181,7 @@ addItem: function(model){
 
 Here we use the [appendView][] method to append a view to `.todo-container`
 when a model is added to the collection. Every view container can contain
-multible views. You can also prepend views with [prependView][] or completely
-reset the container with new set of views by giving an array of views to
-[setView][].
-
+multible views. Just start adding more views to it if you need lists.
 
 The difference between [render][] and [renderViews][] is that the latter one
 renders only the new child views and adds them to the parent DOM tree leaving
@@ -218,6 +215,7 @@ parents all the way up to the view tree unless explicitly silenced.
 [setView]: http://epeli.github.com/backbone.viewmaster/docs/classes/Backbone.ViewMaster.html#method_setView
 [appendView]: http://epeli.github.com/backbone.viewmaster/docs/classes/Backbone.ViewMaster.html#method_appendView
 [prependView]: http://epeli.github.com/backbone.viewmaster/docs/classes/Backbone.ViewMaster.html#method_prependView
+[insertView]: http://epeli.github.com/backbone.viewmaster/docs/classes/Backbone.ViewMaster.html#method_insertView
 [bindTo]: http://epeli.github.com/backbone.viewmaster/docs/classes/Backbone.ViewMaster.html#method_bindTo
 [template]: http://epeli.github.com/backbone.viewmaster/docs/classes/Backbone.ViewMaster.html#method_template
 [render]: http://epeli.github.com/backbone.viewmaster/docs/classes/Backbone.ViewMaster.html#method_render
