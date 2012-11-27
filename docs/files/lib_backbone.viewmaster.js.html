@@ -89,7 +89,7 @@
 &#x2F;*global Backbone:true,  _:true, define:true *&#x2F;
 &#x2F;*jshint boss:true, browser:true *&#x2F;
 
-(function (window, Backbone, _) {
+(function() {
 
   function ensureArray(ob){
     return _.isArray(ob) ? ob : [ob];
@@ -145,9 +145,7 @@
       if (typeof callback === &quot;string&quot;) {
         callback = this[callback];
       }
-      if (!emitter || !event || !callback) {
-        throw new Error(&quot;Bad arguments. The signature is &lt;emitter&gt;, &lt;event&gt;, &lt;callback &#x2F; callback name&gt;, [context]&quot;);
-      }
+
       binding = {
         emitter: emitter,
         context: context,
@@ -483,7 +481,7 @@
 
   });
 
-})(this, Backbone, _);
+})();
 
     </pre>
 </div>
