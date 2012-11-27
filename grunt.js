@@ -16,8 +16,8 @@ module.exports = function(grunt) {
         name: pkg.name,
         description: pkg.description,
         version: pkg.version,
-        logo: "../../assets/logo.png",
         url: pkg.url,
+        themedir: ".yuidoc_theme",
         options: {
           paths: "lib",
           outdir: "docs"
