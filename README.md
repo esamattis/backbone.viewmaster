@@ -198,7 +198,7 @@ It removes automatically all the Backbone and DOM event callbacks. If the view
 is a parent to other views it will call remove on them also.
 
 If you need to use the view or its children again some time later use the
-[detach][] method. It removes the view from in its parent view, but leaves
+[detach][] method. It removes the view from in its parent view, but leaves the
 event callbacks untouched and children untouched.
 
 ## Event bubbling
