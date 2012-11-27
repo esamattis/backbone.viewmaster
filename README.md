@@ -13,7 +13,7 @@ nesting methods [setView][], [appendView][], [prependView][] and
 just a humble Backbone View Class with versatile nesting capabilities.
 
 The main idea behind Backbone.ViewMaster is that views should be small and
-independent building components of application UI. Read the tutorial to see how
+independent building blocks of application UI. Read the tutorial to see how
 it's encouraged.
 
 
