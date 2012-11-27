@@ -198,6 +198,8 @@ Any view, parent or child, can be discarded anytime with the [remove][] method.
 It removes automatically all the Backbone and DOM event callbacks. If the view
 is a parent to other views it will call remove on them also.
 
+TODO: todo example code
+
 Views can be also removed by replacing them with [setView][]. ViewMaster
 automatically figures out which views was left out and calls [remove][] on them
 on the next [renderViews][] call.
@@ -213,6 +215,8 @@ about their parents. When you need to communicate with the parent use events to
 send messages to them. Backbone.ViewMaster helps with this by implementing DOM
 like event bubbling: Event triggered in a child view is also seen on its
 parents all the way up to the view tree unless explicitly silenced.
+
+TODO: silence example
 
 
 [Backbone.js]: http://backbonejs.org/
