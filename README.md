@@ -204,12 +204,10 @@ event callbacks untouched and children untouched.
 ## Event bubbling
 
 In order to keep views resusable their implementation should not asume anything
-about their parents. When you need to communicate with the parent views use
-events to send messages to them. Backbone.ViewMaster helps with this by
-implementing DOM like event bubbling: Event triggered in a child view is also
-seen on its parents all the way up to the view tree unless explicitly
-silenced.
-
+about their parents. When you need to communicate with the parent use events to
+send messages to them. Backbone.ViewMaster helps with this by implementing DOM
+like event bubbling: Event triggered in a child view is also seen on its
+parents all the way up to the view tree unless explicitly silenced.
 
 
 [Backbone.js]: http://backbonejs.org/
