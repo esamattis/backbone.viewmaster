@@ -203,6 +203,18 @@ describe("ViewMaster", function(){
     expect(_.contains(parent.getViews(".container"), child)).to.not.be.ok;
   });
 
+  it("child.detach() removes from parent and DOM", function(){
+    var parent = new Master();
+    var child = new Puppet({ name: "first" });
+
+    parent.setView(".container", child);
+    parent.render();
+    expect(_.contains(parent.getViews(".container"), child)).to.be.ok;
+
+    child.detach();
+    expect(parent.$el).to.not.have(child.$el);
+    expect(_.contains(parent.getViews(".container"), child)).to.not.be.ok;
+  });
 
 
 
