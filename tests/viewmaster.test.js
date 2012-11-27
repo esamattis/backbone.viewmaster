@@ -110,6 +110,28 @@ describe("ViewMaster", function(){
     expect(childs[1].innerHTML).to.eq("newview");
   });
 
+  it("can insert view to specific index with insertView(...)", function(){
+    var parent = new Master();
+    parent.setView(".container", new Puppet());
+    parent.render();
+
+    var first = new Puppet({ name: "first" });
+    var last = new Puppet({ name: "last" });
+    parent.setView(".container", [first, last]);
+    parent.render();
+
+    expect(parent.$el).to.have(first.$el);
+    expect(parent.$el).to.have(last.$el);
+
+    var middle = new Puppet({ name: "middle" });
+    parent.insertView(".container", 1, middle);
+    parent.renderViews();
+
+    expect(parent.$el).to.have(middle.$el);
+    expect(parent.getViews(".container")).to.deep.eq([first, middle, last]);
+
+  });
+
   it("can add new views with prependView() after initial render", function(){
     var m = new Master();
     m.setView(".container", new Puppet());
