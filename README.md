@@ -6,11 +6,11 @@ focusing on encapsulation and reusability. This is implemented after writing
 several Backbone.js applications and by carefully picking the recurring
 patterns seen on them.
 
-Backbone.ViewMaster is a single View extended from Backbone.View. Views created
-from it can be infinitely nested with each others using the four nesting
-methods [setView][], [appendView][], [prependView][] and [insertView][].
-There is no separate concept of layouts or list views. It's just a humble
-Backbone View class boosted with nesting capabilities.
+Backbone.ViewMaster is a single View extended from Backbone.View. Views
+extended from it can be infinitely nested with each others using the four
+nesting methods [setView][], [appendView][], [prependView][] and
+[insertView][].  There is no separate concept of layouts or list views. It's
+just a humble Backbone View class boosted with nesting capabilities.
 
 The main idea behind Backbone.ViewMaster is that views should be small and
 independent building components of application UI. Read the tutorial to see how
