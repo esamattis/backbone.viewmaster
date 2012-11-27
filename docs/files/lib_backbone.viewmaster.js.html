@@ -89,21 +89,7 @@
 &#x2F;*global Backbone:true,  _:true, define:true *&#x2F;
 &#x2F;*jshint boss:true, browser:true *&#x2F;
 
-(function(root, factory) {
-
-  &#x2F;&#x2F; Expose into global Backbone namespace if Backbone is global
-  if (typeof root.Backbone === &quot;object&quot; &amp;&amp; typeof root._ === &quot;function&quot;) {
-    root.Backbone.ViewMaster = factory(Backbone, _);
-  }
-
-  &#x2F;&#x2F; If we have AMD try requiring Backbone and build with it
-  if (typeof define === &quot;function&quot; &amp;&amp; define.amd) {
-    define([&quot;backbone&quot;, &quot;underscore&quot;], function(Backbone, _) {
-      return Backbone.ViewMaster || factory(Backbone, _);
-    });
-  }
-
-}(this, function (Backbone, _) {
+(function (window, Backbone, _) {
 
   function ensureArray(ob){
     return _.isArray(ob) ? ob : [ob];
@@ -114,13 +100,10 @@
    *
    * &lt;https:&#x2F;&#x2F;github.com&#x2F;epeli&#x2F;backbone.viewmaster&gt;
    *
-   * ***NOTE**: Most important methods &#x60;setView&#x60;, &#x60;appendView&#x60;, &#x60;prependView&#x60;
-   * and &#x60;removeView&#x60; are protected methods.*
-   *
    * @class Backbone.ViewMaster
    * @extends Backbone.View
    * *&#x2F;
-  return Backbone.View.extend({
+  Backbone.ViewMaster = Backbone.View.extend({
 
     constructor: function(opts) {
       Backbone.View.prototype.constructor.apply(this, arguments);
@@ -225,7 +208,7 @@
     &#x2F;**
      * Returns the context object for the &#x60;template&#x60; method.
      *
-     * Default: this.model.toJSON() or an empty object if view has no model.
+     * Default: &#x60;this.model.toJSON()&#x60; or an empty object if view has no model.
      *
      * @method context
      * @return {Object} context
@@ -297,12 +280,13 @@
     },
 
     &#x2F;**
-     * Detach view from its parent.
+     * Detach view from its parent but keep it in DOM.
      *
-     * @method detachParent
+     * @private
+     * @method _removeParent
      * @return {Object} this
      **&#x2F;
-    detachParent: function() {
+    _removeParent: function() {
 
       if (!this._parent) return;
 
@@ -327,7 +311,7 @@
 
         &#x2F;&#x2F; when parent is changing remove it from previous
         if (view._parent &amp;&amp; view._parent !== self) {
-          view.detachParent();
+          view._removeParent();
         }
 
         if (!view._bubble) {
@@ -369,12 +353,16 @@
     &#x2F;**
      * Set a view or an array of views to a given view container.
      *
-     * @method setView
+     * If previous set of views is replaced by a new set — the views not
+     * present in the new set will be discarded with &#x60;remove&#x60; on the next
+     * &#x60;renderViews&#x60; call unless detached with &#x60;detach&#x60; method.
+     *
      * @protected
+     * @method setView
      * @param {String} selector CSS selector for the view container
      * @param {Object&#x2F;Array} view(s) View object or an array of view objects
      **&#x2F;
-    setViews: function(containerSel, currentViews) {
+    setView: function(containerSel, currentViews) {
       var previousViews;
       currentViews = ensureArray(currentViews);
 
@@ -389,19 +377,16 @@
       return this;
     },
 
-    getViews: function(containerSel) {
-      return this._views[containerSel];
-    },
 
     &#x2F;**
      * Append a view or an array of views to a given view container.
      *
-     * @method appendView
      * @protected
+     * @method appendView
      * @param {String} selector CSS selector for the view container
      * @param {Object&#x2F;Array} view(s) View object or an array of view objects
      **&#x2F;
-    appendViews: function(containerSel, views) {
+    appendView: function(containerSel, views) {
       this._prepareViews(views);
       this._views[containerSel] = (this._views[containerSel] || []).concat(
         ensureArray(views)
@@ -412,12 +397,12 @@
     &#x2F;**
      * Prepend a view or an array of views to a given view container.
      *
-     * @method prependView
      * @protected
+     * @method prependView
      * @param {String} selector CSS selector for the view container
      * @param {Object&#x2F;Array} view(s) View object or an array of view objects
      **&#x2F;
-    prependViews: function(containerSel, views) {
+    prependView: function(containerSel, views) {
       this._prepareViews(views);
       this._views[containerSel] = ensureArray(views).concat(
         this._views[containerSel] || []
@@ -426,31 +411,41 @@
     },
 
     &#x2F;**
-     * Remove a view or an array of views from this view.
+     * Get views for given container
      *
-     * @method removeView
      * @protected
-     * @param {String} selector CSS selector for the view container
-     * @param {Object&#x2F;Array} view(s) View or array of views
+     * @method getViews
+     * @return {Array} views
+     **&#x2F;
+    getViews: function(containerSel) {
+      return this._views[containerSel];
+    },
+
+    &#x2F;**
+     * Detaches view from its parent and DOM.
+     *
+     * @method detach
      * @return {Object} this
      **&#x2F;
-    removeViews: function(containerSel, toBeRemoved){
-      if (!this._views[containerSel]) return this;
-      toBeRemoved = ensureArray(toBeRemoved);
-
-      this._views[containerSel] = _.difference(
-        this._views[containerSel],
-        toBeRemoved
-      );
-
-      this._remove = this._remove.concat(toBeRemoved);
+    detach: function() {
+      this._removeParent();
+      this.$el.detach();
       return this;
     },
 
+
+    &#x2F;**
+     * Discard this view and all its children for good. Clears all events bound
+     * for this view.  Use &#x60;detach&#x60; instead if you need to use the view again
+     * some time later.
+     *
+     * @method remove
+     * @return {Object} this
+     **&#x2F;
     remove: function() {
       Backbone.View.prototype.remove.apply(this, arguments);
       this.unbindAll();
-      this.detachParent();
+      this._removeParent();
       this.eachView(function(containerSel, view) {
         view.remove();
       });
@@ -458,6 +453,8 @@
     }
 
   });
+
+})(this, Backbone, _);
 
     </pre>
 </div>

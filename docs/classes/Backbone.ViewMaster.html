@@ -94,7 +94,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l24"><code>lib&#x2F;backbone.viewmaster.js:24</code></a>
+            Defined in: <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l10"><code>lib&#x2F;backbone.viewmaster.js:10</code></a>
         </div>
     
 
@@ -109,9 +109,6 @@
     <p>Few tested opinions on how to handle deeply nested views in Backbone.js focusing on encapsulation and reusability.</p>
 
 <p><a href="https://github.com/epeli/backbone.viewmaster">https://github.com/epeli/backbone.viewmaster</a></p>
-
-<p><strong><em>NOTE</strong>: Most important methods <code>setView</code>, <code>appendView</code>, <code>prependView</code>
-and <code>removeView</code> are protected methods.</em></p>
 </div>
 
 
@@ -140,6 +137,13 @@ and <code>removeView</code> are protected methods.</em></p>
 
                     <ul class="index-list methods extends">
                         
+                            <li class="index-item method private">
+                                <a href="#method__removeParent">_removeParent</a>
+
+                                
+                                
+                            </li>
+                        
                             <li class="index-item method protected">
                                 <a href="#method_appendView">appendView</a>
 
@@ -162,7 +166,7 @@ and <code>removeView</code> are protected methods.</em></p>
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_detachParent">detachParent</a>
+                                <a href="#method_detach">detach</a>
 
                                 
                                 
@@ -176,14 +180,21 @@ and <code>removeView</code> are protected methods.</em></p>
                             </li>
                         
                             <li class="index-item method protected">
-                                <a href="#method_prependView">prependView</a>
+                                <a href="#method_getViews">getViews</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method protected">
-                                <a href="#method_removeView">removeView</a>
+                                <a href="#method_prependView">prependView</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_remove">remove</a>
 
                                 
                                 
@@ -269,6 +280,79 @@ and <code>removeView</code> are protected methods.</em></p>
                 <h2 class="off-left">Methods</h2>
 
                 
+                    <div id="method__removeParent" class="method item private">
+    <h3 class="name"><code>_removeParent</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l194"><code>lib&#x2F;backbone.viewmaster.js:194</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Detach view from its parent but keep it in DOM.</p>
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    this
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
                     <div id="method_appendView" class="method item protected">
     <h3 class="name"><code>appendView</code></h3>
 
@@ -319,7 +403,7 @@ and <code>removeView</code> are protected methods.</em></p>
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l308"><code>lib&#x2F;backbone.viewmaster.js:308</code></a>
+        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l293"><code>lib&#x2F;backbone.viewmaster.js:293</code></a>
         
         </p>
 
@@ -443,7 +527,7 @@ and <code>removeView</code> are protected methods.</em></p>
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l59"><code>lib&#x2F;backbone.viewmaster.js:59</code></a>
+        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l42"><code>lib&#x2F;backbone.viewmaster.js:42</code></a>
         
         </p>
 
@@ -584,7 +668,7 @@ lifetime of the view.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l137"><code>lib&#x2F;backbone.viewmaster.js:137</code></a>
+        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l120"><code>lib&#x2F;backbone.viewmaster.js:120</code></a>
         
         </p>
 
@@ -597,7 +681,7 @@ lifetime of the view.</p>
     <div class="description">
         <p>Returns the context object for the <code>template</code> method.</p>
 
-<p>Default: this.model.toJSON() or an empty object if view has no model.</p>
+<p>Default: <code>this.model.toJSON()</code> or an empty object if view has no model.</p>
     </div>
 
     
@@ -621,8 +705,8 @@ lifetime of the view.</p>
 </div>
 
                 
-                    <div id="method_detachParent" class="method item">
-    <h3 class="name"><code>detachParent</code></h3>
+                    <div id="method_detach" class="method item">
+    <h3 class="name"><code>detach</code></h3>
 
     
         <span class="paren">()</span>
@@ -657,7 +741,7 @@ lifetime of the view.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l211"><code>lib&#x2F;backbone.viewmaster.js:211</code></a>
+        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l336"><code>lib&#x2F;backbone.viewmaster.js:336</code></a>
         
         </p>
 
@@ -668,7 +752,7 @@ lifetime of the view.</p>
     </div>
 
     <div class="description">
-        <p>Detach view from its parent.</p>
+        <p>Detaches view from its parent and DOM.</p>
     </div>
 
     
@@ -738,7 +822,7 @@ lifetime of the view.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l255"><code>lib&#x2F;backbone.viewmaster.js:255</code></a>
+        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l239"><code>lib&#x2F;backbone.viewmaster.js:239</code></a>
         
         </p>
 
@@ -826,6 +910,79 @@ lifetime of the view.</p>
 </div>
 
                 
+                    <div id="method_getViews" class="method item protected">
+    <h3 class="name"><code>getViews</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Array</span>
+        </span>
+    
+
+    
+
+    
+        <span class="flag protected">protected</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l325"><code>lib&#x2F;backbone.viewmaster.js:325</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Get views for given container</p>
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Array</span>:
+                    
+                    views
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
                     <div id="method_prependView" class="method item protected">
     <h3 class="name"><code>prependView</code></h3>
 
@@ -876,7 +1033,7 @@ lifetime of the view.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l324"><code>lib&#x2F;backbone.viewmaster.js:324</code></a>
+        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l309"><code>lib&#x2F;backbone.viewmaster.js:309</code></a>
         
         </p>
 
@@ -936,27 +1093,11 @@ lifetime of the view.</p>
 </div>
 
                 
-                    <div id="method_removeView" class="method item protected">
-    <h3 class="name"><code>removeView</code></h3>
+                    <div id="method_remove" class="method item">
+    <h3 class="name"><code>remove</code></h3>
 
     
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>selector</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>view(s)</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
+        <span class="paren">()</span>
     
 
     
@@ -967,8 +1108,6 @@ lifetime of the view.</p>
 
     
 
-    
-        <span class="flag protected">protected</span>
     
 
     
@@ -990,7 +1129,7 @@ lifetime of the view.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l340"><code>lib&#x2F;backbone.viewmaster.js:340</code></a>
+        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l349"><code>lib&#x2F;backbone.viewmaster.js:349</code></a>
         
         </p>
 
@@ -1001,47 +1140,11 @@ lifetime of the view.</p>
     </div>
 
     <div class="description">
-        <p>Remove a view or an array of views from this view.</p>
+        <p>Discard this view and all its children for good. Clears all events bound
+for this view.  Use <code>detach</code> instead if you need to use the view again
+some time later.</p>
     </div>
 
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">selector</code>
-                        <span class="type">String</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>CSS selector for the view container</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">view(s)</code>
-                        <span class="type">Object/Array</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>View or array of views</p>
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
     
 
     
@@ -1109,7 +1212,7 @@ lifetime of the view.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l151"><code>lib&#x2F;backbone.viewmaster.js:151</code></a>
+        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l134"><code>lib&#x2F;backbone.viewmaster.js:134</code></a>
         
         </p>
 
@@ -1232,7 +1335,7 @@ lifetime of the view.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l185"><code>lib&#x2F;backbone.viewmaster.js:185</code></a>
+        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l168"><code>lib&#x2F;backbone.viewmaster.js:168</code></a>
         
         </p>
 
@@ -1358,7 +1461,7 @@ lifetime of the view.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l281"><code>lib&#x2F;backbone.viewmaster.js:281</code></a>
+        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l265"><code>lib&#x2F;backbone.viewmaster.js:265</code></a>
         
         </p>
 
@@ -1370,6 +1473,10 @@ lifetime of the view.</p>
 
     <div class="description">
         <p>Set a view or an array of views to a given view container.</p>
+
+<p>If previous set of views is replaced by a new set — the views not
+present in the new set will be discarded with <code>remove</code> on the next
+<code>renderViews</code> call unless detached with <code>detach</code> method.</p>
     </div>
 
     
@@ -1464,7 +1571,7 @@ lifetime of the view.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l126"><code>lib&#x2F;backbone.viewmaster.js:126</code></a>
+        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l109"><code>lib&#x2F;backbone.viewmaster.js:109</code></a>
         
         </p>
 
@@ -1558,7 +1665,7 @@ lifetime of the view.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l93"><code>lib&#x2F;backbone.viewmaster.js:93</code></a>
+        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l76"><code>lib&#x2F;backbone.viewmaster.js:76</code></a>
         
         </p>
 
@@ -1636,7 +1743,7 @@ called by <code>remove</code>.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l107"><code>lib&#x2F;backbone.viewmaster.js:107</code></a>
+        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l90"><code>lib&#x2F;backbone.viewmaster.js:90</code></a>
         
         </p>
 
@@ -1712,7 +1819,7 @@ called by <code>remove</code>.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l118"><code>lib&#x2F;backbone.viewmaster.js:118</code></a>
+        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l101"><code>lib&#x2F;backbone.viewmaster.js:101</code></a>
         
         </p>
 
@@ -1756,7 +1863,7 @@ called by <code>remove</code>.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l41"><code>lib&#x2F;backbone.viewmaster.js:41</code></a>
+        <a href="..&#x2F;files&#x2F;lib_backbone.viewmaster.js.html#l24"><code>lib&#x2F;backbone.viewmaster.js:24</code></a>
         
         </p>
 
