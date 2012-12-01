@@ -228,8 +228,6 @@ var TodoItem = Backbone.ViewMaster.extend({
 });
 ```
 
-
-
 Views can be also removed by replacing them with [setView][]. ViewMaster
 automatically figures out which views was left out and calls [remove][] on them
 on the next [renderViews][] call.
@@ -240,14 +238,20 @@ event callbacks untouched and children untouched.
 
 ## Event bubbling
 
-In order to keep views resusable their implementation should not asume anything
-about their parents. When you need to communicate with the parent use events to
-send messages to them. Backbone.ViewMaster helps with this by implementing DOM
-like event bubbling: Event triggered in a child view is also seen on its
-parents all the way up to the view tree unless explicitly silenced.
+In order to keep views decoupled and resusable their implementation should not
+asume anything about their parents. When you need to communicate with the
+parent use events to send messages to them. Backbone.ViewMaster helps with this
+by implementing DOM like event bubbling: Event triggered in a child view is
+also seen on its parents all the way up to the view tree unless explicitly
+silenced.
 
-TODO: silence example
+```javascript
+// Bubbled event "refresh" to parents
+view.trigger("refresh");
 
+// Do not bubble event "myevent" to parents
+view.trigger("myevent", { parent: false });
+```
 
 [Backbone.js]: http://backbonejs.org/
 [dev]: https://github.com/epeli/backbone.viewmaster/raw/master/lib/backbone.viewmaster.js
