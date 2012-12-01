@@ -74,7 +74,7 @@ do that in the constructor of the `TodoLayout`.
 ```javascript
 // TodoLayout
 constructor: function(){
-  Backbone.ViewMaster.prorotype.constructor.apply(this, arguments);
+  Backbone.ViewMaster.prototype.constructor.apply(this, arguments);
   this.bindTo(this.model, "change", this.render);
 },
 ```
@@ -128,11 +128,11 @@ nest it.  We do that in its constructor using the [setView][] method.
 ```javascript
 // TodoLayout
 constructor: function(){
-  Backbone.ViewMaster.prorotype.constructor.apply(this, arguments);
+  Backbone.ViewMaster.prototype.constructor.apply(this, arguments);
   this.bindTo(this.model, "change", this.render);
   this.setView(".addview-container", new AddView({
     collection: this.collection
-  });
+  }));
 },
 ```
 
@@ -151,9 +151,16 @@ Now we are ready to create and render our nested view. We do that by calling
 the default render method.
 
 ```javascript
-var layout = new TodoLayout();
+var items = new Backbone.Collection();
+var app = new Backbone.Model();
+var layout = new TodoLayout({
+  model: app,
+  collection: items
+});
+
 layout.render();
 $("body").append(layout.el);
+app.set("name", prompt("Your name"));
 ```
 
 The render method takes care of rendering itself and the intial rendering of
@@ -200,7 +207,9 @@ a parent to other views it will call remove on them also.
 
 ```
 <script type="template" id="item">
-<span class="item"><%= text %></span></button>x</button>
+  <span class="item"><%= text %></span>
+  <button class="edit">edit</button>
+  <button class="done">x</button>
 </script>
 ```
 
@@ -208,21 +217,27 @@ a parent to other views it will call remove on them also.
 var TodoItem = Backbone.ViewMaster.extend({
 
   constructor: function(){
-    Backbone.ViewMaster.prorotype.constructor.apply(this, arguments);
+    Backbone.ViewMaster.prototype.constructor.apply(this, arguments);
     this.bindTo(this.model, "change", this.render);
   },
 
   template: function(context){
     return _.template($("#item").html(), context);
-  }
-
-  events: {
-    "click button": "remove"
   },
 
-  remove: function(){
+  events: {
+    "click .done": "done",
+    "click .edit": "edit"
+  },
+
+  done: function(){
     this.model.destroy();
     this.remove();
+  },
+
+  edit: function() {
+    var newContent = prompt("Edit todo", this.$(".item").text());
+    if (newContent !== null) this.model.set("text", newContent);
   }
 
 });
