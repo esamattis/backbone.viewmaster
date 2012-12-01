@@ -125,6 +125,28 @@ describe("Events", function() {
       expect(spy).to.have.been.called.once;
     });
 
+    it("passing `parent: false` prevents bubbling", function(){
+      var child = new Backbone.ViewMaster();
+      child.template = function() {
+        return "<p>child</p>";
+      };
+
+      var parent = new Backbone.ViewMaster();
+      parent.template = function() {
+        return "<div class=container ></div>";
+      };
+
+      parent.setView(".container", child);
+
+      parent.render();
+
+      var spy = chai.spy();
+      parent.on("test", spy);
+
+      child.trigger("test", { parent: false });
+      expect(spy).to.not.have.been.called.once;
+    });
+
     it("dont break dom bubbling", function(){
       var child = new Backbone.ViewMaster();
       child.template = function() {
