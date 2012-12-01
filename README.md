@@ -193,9 +193,9 @@ the children.
 
 ## Removing views
 
-Any view, parent or child, can be discarded anytime with the [remove][] method.
-It removes automatically all the Backbone and DOM event callbacks. If the view
-is a parent to other views it will call remove on them also.
+Any view, parent or child, can be discarded with the [remove][] method.  It
+removes automatically all the Backbone and DOM event callbacks. If the view is
+a parent to other views it will call remove on them also.
 
 
 ```html
