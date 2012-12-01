@@ -60,7 +60,7 @@ var TodoLayout = Backbone.ViewMaster.extend({
 
 First thing you do for every ViewMaster view is set a [template][] function for
 it.  It can be any function which takes a context object as the first argument
-and returns neighter a HTML string or a DOM object. The context object is by
+and returns neither a HTML string or a DOM object. The context object is by
 default `this.model.toJSON()` or an empty object if your view does not have a
 model.  You can customize this behavior by overriding the [context][] method.
 There is no need to define the [render][] method. ViewMaster already defines it
@@ -163,7 +163,7 @@ $("body").append(layout.el);
 app.set("name", prompt("Your name"));
 ```
 
-The render method takes care of rendering itself and the intial rendering of
+The render method takes care of rendering itself and the initial rendering of
 its child views. This means it will **render child views only once** unless `{
 force: true }` is passed to the render method. This is because normally it
 should be the responsibility of the child view to know when it should render
@@ -192,7 +192,7 @@ addItem: function(model){
 
 Here we use the [appendView][] method to append a view to `.todo-container`
 when a model is added to the collection. Every view container can contain
-multible views. Just start adding more views to it if you need lists.
+multiple views. Just start adding more views to it if you need lists.
 
 The difference between [render][] and [renderViews][] is that the latter one
 renders only the new child views and adds them to the parent DOM tree leaving
@@ -255,7 +255,7 @@ event callbacks untouched and children untouched.
 ## Event bubbling
 
 In order to keep views decoupled and resusable their implementation should not
-asume anything about their parents. When you need to communicate with the
+assume anything about their parents. When you need to communicate with the
 parent use events to send messages to them. Backbone.ViewMaster helps with this
 by implementing DOM like event bubbling: Event triggered in a child view is
 also seen on its parents all the way up to the view tree unless explicitly
@@ -280,7 +280,7 @@ That's about it. Check out the full working todo app in the examples
 ## How do I use jQuery plugins?
 
 Just override the render method, call the super method and then do your jQuery
-pluging stuff:
+plugin stuff:
 
 ```javascript
 render: function(){
