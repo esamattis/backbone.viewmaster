@@ -90,6 +90,7 @@
 &#x2F;*jshint boss:true, browser:true *&#x2F;
 
 (function() {
+  var VERSION = &quot;1.0.0&quot;;
 
   function ensureArray(ob){
     return _.isArray(ob) ? ob : [ob];
@@ -314,7 +315,7 @@
      **&#x2F;
     _prepareViews: function(views) {
       var self = this;
-      ensureArray(views).forEach(function(view) {
+      _.each(ensureArray(views), function(view) {
 
         &#x2F;&#x2F; when parent is changing remove it from previous
         if (view._parent &amp;&amp; view._parent !== self) {
@@ -323,8 +324,11 @@
 
         &#x2F;&#x2F; Bind bubbling
         if (!view._bubble) {
-          view._bubble = view.bindTo(view, &quot;all&quot;, function(eventName, arg) {
-            if (!arg || typeof(arg.parent) === &quot;undefined&quot; || arg.parent) self.trigger(eventName, arg);
+          view._bubble = view.bindTo(view, &quot;all&quot;, function() {
+            var arg = arguments[1];
+            if (!arg || typeof(arg.parent) === &quot;undefined&quot; || arg.parent) {
+              self.trigger.apply(self, arguments);
+            }
           }, view);
         }
 
@@ -355,14 +359,13 @@
      * @return {Object} this
      **&#x2F;
     eachView: function(fn) {
-      var self = this;
-      _.keys(this._views).forEach(function(containerSel) {
-        var views = self._views[containerSel];
-        if (!views) return;
-        views.forEach(function(view) {
+      var containerSel, view, i, views = this._views;
+      for (containerSel in views) {
+        for (i = 0; i &lt; views[containerSel].length; i++) {
+          view = views[containerSel][i];
           fn(containerSel, view);
-        });
-      });
+        }
+      }
     },
 
     _detachViews: function() {
@@ -494,6 +497,9 @@
     }
 
   });
+
+  Backbone.ViewMaster.VERSION = VERSION;
+
 
 })();
 

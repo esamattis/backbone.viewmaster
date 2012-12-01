@@ -28,7 +28,7 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "lib/backbone.viewmaster.js",
-            "line": 10,
+            "line": 11,
             "description": "Few tested opinions on how to handle deeply nested views in Backbone.js focusing on encapsulation and reusability.\n\n<https://github.com/epeli/backbone.viewmaster>",
             "extends": "Backbone.View"
         }
@@ -36,7 +36,7 @@
     "classitems": [
         {
             "file": "lib/backbone.viewmaster.js",
-            "line": 24,
+            "line": 25,
             "description": "Boolean indicating whether this view has been rendered at least once.\nSet by the `render` method and used by the parent view.",
             "itemtype": "property",
             "name": "rendered",
@@ -45,7 +45,7 @@
         },
         {
             "file": "lib/backbone.viewmaster.js",
-            "line": 42,
+            "line": 43,
             "description": "Bind a callback function to a given Backbone event emitter for the\nlifetime of the view.",
             "itemtype": "method",
             "name": "bindTo",
@@ -80,7 +80,7 @@
         },
         {
             "file": "lib/backbone.viewmaster.js",
-            "line": 74,
+            "line": 75,
             "description": "Unbind all event callbacks this view has bound with `bindTo`.",
             "itemtype": "method",
             "name": "unbindAll",
@@ -92,7 +92,7 @@
         },
         {
             "file": "lib/backbone.viewmaster.js",
-            "line": 87,
+            "line": 88,
             "description": "Unbind single `binding` bound with `bindTo`.",
             "itemtype": "method",
             "name": "unbindFrom",
@@ -107,7 +107,7 @@
         },
         {
             "file": "lib/backbone.viewmaster.js",
-            "line": 98,
+            "line": 99,
             "description": "TODO: doc me",
             "itemtype": "property",
             "name": "elements",
@@ -115,7 +115,7 @@
         },
         {
             "file": "lib/backbone.viewmaster.js",
-            "line": 106,
+            "line": 107,
             "description": "Template function. User must override this!",
             "itemtype": "method",
             "name": "template",
@@ -134,7 +134,7 @@
         },
         {
             "file": "lib/backbone.viewmaster.js",
-            "line": 117,
+            "line": 118,
             "description": "Returns the context object for the `template` method.\n\nDefault: `this.model.toJSON()` or an empty object if view has no model.",
             "itemtype": "method",
             "name": "context",
@@ -146,7 +146,7 @@
         },
         {
             "file": "lib/backbone.viewmaster.js",
-            "line": 131,
+            "line": 132,
             "description": "Render this view with `this.template(this.context())` and child views\nwith `this.renderViews(options)`.",
             "itemtype": "method",
             "name": "render",
@@ -173,7 +173,7 @@
         },
         {
             "file": "lib/backbone.viewmaster.js",
-            "line": 167,
+            "line": 168,
             "description": "Render child views only.",
             "itemtype": "method",
             "name": "renderViews",
@@ -200,7 +200,7 @@
         },
         {
             "file": "lib/backbone.viewmaster.js",
-            "line": 193,
+            "line": 194,
             "description": "Detach view from its parent but keep it in DOM.",
             "access": "private",
             "tagname": "",
@@ -214,7 +214,7 @@
         },
         {
             "file": "lib/backbone.viewmaster.js",
-            "line": 219,
+            "line": 220,
             "description": "Prepare views to be nested in this view. Set up event bubbling and\nremove possible previous parent.",
             "access": "private",
             "tagname": "",
@@ -231,7 +231,7 @@
         },
         {
             "file": "lib/backbone.viewmaster.js",
-            "line": 247,
+            "line": 251,
             "description": "Same as original Backbone trigger, but the events are bubbled up to the\nparent views unless object with `parent: false` or `parent: null` is\npassed with the first event object.",
             "itemtype": "method",
             "name": "trigger",
@@ -256,7 +256,7 @@
         },
         {
             "file": "lib/backbone.viewmaster.js",
-            "line": 260,
+            "line": 264,
             "description": "Iterate each child view.",
             "itemtype": "method",
             "name": "eachView",
@@ -287,7 +287,7 @@
         },
         {
             "file": "lib/backbone.viewmaster.js",
-            "line": 286,
+            "line": 289,
             "description": "Set a view or an array of views to a given view container.\n\nIf previous set of views is replaced by a new set — the views not\npresent in the new set will be discarded with `remove` on the next\n`renderViews` call unless detached with `detach` method.",
             "access": "protected",
             "tagname": "",
@@ -309,7 +309,7 @@
         },
         {
             "file": "lib/backbone.viewmaster.js",
-            "line": 313,
+            "line": 316,
             "description": "Insert view or array of views to specific index in the view array.",
             "access": "protected",
             "tagname": "",
@@ -336,7 +336,7 @@
         },
         {
             "file": "lib/backbone.viewmaster.js",
-            "line": 333,
+            "line": 336,
             "description": "Append a view or an array of views to a given view container.",
             "access": "protected",
             "tagname": "",
@@ -358,7 +358,7 @@
         },
         {
             "file": "lib/backbone.viewmaster.js",
-            "line": 349,
+            "line": 352,
             "description": "Prepend a view or an array of views to a given view container.",
             "access": "protected",
             "tagname": "",
@@ -380,7 +380,7 @@
         },
         {
             "file": "lib/backbone.viewmaster.js",
-            "line": 365,
+            "line": 368,
             "description": "Get views for given container",
             "access": "protected",
             "tagname": "",
@@ -401,7 +401,7 @@
         },
         {
             "file": "lib/backbone.viewmaster.js",
-            "line": 377,
+            "line": 380,
             "description": "Detaches view from its parent and DOM.",
             "itemtype": "method",
             "name": "detach",
@@ -413,7 +413,7 @@
         },
         {
             "file": "lib/backbone.viewmaster.js",
-            "line": 390,
+            "line": 393,
             "description": "Discard this view and all its children for good. Clears all events bound\nfor the view. Use `detach` instead if you need to use the view again\nsome time later.",
             "itemtype": "method",
             "name": "remove",
