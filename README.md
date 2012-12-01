@@ -40,7 +40,7 @@ them.
 extending your custom views from it. Lets define a layout for our app with some
 container elements for our nested views.
 
-```html
+```
 <script type="template" id="layout">
 <h1><%= name %> TODOs</h1>
 <div class="addview-container"></div>
@@ -87,7 +87,7 @@ event callbacks are automatically unbound when the view is discarded.
 
 Now we create a nested view for the `addview-container`.
 
-```html
+```
 <script type="template" id="addview">
 <input type="text">
 <button>Add</button>
@@ -198,7 +198,7 @@ removes automatically all the Backbone and DOM event callbacks. If the view is
 a parent to other views it will call remove on them also.
 
 
-```html
+```
 <script type="template" id="item">
 <span class="item"><%= text %></span></button>x</button>
 </script>
