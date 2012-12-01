@@ -108,7 +108,7 @@ var AddView = Backbone.ViewMaster.extend({
   addTodo: function(e){
     e.preventDefault();
     this.collection.add(new Backbone.Model({
-      action: this.$("input").text()
+      text: this.$("input").text()
     });
   }
 
@@ -197,7 +197,38 @@ Any view, parent or child, can be discarded anytime with the [remove][] method.
 It removes automatically all the Backbone and DOM event callbacks. If the view
 is a parent to other views it will call remove on them also.
 
-TODO: TodoItem example with remove
+
+```html
+<script type="template" id="item">
+<span class="item"><%= text %></span></button>x</button>
+</script>
+```
+
+```javascript
+var TodoItem = Backbone.ViewMaster.extend({
+
+  constructor: function(){
+    Backbone.ViewMaster.prorotype.constructor.apply(this, arguments);
+    this.bindTo(this.model, "change", this.render);
+  },
+
+  template: function(context){
+    return _.template($("#item").html(), context);
+  }
+
+  events: {
+    "click button": "remove"
+  },
+
+  remove: function(){
+    this.model.destroy();
+    this.remove();
+  }
+
+});
+```
+
+
 
 Views can be also removed by replacing them with [setView][]. ViewMaster
 automatically figures out which views was left out and calls [remove][] on them
