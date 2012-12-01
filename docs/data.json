@@ -231,7 +231,32 @@
         },
         {
             "file": "lib/backbone.viewmaster.js",
-            "line": 246,
+            "line": 247,
+            "description": "Same as original Backbone trigger, but the events are bubbled up to the\nparent views unless object with `parent: false` or `parent: null` is\npassed with the first event object.",
+            "itemtype": "method",
+            "name": "trigger",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "Event name",
+                    "type": "String"
+                },
+                {
+                    "name": "object*",
+                    "description": "Zero or more objects to be passed along with\nthe event",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "this",
+                "type": "Object"
+            },
+            "class": "Backbone.ViewMaster"
+        },
+        {
+            "file": "lib/backbone.viewmaster.js",
+            "line": 260,
             "description": "Iterate each child view.",
             "itemtype": "method",
             "name": "eachView",
@@ -262,7 +287,7 @@
         },
         {
             "file": "lib/backbone.viewmaster.js",
-            "line": 272,
+            "line": 286,
             "description": "Set a view or an array of views to a given view container.\n\nIf previous set of views is replaced by a new set — the views not\npresent in the new set will be discarded with `remove` on the next\n`renderViews` call unless detached with `detach` method.",
             "access": "protected",
             "tagname": "",
@@ -284,7 +309,7 @@
         },
         {
             "file": "lib/backbone.viewmaster.js",
-            "line": 299,
+            "line": 313,
             "description": "Insert view or array of views to specific index in the view array.",
             "access": "protected",
             "tagname": "",
@@ -311,7 +336,7 @@
         },
         {
             "file": "lib/backbone.viewmaster.js",
-            "line": 319,
+            "line": 333,
             "description": "Append a view or an array of views to a given view container.",
             "access": "protected",
             "tagname": "",
@@ -333,7 +358,7 @@
         },
         {
             "file": "lib/backbone.viewmaster.js",
-            "line": 335,
+            "line": 349,
             "description": "Prepend a view or an array of views to a given view container.",
             "access": "protected",
             "tagname": "",
@@ -355,7 +380,7 @@
         },
         {
             "file": "lib/backbone.viewmaster.js",
-            "line": 351,
+            "line": 365,
             "description": "Get views for given container",
             "access": "protected",
             "tagname": "",
@@ -376,7 +401,7 @@
         },
         {
             "file": "lib/backbone.viewmaster.js",
-            "line": 363,
+            "line": 377,
             "description": "Detaches view from its parent and DOM.",
             "itemtype": "method",
             "name": "detach",
@@ -388,7 +413,7 @@
         },
         {
             "file": "lib/backbone.viewmaster.js",
-            "line": 376,
+            "line": 390,
             "description": "Discard this view and all its children for good. Clears all events bound\nfor the view. Use `detach` instead if you need to use the view again\nsome time later.",
             "itemtype": "method",
             "name": "remove",

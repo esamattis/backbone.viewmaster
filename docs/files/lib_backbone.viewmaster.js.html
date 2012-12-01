@@ -321,15 +321,29 @@
           view._removeParent();
         }
 
+        &#x2F;&#x2F; Bind bubbling
         if (!view._bubble) {
           view._bubble = view.bindTo(view, &quot;all&quot;, function(eventName, arg) {
-            self.trigger(eventName, view, arg);
+            if (!arg || typeof(arg.parent) === &quot;undefined&quot; || arg.parent) self.trigger(eventName, arg);
           }, view);
         }
 
         view._parent = self;
       });
     },
+
+    &#x2F;**
+     * Same as original Backbone trigger, but the events are bubbled up to the
+     * parent views unless object with &#x60;parent: false&#x60; or &#x60;parent: null&#x60; is
+     * passed with the first event object.
+     *
+     * @method trigger
+     * @param {String} event Event name
+     * @param {Object} [object*] Zero or more objects to be passed along with
+     * the event
+     * @return {Object} this
+     **&#x2F;
+    &#x2F;&#x2F; trigger: function() { },
 
     &#x2F;**
      * Iterate each child view.
