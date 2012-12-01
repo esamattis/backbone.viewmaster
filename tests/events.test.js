@@ -149,6 +149,36 @@ describe("Events", function() {
       child.trigger("test", 1, 2);
     });
 
+    it("multiple levels", function(done){
+      var child = new Backbone.ViewMaster();
+      child.template = function() {
+        return "<p>child</p>";
+      };
+
+      var parent = new Backbone.ViewMaster();
+      parent.template = function() {
+        return "<div class=container ></div>";
+      };
+
+      var grandparent = new Backbone.ViewMaster();
+      grandparent.template = function() {
+        return "<div class=container ></div>";
+      };
+
+      parent.setView(".container", child);
+      grandparent.setView(".container", parent);
+
+      grandparent.render();
+
+      grandparent.on("test", function(arg1, arg2) {
+        expect(arg1).to.eq(1);
+        expect(arg2).to.eq(2);
+        done();
+      });
+
+      child.trigger("test", 1, 2);
+    });
+
     describe("options", function() {
       function bubbleEnv(){
         var child = new Backbone.ViewMaster();
