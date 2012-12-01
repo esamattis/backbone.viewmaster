@@ -284,7 +284,7 @@ pluging stuff:
 ```javascript
 render: function(){
   Backbone.ViewMaster.prototype.render.apply(this, arguments);
-  this.$("element").jqueryPluging();
+  this.$("element").jqueryPlugin();
 }
 ```
 
