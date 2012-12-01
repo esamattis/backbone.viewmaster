@@ -125,27 +125,65 @@ describe("Events", function() {
       expect(spy).to.have.been.called.once;
     });
 
-    it("passing `parent: false` prevents bubbling", function(){
-      var child = new Backbone.ViewMaster();
-      child.template = function() {
-        return "<p>child</p>";
-      };
 
-      var parent = new Backbone.ViewMaster();
-      parent.template = function() {
-        return "<div class=container ></div>";
-      };
+    describe("options", function() {
+      function bubbleEnv(){
+        var child = new Backbone.ViewMaster();
+        child.template = function() {
+          return "<p>child</p>";
+        };
 
-      parent.setView(".container", child);
+        var parent = new Backbone.ViewMaster();
+        parent.template = function() {
+          return "<div class=container ></div>";
+        };
 
-      parent.render();
+        parent.setView(".container", child);
 
-      var spy = chai.spy();
-      parent.on("test", spy);
+        parent.render();
 
-      child.trigger("test", { parent: false });
-      expect(spy).to.not.have.been.called.once;
+        var spy = chai.spy();
+        parent.on("test", spy);
+
+        return {
+          parent: parent,
+          child: child,
+          spy: spy
+        };
+      }
+
+      it("`{parent: false}` prevents bubbling", function(){
+        var env = bubbleEnv();
+        env.child.trigger("test", { parent: false });
+        expect(env.spy).to.not.have.been.called.once;
+      });
+
+      it("`{parent: null}` prevents bubbling", function(){
+        var env = bubbleEnv();
+        env.child.trigger("test", { parent: null });
+        expect(env.spy).to.not.have.been.called.once;
+      });
+
+      it("`{parent: true}` does not prevent bubbling", function(){
+        var env = bubbleEnv();
+        env.child.trigger("test", { parent: true });
+        expect(env.spy).to.have.been.called.once;
+      });
+
+      it("`{parent: undefined}` does not prevent bubbling", function(){
+        var env = bubbleEnv();
+        env.child.trigger("test", { parent: undefined });
+        expect(env.spy).to.have.been.called.once;
+      });
+
+      it("`{}` does not prevent bubbling", function(){
+        var env = bubbleEnv();
+        env.child.trigger("test", {});
+        expect(env.spy).to.have.been.called.once;
+      });
+
     });
+
 
     it("dont break dom bubbling", function(){
       var child = new Backbone.ViewMaster();
