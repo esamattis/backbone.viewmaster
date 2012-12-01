@@ -42,7 +42,7 @@ container elements for our nested views.
 
 ```
 <script type="template" id="layout">
-  <h1><%= name %> TODOs</h1>
+  <h1><%= name %>'s TODOs</h1>
   <div class="addview-container"></div>
   <ul class="todo-container"></ul>
 </script>
@@ -179,6 +179,7 @@ on the parent view to make them visible.
 constructor: function(){
   ... snip ...
   this.bindTo(this.collection, "add", this.addItem);
+  ... snip ...
 },
 
 addItem: function(model){
