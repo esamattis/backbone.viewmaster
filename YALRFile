@@ -1,0 +1,9 @@
+// https://github.com/epeli/yalr
+module.exports = {
+  path: [
+    "lib/",
+    "tests/",
+    "docs/",
+  ],
+  debounce: 500
+};
