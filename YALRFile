@@ -4,6 +4,7 @@ module.exports = {
     "lib/",
     "tests/",
     "docs/",
+    "examples/",
   ],
   debounce: 500
 };
