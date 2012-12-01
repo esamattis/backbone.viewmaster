@@ -42,9 +42,9 @@ container elements for our nested views.
 
 ```
 <script type="template" id="layout">
-<h1><%= name %> TODOs</h1>
-<div class="addview-container"></div>
-<ul class="todo-container"></ul>
+  <h1><%= name %> TODOs</h1>
+  <div class="addview-container"></div>
+  <ul class="todo-container"></ul>
 </script>
 ```
 
@@ -89,8 +89,8 @@ Now we create a nested view for the `addview-container`.
 
 ```
 <script type="template" id="addview">
-<input type="text">
-<button>Add</button>
+  <input type="text">
+  <button>Add</button>
 </script>
 ```
 
@@ -268,6 +268,25 @@ view.trigger("refresh");
 view.trigger("myevent", { parent: false });
 ```
 
+## Conclusion
+
+That's about it. Check out the full working todo app in the examples
+[directory][todo-example] or play with the live app [here][todo-live].
+
+
+# FAQ
+
+## How do I use jQuery plugins?
+
+Just override the render method and call the super method:
+
+```javascript
+render: function(){
+  Backbone.ViewMaster.prototype.render.apply(this, arguments);
+  this.$("element").jqueryPluging();
+}
+```
+
 [Backbone.js]: http://backbonejs.org/
 [dev]: https://github.com/epeli/backbone.viewmaster/raw/master/lib/backbone.viewmaster.js
 [production]: https://github.com/epeli/backbone.viewmaster/raw/master/lib/backbone.viewmaster.min.js
@@ -288,3 +307,5 @@ view.trigger("myevent", { parent: false });
 [remove]: http://epeli.github.com/backbone.viewmaster/docs/classes/Backbone.ViewMaster.html#method_remove
 
 
+[todo-example]: https://github.com/epeli/backbone.viewmaster/tree/master/examples/todos
+[todo-live]: http://epeli.github.com/backbone.viewmaster/examples/todos
