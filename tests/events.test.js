@@ -125,6 +125,29 @@ describe("Events", function() {
       expect(spy).to.have.been.called.once;
     });
 
+    it("passes options to parent", function(done){
+      var child = new Backbone.ViewMaster();
+      child.template = function() {
+        return "<p>child</p>";
+      };
+
+      var parent = new Backbone.ViewMaster();
+      parent.template = function() {
+        return "<div class=container ></div>";
+      };
+
+      parent.setView(".container", child);
+
+      parent.render();
+
+      parent.on("test", function(arg1, arg2) {
+        expect(arg1).to.eq(1);
+        expect(arg2).to.eq(2);
+        done();
+      });
+
+      child.trigger("test", 1, 2);
+    });
 
     describe("options", function() {
       function bubbleEnv(){
