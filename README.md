@@ -289,6 +289,16 @@ render: function(){
 }
 ```
 
+## Doesn't Backbone.View#dispose() unbind events already on remove?
+
+Some. It only works with events bound to `this.model` or `this.collection` and
+it also requires that the view is passed as the context object to the `on`
+method. To make sure that all events are always unbound on remove I recommend
+that you use always `view.bindTo(...)` with Backbone.ViewMaster.
+
+*DISCLAIMER: `view.dispose()` is a feature of unreleased Backbone.js and it
+might change before actual release.*
+
 # License
 
 The MIT License. See LICENSE.
