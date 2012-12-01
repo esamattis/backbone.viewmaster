@@ -289,6 +289,10 @@ render: function(){
 }
 ```
 
+# License
+
+The MIT License. See LICENSE.
+
 [Backbone.js]: http://backbonejs.org/
 [dev]: https://github.com/epeli/backbone.viewmaster/raw/master/lib/backbone.viewmaster.js
 [production]: https://github.com/epeli/backbone.viewmaster/raw/master/lib/backbone.viewmaster.min.js
