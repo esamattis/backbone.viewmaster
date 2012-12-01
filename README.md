@@ -95,7 +95,7 @@ Now we create a nested view for the `addview-container`.
 ```
 
 ```javascript
-var AddView = Backbone.ViewMaster.extend({
+var AddTodoItem = Backbone.ViewMaster.extend({
 
   template: function(context){
     return _.template($("#addview").html(), context);
@@ -130,7 +130,7 @@ nest it.  We do that in its constructor using the [setView][] method.
 constructor: function(){
   Backbone.ViewMaster.prototype.constructor.apply(this, arguments);
   this.bindTo(this.model, "change", this.render);
-  this.setView(".addview-container", new AddView({
+  this.setView(".addview-container", new AddTodoItem({
     collection: this.collection
   }));
 },
