@@ -278,7 +278,8 @@ That's about it. Check out the full working todo app in the examples
 
 ## How do I use jQuery plugins?
 
-Just override the render method and call the super method:
+Just override the render method, call the super method and then do your jQuery
+pluging stuff:
 
 ```javascript
 render: function(){
