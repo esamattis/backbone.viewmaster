@@ -304,8 +304,8 @@ might change before actual release.*
 The MIT License. See LICENSE.
 
 [Backbone.js]: http://backbonejs.org/
-[dev]: https://github.com/epeli/backbone.viewmaster/raw/master/lib/backbone.viewmaster.js
-[production]: https://github.com/epeli/backbone.viewmaster/raw/master/lib/backbone.viewmaster.min.js
+[dev]: http://epeli.github.com/backbone.viewmaster/backbone.viewmaster.js
+[production]: http://epeli.github.com/backbone.viewmaster/backbone.viewmaster.min.js
 [api]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html
 
 [setView]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_setView
