@@ -112,7 +112,7 @@ handle event callback unbinding and make sure that it won't collide with the
 -->
 
 Since we wanted this to be the view for the `addview-container` and because
-it's an element of `TodoLayout` — it is the responsibility of `TodoLayout` to
+it's an element of `TodoLayout` it is the responsibility of `TodoLayout` to
 nest it.  We do that in its constructor using the [setView][] method.
 
 ```javascript
