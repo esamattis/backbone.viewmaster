@@ -50,7 +50,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          "./public/": ["./lib/*.js"]
+          "./public/": ["./lib/*.js", "./examples/**"]
         }
       }
     },
