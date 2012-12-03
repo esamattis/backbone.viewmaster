@@ -29,6 +29,11 @@ describe("ViewMaster", function(){
     expect(Backbone.ViewMaster).to.be.ok;
   });
 
+  it("returns null for unknown view container", function() {
+    var view = new Backbone.ViewMaster();
+    expect(view.getViews("something")).to.eq(undefined);
+  });
+
   it("Adds model to instance", function(){
     var model = new Backbone.Model();
     var view = new Backbone.ViewMaster({
