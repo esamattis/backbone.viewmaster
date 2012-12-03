@@ -1,11 +1,14 @@
 {
   "name": "Backbone.ViewMaster",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "url": "https://github.com/epeli/backbone.viewmaster",
   "description": "Few tested opinions on how to handle deeply nested views in Backbone.js focusing on encapsulation and reusability.",
   "dependencies": {
     "grunt": "",
     "grunt-exec": "",
-    "grunt-contrib-yuidoc": ""
+    "grunt-contrib-yuidoc": "",
+    "grunt-contrib-copy": "",
+    "underscore": "",
+    "grunt-templater": ""
   }
 }
