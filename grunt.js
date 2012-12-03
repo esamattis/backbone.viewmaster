@@ -41,8 +41,11 @@ module.exports = function(grunt) {
 
     copy: {
       dist: {
+        options: {
+          basePath: "public_source"
+        },
         files: {
-          "./public/": ["./lib/*.js", "./public_source/vendor/**"]
+          "./public/": ["./lib/*.js", "./public_source/**"]
         }
       }
     },
