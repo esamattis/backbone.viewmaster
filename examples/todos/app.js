@@ -55,11 +55,11 @@ var TodoLayout = Backbone.ViewMaster.extend({
 
   constructor: function(){
     Backbone.ViewMaster.prototype.constructor.apply(this, arguments);
-    this.bindTo(this.model, "change", this.render);
-    this.bindTo(this.collection, "add", this.addItem);
     this.setView(".addview-container", new AddTodoItem({
       collection: this.collection
     }));
+    this.bindTo(this.model, "change", this.render);
+    this.bindTo(this.collection, "add", this.addItem);
   },
 
   template: function(context){
