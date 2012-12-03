@@ -17,6 +17,7 @@ The main idea behind Backbone.ViewMaster is that views should be small and
 independent building blocks of application UI. Read the tutorial to see how
 it's encouraged.
 
+Created by [Esa-Matti Suuronen][esa] [@EsaMatti][].
 
 # Download
 
@@ -304,6 +305,8 @@ might change before actual release.*
 The MIT License. See LICENSE.
 
 [Backbone.js]: http://backbonejs.org/
+[@EsaMatti]: https://twitter.com/EsaMatti
+[esa]: http://esa-matti.suuronen.org/
 [dev]: http://epeli.github.com/backbone.viewmaster/backbone.viewmaster.js
 [production]: http://epeli.github.com/backbone.viewmaster/backbone.viewmaster.min.js
 [api]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html
