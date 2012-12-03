@@ -306,21 +306,21 @@ The MIT License. See LICENSE.
 [Backbone.js]: http://backbonejs.org/
 [dev]: https://github.com/epeli/backbone.viewmaster/raw/master/lib/backbone.viewmaster.js
 [production]: https://github.com/epeli/backbone.viewmaster/raw/master/lib/backbone.viewmaster.min.js
-[api]: http://epeli.github.com/backbone.viewmaster/docs/classes/Backbone.ViewMaster.html
+[api]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html
 
-[setView]: http://epeli.github.com/backbone.viewmaster/docs/classes/Backbone.ViewMaster.html#method_setView
-[appendView]: http://epeli.github.com/backbone.viewmaster/docs/classes/Backbone.ViewMaster.html#method_appendView
-[prependView]: http://epeli.github.com/backbone.viewmaster/docs/classes/Backbone.ViewMaster.html#method_prependView
-[insertView]: http://epeli.github.com/backbone.viewmaster/docs/classes/Backbone.ViewMaster.html#method_insertView
-[bindTo]: http://epeli.github.com/backbone.viewmaster/docs/classes/Backbone.ViewMaster.html#method_bindTo
-[template]: http://epeli.github.com/backbone.viewmaster/docs/classes/Backbone.ViewMaster.html#method_template
-[render]: http://epeli.github.com/backbone.viewmaster/docs/classes/Backbone.ViewMaster.html#method_render
-[renderViews]: http://epeli.github.com/backbone.viewmaster/docs/classes/Backbone.ViewMaster.html#method_renderViews
-[context]: http://epeli.github.com/backbone.viewmaster/docs/classes/Backbone.ViewMaster.html#method_context
-[rendered]: http://epeli.github.com/backbone.viewmaster/docs/classes/Backbone.ViewMaster.html#property_rendered
-[getViews]: http://epeli.github.com/backbone.viewmaster/docs/classes/Backbone.ViewMaster.html#method_getViews
-[detach]: http://epeli.github.com/backbone.viewmaster/docs/classes/Backbone.ViewMaster.html#method_detach
-[remove]: http://epeli.github.com/backbone.viewmaster/docs/classes/Backbone.ViewMaster.html#method_remove
+[setView]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_setView
+[appendView]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_appendView
+[prependView]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_prependView
+[insertView]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_insertView
+[bindTo]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_bindTo
+[template]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_template
+[render]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_render
+[renderViews]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_renderViews
+[context]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_context
+[rendered]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#property_rendered
+[getViews]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_getViews
+[detach]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_detach
+[remove]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_remove
 
 
 [todo-example]: https://github.com/epeli/backbone.viewmaster/tree/master/examples/todos
