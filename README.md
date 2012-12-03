@@ -67,22 +67,6 @@ model.  You can customize this behavior by overriding the [context][] method.
 There is no need to define the [render][] method. ViewMaster already defines it
 and uses your template function to populate the `this.el` element.
 
-## Event management
-
-Next we bind to the model object's change events to reflect the model state. We
-do that in the constructor of the `TodoLayout`.
-
-```javascript
-// TodoLayout
-constructor: function(){
-  Backbone.ViewMaster.prototype.constructor.apply(this, arguments);
-  this.bindTo(this.model, "change", this.render);
-},
-```
-
-We use the [bindTo][] method of the MasterView instead of using the
-`this.model.on(...)` method of the model to make sure that all the view related
-event callbacks are automatically unbound when the view is discarded.
 
 ## Nesting
 
@@ -135,7 +119,6 @@ nest it.  We do that in its constructor using the [setView][] method.
 // TodoLayout
 constructor: function(){
   Backbone.ViewMaster.prototype.constructor.apply(this, arguments);
-  this.bindTo(this.model, "change", this.render);
   this.setView(".addview-container", new AddTodoItem({
     collection: this.collection
   }));
@@ -150,6 +133,22 @@ argument and because the CSS selectors are very implementation specific details
 of your view. If you need to set the view from the outside create a setter
 method for it to keep your views encapsulated and maintainable.
 
+## Event management
+
+Event management is important part of view management in Backbone.js.
+Unfortunately the event callbacks start easily leaking memory if you don't
+remember to unbind them when you are done with the views. ViewMaster helps with
+this by introducing a [bindTo][] method which is bound to the view context.  It
+will unbind all event callbacks automatically when you discard the view with
+[remove][].
+
+```javascript
+// TodoLayout
+constructor: function(){
+  ... snip ...
+  this.bindTo(this.model, "change", this.render);
+},
+```
 
 ## Rendering
 
@@ -177,15 +176,17 @@ itself. The parent view only helps child views to get started.
 
 ### Child views
 
-When new child views are added you need to call [render][] or [renderViews][]
-on the parent view to make them visible.
+
+We add new TodoItems to our layout whenever a todo model is added to the
+collection. When a new child view is added you need to call [render][] or
+[renderViews][] on the parent view to make them visible.
 
 ```javascript
 // TodoLayout
 constructor: function(){
   ... snip ...
+  this.bindTo(this.model, "change", this.render);
   this.bindTo(this.collection, "add", this.addItem);
-  ... snip ...
 },
 
 addItem: function(model){
@@ -295,14 +296,14 @@ render: function(){
 }
 ```
 
-## Doesn't Backbone.View#dispose() unbind events already on remove?
+## Doesn't `Backbone.View#dispose()` unbind events already on remove?
 
 Some. It only works with events bound to `this.model` or `this.collection` and
 it also requires that the view is passed as the context object to the `on`
 method. To make sure that all events are always unbound on remove I recommend
 that you use always `view.bindTo(...)` with Backbone.ViewMaster.
 
-*DISCLAIMER: `view.dispose()` is a feature of unreleased Backbone.js and it
+*DISCLAIMER: `dispose()` is a feature of unreleased Backbone.js version and it
 might change before actual release.*
 
 # License
