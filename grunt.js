@@ -27,6 +27,12 @@ module.exports = function(grunt) {
       }
     },
 
+    exec: {
+      publish: {
+        command: "cd public && git init && git add . && git commit -m publish && git push -f  git@github.com:epeli/backbone.viewmaster.git master:gh-pages"
+      }
+    },
+
     template: {
       doc: {
         src: 'public_source/template.html',
