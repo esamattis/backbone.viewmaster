@@ -21,8 +21,8 @@ Created by [Esa-Matti Suuronen][esa] [@EsaMatti][].
 
 # Download
 
-  - [backbone.viewmaster.js][dev] **5.9K**
-  - [backbone.viewmaster.min.js][production] **2.8K**
+  - [backbone.viewmaster.js][dev] **12K** with comments
+  - [backbone.viewmaster.min.js][production] **2.7K** minified
 
 # API Docs
 
