@@ -313,8 +313,8 @@ The MIT License. See LICENSE.
 [Backbone.js]: http://backbonejs.org/
 [@EsaMatti]: https://twitter.com/EsaMatti
 [esa]: http://esa-matti.suuronen.org/
-[dev]: http://epeli.github.com/backbone.viewmaster/backbone.viewmaster.js
-[production]: http://epeli.github.com/backbone.viewmaster/backbone.viewmaster.min.js
+[dev]: http://epeli.github.com/backbone.viewmaster/lib/backbone.viewmaster.js
+[production]: http://epeli.github.com/backbone.viewmaster/lib/backbone.viewmaster.min.js
 [api]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html
 
 [setView]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_setView
