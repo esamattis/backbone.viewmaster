@@ -59,13 +59,25 @@ describe("ViewMaster", function(){
 
 
   it("does not render child views twice", function(){
-    var m = new Master();
-    var p = new Puppet();
-    var spy = p.render = chai.spy(p.render);
+    var parent = new Backbone.ViewMaster();
+    parent.template = function() {
+      return "<div class=container ></div>";
+    };
 
-    m.setView(".container", p);
-    m.render();
-    m.render();
+    var child = new Backbone.ViewMaster();
+    child.$el.detach = chai.spy(child.$el.detach);
+    child.render = chai.spy(child.render);
+    child.template = function() {
+      return "<p>child</p>";
+    };
+
+    parent.setView(".container", child);
+
+    var spy = child.render = chai.spy(child.render);
+
+    parent.setView(".container", child);
+    parent.render();
+    parent.render();
     expect(spy).to.have.been.called.once;
   });
 
