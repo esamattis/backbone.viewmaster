@@ -2,7 +2,7 @@
 
 var fs = require("fs");
 var version = fs.readFileSync("./lib/backbone.viewmaster.js")
-  .toString().match(/VERSION.*\"([0-9\.]+)\"/)[1];
+  .toString().match(/VERSION.*\"(.+)\"/)[1];
 
 module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-yuidoc');
