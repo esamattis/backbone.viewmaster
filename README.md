@@ -306,6 +306,18 @@ that you use always `view.bindTo(...)` with Backbone.ViewMaster.
 *DISCLAIMER: `dispose()` is a feature of unreleased Backbone.js version and it
 might change before actual release.*
 
+# Changelog
+
+## 1.1.0pre
+
+  - Rename renderViews() to refreshViews() and avoid unneeded detaches and
+    appends.
+
+## 1.0.0
+
+  - First release
+
+
 # License
 
 The MIT License. See LICENSE.
