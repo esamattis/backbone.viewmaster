@@ -72,12 +72,10 @@ describe("ViewMaster", function(){
 
     parent.setView(".container", child);
 
-    var spy = child.render = chai.spy(child.render);
-
     parent.setView(".container", child);
     parent.render();
     parent.render();
-    expect(spy).to.have.been.called.once;
+    expect(child.render).to.have.been.called.once;
   });
 
 
