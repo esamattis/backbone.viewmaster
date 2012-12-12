@@ -71,11 +71,12 @@ describe("ViewMaster", function(){
     };
 
     parent.setView(".container", child);
-
     parent.setView(".container", child);
+
     parent.render();
     parent.render();
     expect(child.render).to.have.been.called.once;
+    expect(parent.$el).to.have.text("child");
   });
 
 
