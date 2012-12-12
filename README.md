@@ -179,7 +179,7 @@ itself. The parent view only helps child views to get started.
 
 We add new TodoItems to our layout whenever a todo model is added to the
 collection. When a new child view is added you need to call [render][] or
-[renderViews][] on the parent view to make them visible.
+[refreshViews][] on the parent view to make them visible.
 
 ```javascript
 // TodoLayout
@@ -193,7 +193,7 @@ addItem: function(model){
   this.appendView(".todo-container", new TodoItem({
     model: model
   }));
-  this.renderViews();
+  this.refreshViews();
 }
 ```
 
@@ -201,7 +201,7 @@ Here we use the [appendView][] method to append a view to `.todo-container`
 when a model is added to the collection. Every view container can contain
 multiple views. Just start adding more views to it if you need lists.
 
-The difference between [render][] and [renderViews][] is that the latter one
+The difference between [render][] and [refreshViews][] is that the latter one
 renders only the new child views and adds them to the parent DOM tree leaving
 the parent untouched otherwise while the former renders the parent itself and
 the children.
@@ -253,7 +253,7 @@ var TodoItem = Backbone.ViewMaster.extend({
 
 Views can be also removed by replacing them with [setView][]. ViewMaster
 automatically figures out which views was left out and calls [remove][] on them
-on the next [renderViews][] call.
+on the next [refreshViews][] call.
 
 If you need to use the view and its children again some time later use the
 [detach][] method. It removes the view from in its parent view, but leaves the
@@ -324,7 +324,7 @@ The MIT License. See LICENSE.
 [bindTo]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_bindTo
 [template]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_template
 [render]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_render
-[renderViews]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_renderViews
+[refreshViews]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_refreshViews
 [context]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_context
 [rendered]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#property_rendered
 [getViews]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_getViews
