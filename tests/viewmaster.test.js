@@ -65,7 +65,6 @@ describe("ViewMaster", function(){
     };
 
     var child = new Backbone.ViewMaster();
-    child.$el.detach = chai.spy(child.$el.detach);
     child.render = chai.spy(child.render);
     child.template = function() {
       return "<p>child</p>";
