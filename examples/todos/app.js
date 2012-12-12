@@ -70,7 +70,7 @@ var TodoLayout = Backbone.ViewMaster.extend({
     this.appendView(".todo-container", new TodoItem({
       model: model
     }));
-    this.renderViews();
+    this.refreshViews();
   }
 
 });
