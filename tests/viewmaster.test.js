@@ -79,6 +79,33 @@ describe("ViewMaster", function(){
   });
 
 
+  it("refreshViews() does not detach child views if not needed", function() {
+    var parent = new Backbone.ViewMaster();
+    parent.template = function() {
+      return "<div class=container ></div>";
+    };
+
+    var child = new Backbone.ViewMaster();
+    child.render = chai.spy(child.render);
+    child.template = function() {
+      return "<p>child</p>";
+    };
+
+    parent.render();
+
+    child.$el.detach = chai.spy(child.$el.detach);
+    parent.setView(".container", child);
+
+    // Detach once
+    parent.refreshViews();
+
+    // Do nothing because nothing has changed
+    parent.refreshViews();
+
+    expect(child.$el.detach).to.have.been.called.once;
+  });
+
+
   it("only new child views are rendered on ViewMaster#render()", function(){
     var m = new Master();
     var first = new Puppet({ name: "first" });
@@ -90,7 +117,7 @@ describe("ViewMaster", function(){
     var second = new Puppet({ name: "second" });
     second.render = chai.spy(second.render);
     m.appendView(".container", second);
-    m.renderViews();
+    m.refreshViews();
 
     expect(first.render).to.have.been.called.once;
     expect(second.render).to.have.been.called.once;
@@ -139,7 +166,7 @@ describe("ViewMaster", function(){
 
     var middle = new Puppet({ name: "middle" });
     parent.insertView(".container", 1, middle);
-    parent.renderViews();
+    parent.refreshViews();
 
     expect(parent.$el).to.have(middle.$el);
     expect(parent.getViews(".container")).to.deep.eq([first, middle, last]);
@@ -152,7 +179,7 @@ describe("ViewMaster", function(){
     m.render();
 
     m.prependView(".container", new Puppet({ name: "newview" }));
-    m.renderViews();
+    m.refreshViews();
     var childs = m.$(".child");
     expect(childs[1].innerHTML).to.eq("puppet");
     expect(childs[0].innerHTML).to.eq("newview");
@@ -167,14 +194,14 @@ describe("ViewMaster", function(){
     m.render();
 
     m.setView(".container", [second, first]);
-    m.renderViews();
+    m.refreshViews();
 
     var childs = m.$(".child");
     expect(childs[0].innerHTML).to.eq("second");
     expect(childs[1].innerHTML).to.eq("first");
   });
 
-  it("setView&renderViews() removes old views", function(){
+  it("setView&refreshViews() removes old views", function(){
     var m = new Master();
     var views = [
       new Puppet({ name: "first" }),
@@ -185,7 +212,7 @@ describe("ViewMaster", function(){
     m.render();
 
     m.setView(".container", views[1]);
-    m.renderViews();
+    m.refreshViews();
 
     expect(m.$el).to.not.have(views[0].$el);
     expect(m.$el).to.have(views[1].$el);
