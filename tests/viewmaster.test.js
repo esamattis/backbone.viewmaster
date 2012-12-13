@@ -106,6 +106,38 @@ describe("ViewMaster", function(){
     expect(child.$el.detach).to.have.been.called.once;
   });
 
+  it("new children do not cause previous to be rendered or detached again", function(){
+
+    var parent = new Backbone.ViewMaster();
+    parent.template = function() {
+      return "<div class=previousContainter ></div><div class=newContainer ></div>";
+    };
+
+    var previousChild = new Backbone.ViewMaster();
+    previousChild.render = chai.spy(previousChild.render);
+    previousChild.$el.detach = chai.spy(previousChild.$el.detach);
+    previousChild.template = function() {
+      return "<p>previousChild</p>";
+    };
+
+
+    parent.setView(".previousContainter", previousChild);
+    parent.render();
+
+    var newChild = new Backbone.ViewMaster();
+    newChild.render = chai.spy(newChild.render);
+    newChild.template = function() {
+      return "<p>newChild</p>";
+    };
+
+    parent.setView(".newContainer", newChild);
+    parent.refreshViews();
+
+    expect(previousChild.render, "only one render call").to.have.been.called.once;
+    expect(previousChild.$el.detach, "only one detach call").to.have.been.called.once;
+
+  });
+
 
   it("only new child views are rendered on ViewMaster#render()", function(){
     var m = new Master();
