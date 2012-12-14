@@ -2,7 +2,7 @@
 /*jshint expr:true, browser:true */
 
 
-describe("Events", function() {
+describe("Event", function() {
 
   describe("binding", function() {
 
@@ -100,7 +100,7 @@ describe("Events", function() {
 
 
 
-  describe("bubble", function() {
+  describe("bubbling", function() {
 
     it("from children to parent", function(){
       var child = new Backbone.ViewMaster();
@@ -348,6 +348,89 @@ describe("Events", function() {
 
   });
 
+  describe("broadcasting", function() {
+    var VM = Backbone.ViewMaster.extend({
+      constructor: function(opts) {
+        Backbone.ViewMaster.prototype.constructor.apply(this, arguments);
+        this.name = opts.name;
+      },
+      template: function() {
+        return [
+          "<div class=header></div>",
+          "<h1>" + this.name + "</h1>",
+          "<div class=container></div>"
+        ].join(" ");
+      }
+    });
 
+    describe("broadcasts events to all children", function(){
+      var layout = new VM({ name: "layout" });
+      var header = new VM({ name: "header" });
+      var main = new VM({ name: "main" });
+      var child = new VM({ name: "child" });
+
+      layout.setView(".header", header);
+      layout.setView(".container", main);
+      main.setView(".container", child);
+      layout.render();
+
+      var spy = chai.spy();
+      header.on("test", spy);
+      main.on("test", spy);
+      child.on("test", spy);
+
+      layout.broadcast("test");
+
+      expect(spy).to.have.been.called.exactly(3);
+    });
+
+    it("sends arguments", function(done){
+      var layout = new VM({ name: "layout" });
+      var main = new VM({ name: "main" });
+      layout.setView(".container", main);
+      layout.render();
+
+      main.on("test", function(arg1, arg2) {
+        expect(arg1).to.eq(1);
+        expect(arg2).to.eq(2);
+        done();
+      });
+
+      layout.broadcast("test", 1, 2);
+
+    });
+
+    it("events does not bubble up", function() {
+      var layout = new VM({ name: "layout" });
+      var main = new VM({ name: "main" });
+      layout.setView(".container", main);
+      layout.render();
+
+      var spy = chai.spy();
+      layout.on("test", spy);
+      main.broadcast("test");
+
+      // expect(spy).to.have.been.not_called; // TODO: does not really assert not called!!?
+      expect(spy.__spy.calls.length).to.eq(0);
+    });
+
+    it("does not interfere with other bubbling events", function() {
+      var layout = new VM({ name: "layout" });
+      var main = new VM({ name: "main" });
+      layout.setView(".container", main);
+      layout.render();
+
+      main.on("test", function() {
+        main.trigger("other");
+      });
+
+      var spy = chai.spy();
+      layout.on("other", spy);
+      layout.broadcast("test");
+
+      expect(spy).to.have.been.called.once;
+    });
+
+  });
 
 });
