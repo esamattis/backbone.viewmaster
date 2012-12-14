@@ -312,6 +312,9 @@ might change before actual release.*
 
   - Rename renderViews() to refreshViews() and avoid unneeded detaches and
     appends.
+  - Add [broadcast][] method
+  - Replace implicit event bubbling on trigger with simpler explicit [bubble][]
+    method
 
 ## 1.0.0
 
@@ -342,6 +345,8 @@ The MIT License. See LICENSE.
 [getViews]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_getViews
 [detach]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_detach
 [remove]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_remove
+[bubble]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_bubble
+[broadcast]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_broadcast
 
 
 [todo-example]: https://github.com/epeli/backbone.viewmaster/tree/master/examples/todos
