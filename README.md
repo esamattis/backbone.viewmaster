@@ -301,8 +301,9 @@ var TodoItemList = Backbone.ViewMaster.extend({
 });
 ```
 
-Now in the layout we just add a Search view which emits 'search' events, listen
-to them on the layout view and broadcast them to TodoItemList view.
+Now in the layout we just add a Search view which emits 'search' events as user
+types characters, listen to them on the layout view and broadcast them to
+TodoItemList view.
 
 ```javascript
 // TodoLayout
