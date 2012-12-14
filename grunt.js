@@ -69,7 +69,7 @@ module.exports = function(grunt) {
     },
 
     watch: {
-      files: "lib/*",
+      files: ["lib/*", "README.md"],
       tasks: "default"
     }
 
