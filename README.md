@@ -1,4 +1,6 @@
+
 <img src="https://github.com/epeli/backbone.viewmaster/raw/master/public_source/yuidoc-theme/assets/css/logo.png" >
+<a class="stable-documentation" href="http://epeli.github.com/backbone.viewmaster/">Latest stable release documention</a>
 
 # Backbone.ViewMaster
 
