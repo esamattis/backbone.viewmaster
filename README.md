@@ -312,8 +312,8 @@ might change before actual release.*
 
 ## 1.1.0pre
 
-  - Rename renderViews() to refreshViews() and avoid unneeded detaches and
-    appends.
+  - Rename renderViews() to refreshViews()
+  - Avoid detaches on refreshViews() unless its absolutely necessary
   - Add [broadcast][] method
   - Replace implicit event bubbling on trigger with simpler explicit [bubble][]
     method
