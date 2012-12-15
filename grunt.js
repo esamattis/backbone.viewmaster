@@ -9,6 +9,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-exec');
   grunt.loadNpmTasks('grunt-templater');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-mocha');
   var pkg = require("./package.json");
 
   grunt.initConfig({
@@ -65,6 +66,15 @@ module.exports = function(grunt) {
       dist: {
         src: ["lib/backbone.viewmaster.js"],
         dest: "lib/backbone.viewmaster.min.js"
+      }
+    },
+
+    mocha: {
+      client: {
+        src: [ "tests/index.html" ],
+        options: {
+          run: true
+        }
       }
     },
 
