@@ -184,10 +184,9 @@ of its child views. This means it will **render child views only once** unless
 should be the responsibility of the child view to know when it should render
 itself. The parent view only helps child views to get started.
 
-### Child views
+### Multiple views in single container
 
-
-We add new TodoItems to our layout whenever a todo model is added to the
+We add new TodoItem views to our layout whenever a todo model is added to the
 collection. When a new child view is added you need to call [render][] or
 [refreshViews][] on the parent view to make them visible.
 
@@ -206,9 +205,9 @@ addItem: function(model){
 }
 ```
 
-Here we use the [appendView][] method to append a view to `.todo-container`
-when a model is added to the collection. Every view container can contain
-multiple views. Just start adding more views to it if you need lists.
+Here we use the [appendView][] method to append a view to `.todo-container`.
+Every view container can contain multiple views. Just start adding more views
+to it if you need lists.
 
 The difference between [render][] and [refreshViews][] is that the latter one
 renders only the new child views and adds them to the parent DOM tree leaving
@@ -220,7 +219,6 @@ the children.
 Any view, parent or child, can be discarded with the [remove][] method. It
 removes automatically all the Backbone and DOM event callbacks. If the view is
 a parent to other views it will call remove on them also.
-
 
 ```
 <script type="template" id="item">
@@ -262,8 +260,8 @@ var TodoItem = Backbone.ViewMaster.extend({
 ```
 
 Views can be also removed by replacing them with [setView][]. ViewMaster
-automatically figures out which views was left out and calls [remove][] on them
-on the next [refreshViews][] call.
+automatically figures out which views were left out and calls [remove][] on
+them on the next [refreshViews][] call.
 
 If you need to use the view and its children again some time later use the
 [detach][] method. It detaches the view from in its parent view, but leaves the
@@ -284,8 +282,8 @@ loose dependencies between sibling views too.
 
 Lets add search capabilities to our TODO app.
 
-We'll abstract TODO-item filtering to its own view and make it handle search
-event broadcasts.
+We'll abstract TodoItem listing to its own view and make it handle search event
+broadcasts.
 
 ```javascript
 var TodoItemList = Backbone.ViewMaster.extend({
@@ -296,13 +294,15 @@ var TodoItemList = Backbone.ViewMaster.extend({
     // On load display all items
     this.setItems();
 
-    // Refresh item list when a todo is added
-    this.listenTo(this.collection, "add", function() {
-      this.setItems();
+    // Add new TodoItem view on new item model
+    this.listenTo(this.collection, "add", function(model) {
+      this.appendView("ul", new TodoItem({
+        model: model
+      }));
       this.refreshViews();
     });
 
-    // Filter out todos on 'search' broadcast events
+    // Filter out todos on 'search' event broadcasts
     this.listenTo(this, "search", function(searchString) {
       this.setItems(this.collection.filterSearch(searchString));
       this.refreshViews();
@@ -353,9 +353,9 @@ constructor: function(){
   ... snip ...
   this.todoItemList = new TodoItemList({ collection this.collection ));
   this.setView(".todo-container" this.todoItemList);
-  this.setView(".header" new Search(););
+  this.setView(".header" new Search());
 
-  // Listen on bubbled search events from both Search views
+  // Listen on bubbled search events from Search view
   this.listenTo(this, "search", function(searchString) {
     // Broadcast them to TodoItemList view
     this.todoItemList.broadcast("search", searchString);
@@ -370,7 +370,7 @@ testing simpler. Also if we wanted to add an another search box to a footer
 container we can just do that and that's it. No need to bind anything extra.
 
 ```javascript
-this.setView(".footer" new Search(););
+this.setView(".footer" new Search());
 ```
 
 Another benefit of bubbling and broadcasting is that the views can be easily
