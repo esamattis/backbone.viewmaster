@@ -23,8 +23,8 @@ Created by [Esa-Matti Suuronen][esa] [@EsaMatti][].
 
 # Download
 
-  - [backbone.viewmaster.js][dev] with comments
-  - [backbone.viewmaster.min.js][production] minified
+  - [backbone.viewmaster.js][dev] 11kb, with comments
+  - [backbone.viewmaster.min.js][production] 1kb, minified and gzipped
 
 ## Dependencies
 
