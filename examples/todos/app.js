@@ -26,6 +26,7 @@ var TodoItem = Backbone.ViewMaster.extend({
 
   constructor: function(){
     Backbone.ViewMaster.prototype.constructor.apply(this, arguments);
+    // Rerender view after edit
     this.listenTo(this.model, "change", this.render);
   },
 
