@@ -1,6 +1,14 @@
 
 <img src="https://github.com/epeli/backbone.viewmaster/raw/master/public_source/yuidoc-theme/assets/css/logo.png" >
-<a class="stable-documentation" href="http://epeli.github.com/backbone.viewmaster/">Latest stable release documention</a>
+<div class="github-only">
+
+<div>
+<a href="http://epeli.github.com/backbone.viewmaster/">Latest stable release documention</a>
+</div>
+
+[![Build Status](https://travis-ci.org/epeli/backbone.viewmaster.png?branch=master)](https://travis-ci.org/epeli/backbone.viewmaster)
+
+</div>
 
 # Backbone.ViewMaster
 
