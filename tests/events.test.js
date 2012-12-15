@@ -287,7 +287,7 @@ describe("Event", function() {
       }
     });
 
-    describe("broadcasts events to all children", function(){
+    it("broadcasts events to all children", function(){
       var layout = new VM({ name: "layout" });
       var header = new VM({ name: "header" });
       var main = new VM({ name: "main" });
