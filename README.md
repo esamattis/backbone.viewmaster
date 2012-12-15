@@ -288,35 +288,65 @@ var TodoItemList = Backbone.ViewMaster.extend({
 
   constructor: function(){
     Backbone.ViewMaster.prototype.constructor.apply(this, arguments);
+
+    // On load display all items
+    this.setItems();
+
+    // Refresh item list when a todo is added
+    this.listenTo(this.collection, "add", function() {
+      this.setItems();
+      this.refreshViews();
+    });
+
+    // Filter out todos on 'search' broadcast events
     this.listenTo(this, "search", function(searchString) {
-      this.appendView(".todo-tems", this.filterItems(searchString).map(function(model) {
-        return new TodoItem({
-          model: model
-        }));
-      }
-    }
+      this.setItems(this.collection.filterSearch(searchString));
+      this.refreshViews();
+    });
+
   },
 
-  filterItems: function(searchString) {
-    return this.collection.filter(function(model){
-      return model.get("text").indexOf(searchString) !== -1;
-    });
+  template: ... snip ...
+
+  setItems: function(items) {
+    items = items || this.collection;
+    this.setView("ul", items.map(function(model) {
+      return new TodoItem({
+        model: model
+      });
+    }));
   }
 
 });
 ```
 
-Now in the layout we just add a Search view which emits 'search' events as user
-types characters, listen to them on the layout view and broadcast them to
+Now in the layout we just add a Search view which bubbles 'search' events as
+user types characters, listen to them on the layout view and broadcast them to
 TodoItemList view.
+
+```javascript
+var Search = Backbone.ViewMaster.extend({
+  template: ... snip ...
+  events: {
+    "keyup input": function(e) {
+      // Bubble search event up to parent layout
+      this.bubble("search", $(e.target).val());
+    }
+  }
+});
+```
 
 ```javascript
 // TodoLayout
 constructor: function(){
+  ... snip ...
   this.todoItemList = new TodoItemList({ collection this.collection ));
   this.setView(".todo-container" this.todoItemList);
   this.setView(".header" new Search(););
+
+  // Listen on bubbled search events from both Search views
   this.listenTo(this, "search", function(searchString) {
+    // Broadcast them to TodoItemList view
     this.todoItemList.broadcast("search", searchString);
   }
 },
