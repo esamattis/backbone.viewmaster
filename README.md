@@ -217,7 +217,7 @@ the children.
 ## Removing views
 
 Any view, parent or child, can be discarded with the [remove][] method. It
-removes automatically all the Backbone and DOM event callbacks. If the view is
+removes automatically all the Backbone and DOM event listeners. If the view is
 a parent to other views it will call remove on them also.
 
 ```
@@ -411,6 +411,7 @@ render: function(){
     method
   - Rename `renderViews` to [refreshViews][]
   - Avoid detaches on [refreshViews][] call unless its absolutely necessary
+  - Documentation updates
 
 ## 1.0.0
 
