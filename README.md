@@ -3,7 +3,7 @@
 <div class="github-only">
 
 <div>
-<a href="http://epeli.github.com/backbone.viewmaster/">Latest stable release documention</a>
+Read the stable release documention <a href="http://epeli.github.com/backbone.viewmaster/">here</a>.
 </div>
 
 [![Build Status](https://travis-ci.org/epeli/backbone.viewmaster.png?branch=master)](https://travis-ci.org/epeli/backbone.viewmaster)
