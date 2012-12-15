@@ -91,7 +91,7 @@ var TodoItemList = Backbone.ViewMaster.extend({
 var Search = Backbone.ViewMaster.extend({
 
   template: function() {
-    return $("#search").html();
+    return "<input type=text placeholder=Search >";
   },
 
   events: {
@@ -112,10 +112,10 @@ var TodoLayout = Backbone.ViewMaster.extend({
       collection: this.collection
     }));
 
-    this.itemList = new TodoItemList({
+    this.todoItemList = new TodoItemList({
       collection: this.collection
     });
-    this.setView(".todo-container", this.itemList);
+    this.setView(".todo-container", this.todoItemList);
 
     // Add two search fields
     this.setView(".header", new Search());
@@ -124,7 +124,7 @@ var TodoLayout = Backbone.ViewMaster.extend({
     // Listen on bubbled search events from both Search views
     this.listenTo(this, "search", function(searchString) {
       // Broadcast them to TodoItemList view
-      this.itemList.broadcast("search", searchString);
+      this.todoItemList.broadcast("search", searchString);
     });
 
     // Rerender layout to update todo count

@@ -306,7 +306,9 @@ var TodoItemList = Backbone.ViewMaster.extend({
 
   },
 
-  template: ... snip ...
+  template: function() {
+    return "<ul></ul>";
+  },
 
   setItems: function(items) {
     items = items || this.collection;
@@ -326,13 +328,18 @@ TodoItemList view.
 
 ```javascript
 var Search = Backbone.ViewMaster.extend({
-  template: ... snip ...
+
+  template: function() {
+    return "<input type=text placeholder=Search >";
+  },
+
   events: {
     "keyup input": function(e) {
       // Bubble search event up to parent layout
       this.bubble("search", $(e.target).val());
     }
   }
+
 });
 ```
 
