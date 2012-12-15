@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+  <title>TODOs</title>
+  <script src="../../tests/vendor/jquery.js"></script>
+  <script src="../../tests/vendor/underscore.js"></script>
+  <script src="../../tests/vendor/backbone.js"></script>
+  <script src="../../lib/backbone.viewmaster.js"></script>
+
+  <script type="template" id="layout">
+    <h1><%= name %>'s TODOs</h1>
+    <div class="addview-container"></div>
+    <ul class="todo-container"></ul>
+  </script>
+
+  <script type="template" id="addview">
+    <input type="text">
+    <button>Add</button>
+  </script>
+
+  <script type="template" id="item">
+    <span class="item"><%= text %></span>
+    <button class="edit">edit</button>
+    <button class="done">x</button>
+  </script>
+
+  <script src="app.js"></script>
+</head>
+<body>
+</body>
+</html>
