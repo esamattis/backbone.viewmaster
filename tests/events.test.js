@@ -8,63 +8,23 @@ describe("Event", function() {
 
     var model = new Backbone.Model();
 
-    function createView(bindTestEvent, done){
-      var View = Backbone.ViewMaster.extend({
-        constructor: function() {
-          Backbone.ViewMaster.prototype.constructor.apply(this, arguments);
-          bindTestEvent.call(this);
-        },
-        callback: function() {
-          done(null, this);
-        }
-      });
-      return new View({ model: model });
-    }
-
-
-    it(".bindTo(emitter, event, Function)", function(done){
-      createView(function(){
-        this.bindTo(this.model, "test", this.callback);
-      }, done);
-      model.trigger("test");
-    });
-
-    it(".bindTo(emitter, event, method string)", function(done){
-      createView(function(){
-        this.bindTo(this.model, "test", "callback");
-      }, done);
-      model.trigger("test");
-    });
-
-    it(".bindTo(emitter, event, Function, context)", function(done){
-      var myContext = {};
-      createView(function(){
-        this.bindTo(this.model, "test", this.callback, myContext);
-      }, function(err, context) {
-        expect(context === myContext).to.be.ok;
+    it("context is the view", function(done){
+      var view = new Backbone.ViewMaster();
+      var emitter = _.extend({}, Backbone.Events);
+      view.listenTo(emitter, "test", function() {
+        expect(this).to.eq(view);
         done();
       });
-      model.trigger("test");
+      emitter.trigger("test");
     });
 
-    it("unbindFrom(binding) removes binding", function(done) {
-      var view = new Backbone.ViewMaster();
-      var emitter = new Backbone.Model();
-      var binding = view.bindTo(emitter, "throw", function() {
-        throw new Error("Event not unbound!");
-      });
-
-      view.unbindFrom(binding);
-      emitter.trigger("throw");
-      setTimeout(done, 1);
-    });
 
     it("should be removed on view.remove()", function(){
       var model = new Backbone.Model();
       var view = new Backbone.ViewMaster();
       var spy = chai.spy();
 
-      view.bindTo(model, "test", spy);
+      view.listenTo(model, "test", spy);
       model.trigger("test");
       view.remove();
       model.trigger("test");
@@ -88,12 +48,35 @@ describe("Event", function() {
 
       var spy = chai.spy();
       var emitter = new Backbone.Model();
-      child.bindTo(emitter, "test", spy);
+      child.listenTo(emitter, "test", spy);
 
       parent.remove();
 
       emitter.trigger("test");
       expect(spy).to.not.have.been.called.once;
+    });
+
+    it("is not unbound on view.detach()", function(){
+      var child = new Backbone.ViewMaster();
+      child.template = function() {
+        return "<p>child</p>";
+      };
+
+      var parent = new Backbone.ViewMaster();
+      parent.template = function() {
+        return "<div class=container ></div>";
+      };
+
+      parent.setView(".container", child);
+      parent.render();
+
+      var spy = chai.spy();
+      var emitter = new Backbone.Model();
+      child.listenTo(emitter, "test", spy);
+
+      parent.detach();
+      emitter.trigger("test");
+      expect(spy).to.have.been.called.once;
     });
 
   });

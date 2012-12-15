@@ -9,7 +9,7 @@
 
     function CoffeeView() {
       CoffeeView.__super__.constructor.apply(this, arguments);
-      this.bindTo(this.model, "test", this.callback);
+      this.listenTo(this.model, "test", this.callback);
     }
 
     CoffeeView.prototype.callback = function() {

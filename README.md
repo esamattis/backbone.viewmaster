@@ -124,6 +124,7 @@ constructor: function(){
   this.setView(".addview-container", new AddTodoItem({
     collection: this.collection
   }));
+  this.listenTo(this.model, "change", this.render);
 },
 ```
 
@@ -137,20 +138,10 @@ method for it to keep your views encapsulated and maintainable.
 
 ## Event management
 
-Event management is important part of view management in Backbone.js.
-Unfortunately the event callbacks start easily leaking memory if you don't
-remember to unbind them when you are done with the views. ViewMaster helps with
-this by introducing a [bindTo][] method which is bound to the view context.  It
-will unbind all event callbacks automatically when you discard the view with
-[remove][].
-
-```javascript
-// TodoLayout
-constructor: function(){
-  ... snip ...
-  this.bindTo(this.model, "change", this.render);
-},
-```
+Backbone 0.9.9 and later has a [listenTo][] method on every event emitter
+object. This should be always used in views instead of the [on][] method. Using
+it Backbone and Backbone.ViewMaster can automatically remove your view related
+event binding when you discard your views.
 
 ## Rendering
 
@@ -187,8 +178,8 @@ collection. When a new child view is added you need to call [render][] or
 // TodoLayout
 constructor: function(){
   ... snip ...
-  this.bindTo(this.model, "change", this.render);
-  this.bindTo(this.collection, "add", this.addItem);
+  this.listenTo(this.model, "change", this.render);
+  this.listenTo(this.collection, "add", this.addItem);
 },
 
 addItem: function(model){
@@ -228,7 +219,7 @@ var TodoItem = Backbone.ViewMaster.extend({
 
   constructor: function(){
     Backbone.ViewMaster.prototype.constructor.apply(this, arguments);
-    this.bindTo(this.model, "change", this.render);
+    this.listenTo(this.model, "change", this.render);
   },
 
   template: function(context){
@@ -283,7 +274,7 @@ var TodoItemList = Backbone.ViewMaster.extend({
 
   constructor: function(){
     Backbone.ViewMaster.prototype.constructor.apply(this, arguments);
-    this.bindTo(this, "search", function(searchString) {
+    this.listenTo(this, "search", function(searchString) {
       this.appendView(".todo-tems", this.filterItems(searchString).map(function(model) {
         return new TodoItem({
           model: model
@@ -311,7 +302,7 @@ constructor: function(){
   this.todoItemList = new TodoItemList({ collection this.collection ));
   this.setView(".todo-container" this.todoItemList);
   this.setView(".header" new Search(););
-  this.bindTo(this, "search", function(searchString) {
+  this.listenTo(this, "search", function(searchString) {
     this.todoItemList.broadcast("search", searchString);
   }
 },
@@ -354,30 +345,22 @@ render: function(){
 }
 ```
 
-## Doesn't `Backbone.View#dispose()` unbind events already on remove?
-
-Some. It only works with events bound to `this.model` or `this.collection` and
-it also requires that the view is passed as the context object to the `on`
-method. To make sure that all events are always unbound on remove I recommend
-that you use always `view.bindTo(...)` with Backbone.ViewMaster.
-
-*DISCLAIMER: `dispose()` is a feature of unreleased Backbone.js version and it
-might change before actual release.*
-
 # Changelog
 
 ## 1.1.0pre
 
-  - Rename renderViews() to refreshViews()
-  - Avoid detaches on refreshViews() unless its absolutely necessary
+  - Support Backbone.js 0.9.9
+  - Remove `bindTo`, `unbindFrom` and `unbindAll` in favour of new Backbone
+    methods [listenTo][] and [stopListening][] introduced in 0.9.9
   - Add [broadcast][] method
   - Replace implicit event bubbling on trigger with simpler explicit [bubble][]
     method
+  - Rename `renderViews` to [refreshViews][]
+  - Avoid detaches on [refreshViews][] call unless its absolutely necessary
 
 ## 1.0.0
 
   - First release
-
 
 # License
 
@@ -390,11 +373,14 @@ The MIT License. See LICENSE.
 [production]: http://epeli.github.com/backbone.viewmaster/lib/backbone.viewmaster.min.js
 [api]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html
 
+[listenTo]: http://backbonejs.org/#Events-listenTo
+[stopListening]: http://backbonejs.org/#Events-stopListening
+[on]: http://backbonejs.org/#Events-on
+
 [setView]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_setView
 [appendView]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_appendView
 [prependView]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_prependView
 [insertView]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_insertView
-[bindTo]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_bindTo
 [template]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_template
 [render]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_render
 [refreshViews]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_refreshViews
