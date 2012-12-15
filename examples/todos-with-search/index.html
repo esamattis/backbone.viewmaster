@@ -8,14 +8,25 @@
   <script src="../../lib/backbone.viewmaster.js"></script>
 
   <script type="template" id="layout">
-    <h1><%= name %>'s TODOs</h1>
+    <div class="header"></div>
+    <hr>
+
+    <h1>TODOs</h1>
     <div class="addview-container"></div>
-    <ul class="todo-container"></ul>
+    <div class="todo-container"></div>
+    <div>You have <%= count %> todos</div>
+
+    <hr>
+    <div class="footer"></div>
   </script>
 
   <script type="template" id="addview">
-    <input type="text">
+    <input type="text" autofocus>
     <button>Add</button>
+  </script>
+
+  <script type="template" id="search">
+    <input type="text" placeholder="Search" >
   </script>
 
   <script type="template" id="item">

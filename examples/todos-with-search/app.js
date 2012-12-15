@@ -5,7 +5,7 @@
 var AddTodoItem = Backbone.ViewMaster.extend({
 
   template: function(context){
-    return _.template($("#addview").html(), context);
+    return $("#addview").html();
   },
 
   events: {
@@ -50,41 +50,117 @@ var TodoItem = Backbone.ViewMaster.extend({
 
 });
 
+var TodoItemList = Backbone.ViewMaster.extend({
+
+  constructor: function(){
+    Backbone.ViewMaster.prototype.constructor.apply(this, arguments);
+
+    // On load display all items
+    this.setItems();
+
+    // Refresh item list when a todo is added
+    this.listenTo(this.collection, "add", function() {
+      this.setItems();
+      this.refreshViews();
+    });
+
+    // Filter out todos on 'search' broadcast events
+    this.listenTo(this, "search", function(searchString) {
+      this.setItems(this.collection.filterSearch(searchString));
+      this.refreshViews();
+    });
+
+  },
+
+  template: function() {
+    return "<ul></ul>";
+  },
+
+  setItems: function(items) {
+    items = items || this.collection;
+    this.setView("ul", items.map(function(model) {
+      return new TodoItem({
+        model: model
+      });
+    }));
+  }
+
+});
+
+var Search = Backbone.ViewMaster.extend({
+
+  template: function() {
+    return $("#search").html();
+  },
+
+  events: {
+    "keyup input": function(e) {
+      // Bubble search event up to parent layout
+      this.bubble("search", $(e.target).val());
+    }
+  }
+
+});
 
 var TodoLayout = Backbone.ViewMaster.extend({
 
   constructor: function(){
     Backbone.ViewMaster.prototype.constructor.apply(this, arguments);
+
     this.setView(".addview-container", new AddTodoItem({
       collection: this.collection
     }));
-    this.listenTo(this.model, "change", this.render);
-    this.listenTo(this.collection, "add", this.addItem);
+
+    this.itemList = new TodoItemList({
+      collection: this.collection
+    });
+    this.setView(".todo-container", this.itemList);
+
+    // Add two search fields
+    this.setView(".header", new Search());
+    this.setView(".footer", new Search());
+
+    // Listen on bubbled search events from both Search views
+    this.listenTo(this, "search", function(searchString) {
+      // Broadcast them to TodoItemList view
+      this.itemList.broadcast("search", searchString);
+    });
+
+    // Rerender layout to update todo count
+    this.listenTo(this.collection, "add remove", this.render);
   },
 
   template: function(context){
     return _.template($("#layout").html(), context);
   },
 
-  addItem: function(model){
-    this.appendView(".todo-container", new TodoItem({
-      model: model
-    }));
-    this.refreshViews();
+  context: function() {
+    return {
+      count: this.collection.size()
+    };
   }
 
 });
 
 
 $(document).ready(function() {
+  // Collection containing all todo items
   var items = new Backbone.Collection();
-  var app = new Backbone.Model();
+
+  items.filterSearch = function(searchString) {
+    // Do not filter anything on empty string
+    if (!searchString.trim()) return null;
+
+    return this.filter(function(item) {
+      return item.get("text").indexOf(searchString) !== -1;
+    });
+  };
+
+  // Initialize whole layout
   var layout = new TodoLayout({
-    model: app,
     collection: items
   });
 
   layout.render();
   $("body").append(layout.el);
-  app.set("name", prompt("Your name"));
 });
