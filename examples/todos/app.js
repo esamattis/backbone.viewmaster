@@ -59,9 +59,11 @@ var TodoItemList = Backbone.ViewMaster.extend({
     // On load display all items
     this.setItems();
 
-    // Refresh item list when a todo is added
-    this.listenTo(this.collection, "add", function() {
-      this.setItems();
+    // Add new TodoItem view on new item model
+    this.listenTo(this.collection, "add", function(model) {
+      this.appendView("ul", new TodoItem({
+        model: model
+      }));
       this.refreshViews();
     });
 
@@ -108,7 +110,7 @@ var TodoLayout = Backbone.ViewMaster.extend({
   constructor: function(){
     Backbone.ViewMaster.prototype.constructor.apply(this, arguments);
 
-  // Nest AddTodoItem inside TodoLayout
+    // Nest AddTodoItem inside TodoLayout
     this.setView(".addview-container", new AddTodoItem({
       collection: this.collection
     }));
