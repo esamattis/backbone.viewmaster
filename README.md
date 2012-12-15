@@ -23,8 +23,14 @@ Created by [Esa-Matti Suuronen][esa] [@EsaMatti][].
 
 # Download
 
-  - [backbone.viewmaster.js][dev] **12K** with comments
-  - [backbone.viewmaster.min.js][production] **2.7K** minified
+  - [backbone.viewmaster.js][dev] with comments
+  - [backbone.viewmaster.min.js][production] minified
+
+## Dependencies
+
+  - [jQuery](http://jquery.com/)
+  - [Backbone.js][] 0.9.9 or later
+  - [Underscore.js](http://underscorejs.org)
 
 # API Docs
 
