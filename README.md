@@ -147,7 +147,7 @@ method for it to keep your views encapsulated and maintainable.
 Backbone 0.9.9 and later has a [listenTo][] method on every event emitter
 object. This should be always used in views instead of the [on][] method. Using
 it Backbone and Backbone.ViewMaster can automatically remove your view related
-event binding when you discard your views.
+event bindings when you discard your views.
 
 ## Rendering
 
