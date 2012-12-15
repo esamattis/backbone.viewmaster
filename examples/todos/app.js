@@ -108,6 +108,7 @@ var TodoLayout = Backbone.ViewMaster.extend({
   constructor: function(){
     Backbone.ViewMaster.prototype.constructor.apply(this, arguments);
 
+  // Nest AddTodoItem inside TodoLayout
     this.setView(".addview-container", new AddTodoItem({
       collection: this.collection
     }));

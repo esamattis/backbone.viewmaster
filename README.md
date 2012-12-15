@@ -59,9 +59,16 @@ container elements for our nested views.
 
 ```
 <script type="template" id="layout">
-  <h1><%= name %>'s TODOs</h1>
+  <div class="header"></div>
+  <hr>
+
+  <h1>TODOs</h1>
   <div class="addview-container"></div>
-  <ul class="todo-container"></ul>
+  <div class="todo-container"></div>
+  <div>You have <%= count %> todos</div>
+
+  <hr>
+  <div class="footer"></div>
 </script>
 ```
 
@@ -70,6 +77,12 @@ var TodoLayout = Backbone.ViewMaster.extend({
 
   template: function(context){
     return _.template($("#layout").html(), context);
+  },
+
+  context: function() {
+    return {
+      count: this.collection.size()
+    };
   }
 
 });
@@ -135,10 +148,12 @@ nest it.  We do that in its constructor using the [setView][] method.
 // TodoLayout
 constructor: function(){
   Backbone.ViewMaster.prototype.constructor.apply(this, arguments);
+  // Nest AddTodoItem inside TodoLayout
   this.setView(".addview-container", new AddTodoItem({
     collection: this.collection
   }));
-  this.listenTo(this.model, "change", this.render);
+  // Rerender layout to update todo count
+  this.listenTo(this.collection, "add remove", this.render);
 },
 ```
 
@@ -149,8 +164,6 @@ the view definition. This is because they all take a CSS selector as the first
 argument and because the CSS selectors are very implementation specific details
 of your view. If you need to set the view from the outside create a setter
 method for it to keep your views encapsulated and maintainable.
-
-## Event management
 
 Backbone 0.9.9 and later has a [listenTo][] method on every event emitter
 object. This should be always used in views instead of the [on][] method. Using
@@ -164,20 +177,17 @@ the default render method.
 
 ```javascript
 var items = new Backbone.Collection();
-var app = new Backbone.Model();
 var layout = new TodoLayout({
-  model: app,
   collection: items
 });
 
 layout.render();
 $("body").append(layout.el);
-app.set("name", prompt("Your name"));
 ```
 
-The render method takes care of rendering itself and the initial rendering of
-its child views. This means it will **render child views only once** unless `{
-force: true }` is passed to the render method. This is because normally it
+The [render][] method takes care of rendering itself and the initial rendering
+of its child views. This means it will **render child views only once** unless
+`{ force: true }` is passed to the render method. This is because normally it
 should be the responsibility of the child view to know when it should render
 itself. The parent view only helps child views to get started.
 
@@ -192,7 +202,6 @@ collection. When a new child view is added you need to call [render][] or
 // TodoLayout
 constructor: function(){
   ... snip ...
-  this.listenTo(this.model, "change", this.render);
   this.listenTo(this.collection, "add", this.addItem);
 },
 
@@ -215,7 +224,7 @@ the children.
 
 ## Removing views
 
-Any view, parent or child, can be discarded with the [remove][] method.  It
+Any view, parent or child, can be discarded with the [remove][] method. It
 removes automatically all the Backbone and DOM event callbacks. If the view is
 a parent to other views it will call remove on them also.
 
@@ -233,6 +242,7 @@ var TodoItem = Backbone.ViewMaster.extend({
 
   constructor: function(){
     Backbone.ViewMaster.prototype.constructor.apply(this, arguments);
+    // Rerender view after edit
     this.listenTo(this.model, "change", this.render);
   },
 
@@ -263,8 +273,8 @@ automatically figures out which views was left out and calls [remove][] on them
 on the next [refreshViews][] call.
 
 If you need to use the view and its children again some time later use the
-[detach][] method. It removes the view from in its parent view, but leaves the
-event callbacks untouched and children untouched.
+[detach][] method. It detaches the view from in its parent view, but leaves the
+event callbacks and children untouched.
 
 ## Event bubbling and broadcasting
 
@@ -274,14 +284,15 @@ Backbone.ViewMaster helps with this by implementing event bubbling and
 broadcasting.
 
 Event bubbling works exactly like in the DOM. Events triggered with the
-[bubble][] method are bubbled up to their parents. Broadcasting is the opposite
-of this. Events triggered with the [broadcast][] method are broadcasted down to
-the all child views. These can be combined to make loose dependencies between
-sibling views too.
+[bubble][] method are bubbled up to their parents too. Broadcasting is the
+opposite of this. Events triggered with the [broadcast][] method are
+broadcasted down to the all child views too. These can be combined to make
+loose dependencies between sibling views too.
 
 Lets add search capabilities to our TODO app.
 
-We'll first abstract TODO-item filtering to its own view
+We'll abstract TODO-item filtering to its own view and make it handle search
+event broadcasts.
 
 ```javascript
 var TodoItemList = Backbone.ViewMaster.extend({
@@ -373,7 +384,6 @@ Another benefit of bubbling and broadcasting is that the views can be easily
 wrapped with other views and the event bindings would still work. You don't
 have to do anything in your wrapper view. The events will simply bubble and
 broadcast through it.
-
 
 
 ## Conclusion
