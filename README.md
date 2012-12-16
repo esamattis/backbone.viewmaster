@@ -187,9 +187,9 @@ itself. The parent view only initialize child views.
 
 ### Multiple views in single container
 
-We add new TodoItem views to our layout whenever a todo model is added to the
-collection using the [appendView][] method. We use the [refreshViews][] method
-to make that append visible.
+We add new TodoItem views to our layout using the [appendView][] method
+whenever a todo model is added to the collection. [refreshViews][]
+is used to make child view changes visible.
 
 Every view container can contain multiple views. Just start adding more views
 to it if you need lists.
