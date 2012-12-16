@@ -145,7 +145,8 @@ constructor: function(){
   this.setView(".addview-container", new AddTodoItem({
     collection: this.collection
   }));
-  // Rerender layout to update todo count
+  // Render layout on when a todo is removed or added to update
+  // the todo count
   this.listenTo(this.collection, "add remove", this.render);
 },
 ```
@@ -182,13 +183,16 @@ The [render][] method takes care of rendering itself and the initial rendering
 of its child views. This means it will **render child views only once** unless
 `{ force: true }` is passed to the render method. This is because normally it
 should be the responsibility of the child view to know when it should render
-itself. The parent view only helps child views to get started.
+itself. The parent view only initialize child views.
 
 ### Multiple views in single container
 
 We add new TodoItem views to our layout whenever a todo model is added to the
-collection. When a new child view is added you need to call [render][] or
-[refreshViews][] on the parent view to make them visible.
+collection using the [appendView][] method. We use the [refreshViews][] method
+to make that append visible.
+
+Every view container can contain multiple views. Just start adding more views
+to it if you need lists.
 
 ```javascript
 // TodoLayout
@@ -205,14 +209,13 @@ addItem: function(model){
 }
 ```
 
-Here we use the [appendView][] method to append a view to `.todo-container`.
-Every view container can contain multiple views. Just start adding more views
-to it if you need lists.
-
 The difference between [render][] and [refreshViews][] is that the latter one
-renders only the new child views and adds them to the parent DOM tree leaving
-the parent untouched otherwise while the former renders the parent itself and
-the children.
+updates only child view changes made with [setview][], [appendView][],
+[prependView][] and [insertView][] and does not touch the parent itself. The
+former renders the parent and then calls [refreshViews][].
+
+[refreshViews][] will also take of of the initial rendering of child views if
+they have not been rendered before.
 
 ## Removing views
 
@@ -247,12 +250,13 @@ var TodoItem = Backbone.ViewMaster.extend({
   },
 
   done: function(){
+    // When todo task is completed destroy the model and remove the view
     this.model.destroy();
     this.remove();
   },
 
   edit: function() {
-    var newContent = prompt("Edit todo", this.$(".item").text());
+    var newContent = prompt("Edit todo", this.model.get("text"));
     if (newContent !== null) this.model.set("text", newContent);
   }
 

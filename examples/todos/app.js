@@ -40,12 +40,13 @@ var TodoItem = Backbone.ViewMaster.extend({
   },
 
   done: function(){
+    // When todo task is completed destroy the model and remove the view
     this.model.destroy();
     this.remove();
   },
 
   edit: function() {
-    var newContent = prompt("Edit todo", this.$(".item").text());
+    var newContent = prompt("Edit todo", this.model.get("text"));
     if (newContent !== null) this.model.set("text", newContent);
   }
 
@@ -130,7 +131,8 @@ var TodoLayout = Backbone.ViewMaster.extend({
       this.todoItemList.broadcast("search", searchString);
     });
 
-    // Rerender layout to update todo count
+    // Render layout on when a todo is removed or added to update
+    // the todo count
     this.listenTo(this.collection, "add remove", this.render);
   },
 
