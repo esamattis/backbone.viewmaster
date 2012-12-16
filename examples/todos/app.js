@@ -62,9 +62,11 @@ var TodoItemList = Backbone.ViewMaster.extend({
 
     // Add new TodoItem view on new item model
     this.listenTo(this.collection, "add", function(model) {
+      // Create new view for the todo item
       this.appendView("ul", new TodoItem({
         model: model
       }));
+      // Render the new item and put it to DOM tree
       this.refreshViews();
     });
 

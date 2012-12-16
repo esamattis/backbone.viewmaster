@@ -202,9 +202,11 @@ constructor: function(){
 },
 
 addItem: function(model){
-  this.appendView(".todo-container", new TodoItem({
+  // Create new view for the todo item
+  this.appendView("ul", new TodoItem({
     model: model
   }));
+  // Render the new item and put it to DOM tree
   this.refreshViews();
 }
 ```
