@@ -280,10 +280,28 @@ opposite of this. Events triggered with the [broadcast][] method are
 broadcasted down to the all child views too. These can be combined to make
 loose dependencies between sibling views too.
 
-Lets add search capabilities to our TODO app.
+Lets add search capabilities to our TODO app. We create a simple Search view
+which bubbles 'search' events up to its parents.
 
-We'll abstract TodoItem listing to its own view and make it handle search event
-broadcasts.
+```javascript
+var Search = Backbone.ViewMaster.extend({
+
+  template: function() {
+    return "<input type=text placeholder=Search >";
+  },
+
+  events: {
+    "keyup input": function(e) {
+      // Bubble 'search' event up to parent layout
+      this.bubble("search", $(e.target).val());
+    }
+  }
+
+});
+```
+
+We'll abstract TodoItem listing to its own view and make it handle 'search'
+event broadcasts.
 
 ```javascript
 var TodoItemList = Backbone.ViewMaster.extend({
@@ -326,26 +344,8 @@ var TodoItemList = Backbone.ViewMaster.extend({
 });
 ```
 
-Now in the layout we just add a Search view which bubbles 'search' events as
-user types characters, listen to them on the layout view and broadcast them to
-TodoItemList view.
-
-```javascript
-var Search = Backbone.ViewMaster.extend({
-
-  template: function() {
-    return "<input type=text placeholder=Search >";
-  },
-
-  events: {
-    "keyup input": function(e) {
-      // Bubble search event up to parent layout
-      this.bubble("search", $(e.target).val());
-    }
-  }
-
-});
-```
+Now in the layout we just retrigger the bubbling 'search' event as a broadcast
+to the TodoItemList.
 
 ```javascript
 // TodoLayout
@@ -355,7 +355,7 @@ constructor: function(){
   this.setView(".todo-container" this.todoItemList);
   this.setView(".header" new Search());
 
-  // Listen on bubbled search events from Search view
+  // Listen on bubbled 'search' events from Search view
   this.listenTo(this, "search", function(searchString) {
     // Broadcast them to TodoItemList view
     this.todoItemList.broadcast("search", searchString);
@@ -366,17 +366,17 @@ constructor: function(){
 The cool thing about this is that the connection between the TodoItemList and
 the Search view is completely decoubled without introducing a global event
 object or manually passing some vent object to all your views. This makes unit
-testing simpler. Also if we wanted to add an another search box to a footer
+testing simpler and if we wanted to add an another search box to a footer
 container we can just do that and that's it. No need to bind anything extra.
 
 ```javascript
 this.setView(".footer" new Search());
 ```
 
-Another benefit of bubbling and broadcasting is that the views can be easily
-wrapped with other views and the event bindings would still work. You don't
-have to do anything in your wrapper view. The events will simply bubble and
-broadcast through it.
+Another important feature of bubbling and broadcasting is that the views can be
+easily wrapped with other views and the event bindings would still work. You
+don't have to do anything in your wrapper view. The events will simply bubble
+and broadcast through it.
 
 
 ## Conclusion
