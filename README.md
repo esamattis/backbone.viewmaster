@@ -407,7 +407,7 @@ render: function(){
 
 # Changelog
 
-## 1.1.0pre
+## 1.1.0
 
   - Support Backbone.js 0.9.9
   - Remove `bindTo`, `unbindFrom` and `unbindAll` in favour of new Backbone
