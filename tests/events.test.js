@@ -273,19 +273,6 @@ describe("Event", function() {
   });
 
   describe("broadcasting", function() {
-    var VM = Backbone.ViewMaster.extend({
-      constructor: function(opts) {
-        Backbone.ViewMaster.prototype.constructor.apply(this, arguments);
-        this.name = opts.name;
-      },
-      template: function() {
-        return [
-          "<div class=header></div>",
-          "<h1>" + this.name + "</h1>",
-          "<div class=container></div>"
-        ].join(" ");
-      }
-    });
 
     it("broadcasts events to all children", function(){
       var layout = new VM({ name: "layout" });

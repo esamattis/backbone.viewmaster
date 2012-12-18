@@ -18,6 +18,21 @@
   </script>
 
   <script src="../lib/backbone.viewmaster.js"></script>
+  <script>
+    var VM = Backbone.ViewMaster.extend({
+      constructor: function(opts) {
+        Backbone.ViewMaster.prototype.constructor.apply(this, arguments);
+        this.name = opts.name;
+      },
+      template: function() {
+        return [
+          "<div class=header></div>",
+          "<h1>" + this.name + "</h1>",
+          "<div class=container></div>"
+        ].join(" ");
+      }
+    });
+  </script>
   <script src="viewmaster.test.js"></script>
   <script src="events.test.js"></script>
   <script src="elements.test.js"></script>
