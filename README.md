@@ -407,6 +407,10 @@ render: function(){
 
 # Changelog
 
+## 1.1.1
+
+  - Make sure view arrays don't mutate during iteration
+
 ## 1.1.0
 
   - Support Backbone.js 0.9.9
