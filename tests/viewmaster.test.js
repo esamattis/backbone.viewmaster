@@ -266,6 +266,24 @@ describe("ViewMaster", function(){
     expect(master.$el).to.have(child.$el);
   });
 
+
+  it("render calls remove on all children", function(){
+    var parent = new VM({ name: "parent1" });
+    var child1 = new VM({ name: "child1" });
+    var child2 = new VM({ name: "child2" });
+
+    child1.remove = chai.spy(child1.remove);
+    child2.remove = chai.spy(child2.remove);
+
+    parent.appendView(".container", child1);
+    parent.appendView(".container", child2);
+    parent.render();
+    parent.remove();
+
+    expect(child1.remove, "child1").to.have.been.called.once;
+    expect(child2.remove, "child2").to.have.been.called.once;
+  });
+
   it("child.remove() removes from parent", function(){
     var parent = new Master();
     var child = new Puppet({ name: "first" });
