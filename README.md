@@ -13,9 +13,8 @@ Read the stable release documention <a href="http://epeli.github.com/backbone.vi
 # Backbone.ViewMaster
 
 Few **tested** opinions on how to handle deeply nested views in [Backbone.js][]
-focusing on encapsulation and reusability. This is implemented after writing
-several Backbone.js applications and by carefully picking the recurring
-patterns seen on them.
+focusing on modularity. This is implemented after writing several Backbone.js
+applications and by carefully picking the recurring patterns seen on them.
 
 Backbone.ViewMaster is a single View extended from Backbone.View. Views
 extended from it can be infinitely nested with each others using the four
@@ -157,7 +156,7 @@ terms as protected methods. Which means you should use them only from within
 the view definition. This is because they all take a CSS selector as the first
 argument and because the CSS selectors are very implementation specific details
 of your view. If you need to set the view from the outside create a setter
-method for it to keep your views encapsulated and maintainable.
+method for it to keep your views modular and maintainable.
 
 Backbone 0.9.9 and later has a [listenTo][] method on every event emitter
 object. This should be always used in views instead of the [on][] method. Using
