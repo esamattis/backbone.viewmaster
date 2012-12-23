@@ -1,4 +1,3 @@
-
 <img src="https://github.com/epeli/backbone.viewmaster/raw/master/public_source/yuidoc-theme/assets/css/logo.png" >
 <div class="github-only">
 
@@ -419,7 +418,7 @@ render: function(){
   - Replace implicit event bubbling on trigger with simpler explicit [bubble][]
     method
   - Rename `renderViews` to [refreshViews][]
-  - Avoid detaches on [refreshViews][] call unless its absolutely necessary
+  - Avoid detaches on [refreshViews][] call unless it is absolutely necessary
   - Documentation updates
 
 ## 1.0.0
