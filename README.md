@@ -406,6 +406,10 @@ render: function(){
 
 # Changelog
 
+## 1.1.2
+
+  - Release to npm for Browserify usage
+
 ## 1.1.1
 
   - Make sure view arrays don't mutate during iteration
