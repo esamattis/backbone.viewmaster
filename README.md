@@ -32,6 +32,10 @@ Created by [Esa-Matti Suuronen][esa] [@EsaMatti][].
   - [backbone.viewmaster.js][dev] 11kb, with comments
   - [backbone.viewmaster.min.js][production] 1kb, minified and gzipped
 
+or use from npm with [Browserify](http://browserify.org/)
+
+    npm install viewmaster
+
 ## Dependencies
 
   - [jQuery](http://jquery.com/)
