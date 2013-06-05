@@ -4,7 +4,8 @@
   "url": "https://github.com/epeli/backbone.viewmaster",
   "description": "Few tested opinions on how to handle deeply nested views in Backbone.js focusing on encapsulation and reusability.",
   "scripts": {
-    "test": "node_modules/.bin/grunt mocha"
+    "test": "node_modules/.bin/grunt mocha",
+    "prepublish": "npm prune"
   },
   "dependencies": {
     "backbone": "1.x.x",
