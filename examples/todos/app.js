@@ -114,9 +114,7 @@ var TodoLayout = Backbone.ViewMaster.extend({
     Backbone.ViewMaster.prototype.constructor.apply(this, arguments);
 
     // Nest AddTodoItem inside TodoLayout
-    this.setView(".addview-container", new AddTodoItem({
-      collection: this.collection
-    }));
+    this.setView(".addview-container", AddTodoItem);
 
     this.todoItemList = new TodoItemList({
       collection: this.collection
@@ -124,8 +122,8 @@ var TodoLayout = Backbone.ViewMaster.extend({
     this.setView(".todo-container", this.todoItemList);
 
     // Add two search fields
-    this.setView(".header", new Search());
-    this.setView(".footer", new Search());
+    this.setView(".header", Search);
+    this.setView(".footer", Search);
 
     // Listen on bubbled search events from both Search views
     this.listenTo(this, "search", function(searchString) {
