@@ -382,6 +382,53 @@ describe("ViewMaster", function(){
 
   });
 
+  describe("creates child views from classes", function(){
+    beforeEach(function() {
+      this.model = new Backbone.Model({ title: "Title" });
+      this.parent = new Backbone.ViewMaster({ model: this.model });
+      this.parent.template = function() {
+        return "<div class=container></div>";
+      };
+
+      this.View = Backbone.ViewMaster.extend({
+        template: function(context) {
+          return "<h1 class=child>" + context.title + "</h1>";
+        }
+      });
+
+    });
+
+    _.each(["setView", "appendView", "prependView"], function(method) {
+
+      it("can add child view from class using " + method, function(){
+        this.parent[method](".container", this.View);
+        this.parent.render();
+        expect(this.parent.$el).to.have.text("Title");
+      });
+
+      it("can add child views from array of classes using " + method, function(){
+        this.parent[method](".container", [this.View, this.View]);
+        this.parent.render();
+        expect(this.parent.$(".child").size()).to.eq(2);
+      });
+
+    });
+
+    it("can add child view from class using insertView", function(){
+      this.parent.insertView(".container", 0, this.View);
+      this.parent.render();
+      expect(this.parent.$el).to.have.text("Title");
+    });
+
+    it("can add child views from array of classes using insertView", function(){
+      this.parent.insertView(".container", 0, [this.View, this.View]);
+      this.parent.render();
+      expect(this.parent.$(".child").size()).to.eq(2);
+    });
+
+  });
+
+
   describe("with deeply nested views", function(){
 
     var ViewList = Backbone.ViewMaster.extend({
