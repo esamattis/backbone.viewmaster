@@ -17,7 +17,6 @@
     "grunt-contrib-yuidoc": "",
     "grunt-contrib-copy": "",
     "grunt-mocha": "",
-    "underscore": "",
     "grunt-templater": ""
   }
 }
