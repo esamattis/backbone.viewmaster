@@ -339,6 +339,48 @@ describe("ViewMaster", function(){
     expect(child.spy).to.have.been.called.once;
   });
 
+  describe("afterTemplate", function(){
+    beforeEach(function() {
+      this.parent = new Backbone.ViewMaster();
+      this.parent.template = function() {
+        return "<h1>Foo</h1><div class=container ></div>";
+      };
+      this.child = new Backbone.ViewMaster();
+      this.child.template = function() {
+        return "<div class=child >child</div>";
+      };
+
+      this.parent.setView(".container", this.child);
+    });
+
+    it("is called after template is rendered", function(done){
+      this.parent.afterTemplate = function() {
+        expect(this.$el).to.have.text("Foo");
+        done();
+      };
+      this.parent.render();
+    });
+
+    it("cannot access child views", function(){
+      this.parent.afterTemplate = chai.spy(function() {
+        expect(this.$(".child").size()).to.eq(0);
+      });
+      this.parent.render();
+      expect(this.parent.$(".child").size()).to.eq(1);
+      expect(this.parent.afterTemplate).to.have.been.called.once;
+    });
+
+    it("cannot access child views on second render", function(){
+      this.parent.render();
+      this.parent.afterTemplate = chai.spy(function() {
+        expect(this.$(".child").size()).to.eq(0);
+      });
+      this.parent.render();
+      expect(this.parent.$(".child").size()).to.eq(1);
+      expect(this.parent.afterTemplate).to.have.been.called.once;
+    });
+
+  });
 
   describe("with deeply nested views", function(){
 

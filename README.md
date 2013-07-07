@@ -397,12 +397,12 @@ That's about it. Check out the full working todo app in the examples
 
 ## How do I use jQuery plugins?
 
-Just override the render method, call the super method and then do your jQuery
-plugin stuff:
+In [afterTemplate][]. It is executed right after the template is rendered but
+before child views are added making it the perfect place to add them without
+having to worry about side effects to the child views.
 
 ```javascript
-render: function(){
-  Backbone.ViewMaster.prototype.render.apply(this, arguments);
+afterTemplate: function(){
   this.$("element").jqueryPlugin();
 }
 ```
@@ -454,6 +454,7 @@ The MIT License. See LICENSE.
 [insertView]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_insertView
 [template]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_template
 [render]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_render
+[afterTemplate]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_afterTemplate
 [refreshViews]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_refreshViews
 [context]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_context
 [rendered]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#property_rendered
