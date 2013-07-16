@@ -413,7 +413,7 @@ afterTemplate: function(){
 
   - Add [afterTemplate][]
   - Views can be added as constructor functions now too. They will get `model`
-    and `collection` attribtes from their parent views automatically.
+    and `collection` attributes from their parent views automatically.
   - Removed experimental `elements` object which was never documented. Use
     `afterTemplate` from now on.
 
