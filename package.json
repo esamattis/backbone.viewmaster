@@ -11,6 +11,10 @@
     "backbone": "1.x.x",
     "underscore": "1.x.x"
   },
+  "files": [
+    "lib/backbone.viewmaster.js"
+  ],
+  "main": "lib/backbone.viewmaster.js",
   "devDependencies": {
     "grunt": "",
     "grunt-exec": "",
