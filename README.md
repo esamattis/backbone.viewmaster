@@ -38,9 +38,7 @@ or use from npm with [Browserify](http://browserify.org/)
 
 ## Dependencies
 
-  - [jQuery](http://jquery.com/)
   - [Backbone.js][] 0.9.9 or later
-  - [Underscore.js](http://underscorejs.org)
 
 # API Docs
 
