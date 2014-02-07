@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+  <title>TODOs</title>
+  <script src="../../tests/vendor/jquery.js"></script>
+  <script src="../../tests/vendor/underscore.js"></script>
+  <script src="../../tests/vendor/backbone.js"></script>
+  <script src="../../lib/backbone.viewmaster.js"></script>
+
+  <script type="template" id="layout">
+    <div class="header"></div>
+    <hr>
+
+    <h1>TODOs</h1>
+    <div class="addview-container"></div>
+    <div class="todo-container"></div>
+    <div>You have <%= count %> todos</div>
+
+    <hr>
+    <div class="footer"></div>
+  </script>
+
+  <script type="template" id="addview">
+    <input type="text" autofocus>
+    <button>Add</button>
+  </script>
+
+
+  <script type="template" id="item">
+    <span class="item"><%= text %></span>
+    <button class="edit">edit</button>
+    <button class="done">x</button>
+  </script>
+
+  <script src="app.js"></script>
+</head>
+<body>
+</body>
+</html>

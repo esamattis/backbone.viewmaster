@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>lib&#x2F;backbone.viewmaster.js - viewmaster</title>
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.7.0&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.7.0&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="..&#x2F;assets/css/logo.png" title="viewmaster"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 1.2.2</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="..&#x2F;classes/Viewmaster.html">Viewmaster</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input checked type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: lib&#x2F;backbone.viewmaster.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+&#x2F;*global  require:true, module:true *&#x2F;
+&#x2F;*jshint boss:true, browser:true *&#x2F;
+
+(function() {
+  var VERSION = &quot;1.2.2&quot;;
+  var Backbone = this.Backbone;
+  var _ = this._;
+
+  &#x2F;&#x2F; Load Backbone and Underscore using require if we don&#x27;t have the global for
+  &#x2F;&#x2F; some reason
+  if (typeof require === &quot;function&quot;) {
+    if (!Backbone) Backbone = require(&quot;backbone&quot;);
+    if (!_) _ = require(&quot;underscore&quot;);
+  }
+
+  function ensureArray(ob){
+    return _.isArray(ob) ? ob : [ob];
+  }
+
+  function isConstructor(o) {
+    return o.prototype &amp;&amp; o === o.prototype.constructor;
+  }
+
+  &#x2F;**
+   * Few tested opinions on how to handle deeply nested views in Backbone.js
+   * focusing on encapsulation and reusability.
+   *
+   * &lt;https:&#x2F;&#x2F;github.com&#x2F;epeli&#x2F;backbone.viewmaster&gt;
+   *
+   * @class Viewmaster
+   * @extends Backbone.View
+   * *&#x2F;
+  var Viewmaster = Backbone.View.extend({
+
+    constructor: function() {
+      Backbone.View.prototype.constructor.apply(this, arguments);
+
+
+      &#x2F;**
+       * Boolean indicating whether this view has been rendered at least once.
+       * Set by the &#x60;render&#x60; method and used by the parent view.
+       *
+       * @property rendered
+       * @type Boolean
+       **&#x2F;
+      this.rendered = false;
+
+      &#x2F;**
+      * Reference to the parent view.
+      *
+      * @property parent
+      * @type Object
+      **&#x2F;
+      this.parent = null;
+
+      &#x2F;**
+      * Object containing all child views. Key are CSS selectors and values
+      * are arrays of views
+      *
+      * @private
+      * @property _views
+      * @type Object
+      **&#x2F;
+      this._views = {};
+
+      &#x2F;**
+      * Array of views to be removed on next &#x60;refreshViews&#x60; call.
+      *
+      * @private
+      * @property _remove
+      * @type Array
+      **&#x2F;
+      this._remove = [];
+
+      &#x2F;**
+      * Record of view container with changes
+      *
+      * @private
+      * @type Object
+      **&#x2F;
+      this._dirty = {};
+    },
+
+
+    &#x2F;**
+     * Template function. User must override this!
+     *
+     * @method template
+     * @param {Object} context
+     * @return {String &#x2F; DOM object} rendered template
+     **&#x2F;
+    template: function(){
+      throw new Error(&quot;Template function not defined!&quot;);
+    },
+
+    &#x2F;**
+     * Returns the context object for the &#x60;template&#x60; method.
+     *
+     * Default: &#x60;this.model.toJSON()&#x60; or an empty object if view has no model.
+     *
+     * @method context
+     * @return {Object} context
+     **&#x2F;
+    context: function() {
+      if (this.model) return this.model.toJSON();
+      return {};
+    },
+
+
+    &#x2F;**
+     * Render this view with &#x60;this.template(this.context())&#x60; and refresh child
+     * views with &#x60;this.refreshViews(options)&#x60;.
+     *
+     * @method render
+     * @param {Object} options
+     *   @param {Boolean} [options.force]
+     *   force rerendering of child views
+     * @return {Object} this
+     **&#x2F;
+    render: function(opts) {
+      opts = _.extend({}, opts);
+
+      &#x2F;&#x2F; Remove subviews with detach. This way they don&#x27;t lose event handlers
+      &#x2F;&#x2F; and parent view can rerender itself
+      this.eachView(function(sel, view) {
+        view.$el.detach();
+      });
+
+      opts.detached = true;
+
+      this.$el.html(this.template(this.context()));
+
+      this.afterTemplate();
+
+      &#x2F;&#x2F; Mark this view as rendered. Parent view wont try to render this
+      &#x2F;&#x2F; anymore unless force:true is passed
+      this.rendered = true;
+
+      this.refreshViews(opts);
+
+      return this;
+    },
+
+    &#x2F;**
+     * Overrideable by the view implementor.
+     *
+     * Called after the template has been rendered but before adding child
+     * views.  This is perfect place to hook up any jQuery plugings using
+     * &#x60;this.$&#x60; or &#x60;this.$el&#x60; or set access points to view DOM elements
+     *
+     *     this.$el(&quot;button&quot;).tooltipPlugin();
+     *     this.$saveButton = this.$(&quot;button.save&quot;);
+     *
+     * because they cannot have any side affects to child views.
+     *
+     * @method afterTemplate
+     **&#x2F;
+    afterTemplate: function() {},
+
+    &#x2F;**
+     * Refresh any child view changes made with &#x60;setView&#x60;, &#x60;appendView&#x60;,
+     * &#x60;prependView&#x60; or &#x60;insertView&#x60;. Tries to avoid doing any work unless it
+     * is absolutely necessary or &#x60;{ force: true }&#x60; is passed.
+     *
+     * It calls &#x60;render&#x60; on child views only when a child has never been
+     * rendered before.
+     *
+     * @method refreshViews
+     * @param {Object} options
+     *   @param {Boolean} [options.force]
+     *   force rerendering of child views
+     * @return {Object} this
+     **&#x2F;
+    refreshViews: function(opts) {
+      opts = _.extend({}, opts);
+      var self = this;
+      var dirty = this._dirty;
+
+      var oldView;
+      while (oldView = this._remove.shift()) oldView.remove();
+
+      this.eachView(function(sel, view) {
+        &#x2F;&#x2F; Detach view from container if it is dirty to update possible view
+        &#x2F;&#x2F; order changes.
+        var refresh = dirty[sel] || opts.force;
+
+        if (refresh &amp;&amp; !opts.detached) view.$el.detach();
+        if (!view.rendered || opts.force) view.render(opts);
+        if (refresh || opts.detached) self.$(sel).append(view.el);
+      });
+
+      this._dirty = {};
+      return this;
+    },
+
+    &#x2F;**
+     * Detach view from its parent but keep it in DOM.
+     *
+     * @private
+     * @method _removeParent
+     * @return {Object} this
+     **&#x2F;
+    _removeParent: function() {
+
+      if (!this.parent) return;
+
+      var key;
+      for (key in this.parent._views) {
+        this.parent._views[key] = _.without(
+          this.parent._views[key], this
+        );
+      }
+
+      this.parent = null;
+
+      return this;
+    },
+
+
+    &#x2F;**
+     * Prepare views to be nested in this view. Set up event bubbling and
+     * remove possible previous parent.
+     *
+     * @private
+     * @method _prepareViews
+     * @param {Object&#x2F;Constructor&#x2F;Array} view(s) One or array of view objects
+     * or Constructors
+     **&#x2F;
+    _prepareViews: function(views) {
+      var self = this;
+      views = _.map(ensureArray(views), _.bind(this._createInstance, this));
+
+      _.each(views, function(view) {
+        &#x2F;&#x2F; when parent is changing remove it from previous
+        if (view.parent &amp;&amp; view.parent !== self) view._removeParent();
+        view.parent = self;
+      });
+
+      return views;
+    },
+
+    _createInstance: function(view) {
+      return isConstructor(view) ? new view({
+        model: this.model,
+        collection: this.collection
+      }) : view;
+    },
+
+    &#x2F;**
+    * Like &#x60;trigger&#x60; but the events are bubbled all the way up to all
+    * parent views too.
+    *
+    * @method bubble
+    * @param {String} event
+    * @param {any} [args*] Zero or more objects to be passed along with the
+    * event
+    * @return {Object} this
+    **&#x2F;
+    bubble: function() {
+      var args = _.toArray(arguments);
+      this.trigger.apply(this, args);
+      if (this.parent) this.parent.bubble.apply(this.parent, args);
+      return this;
+    },
+
+    &#x2F;**
+    * Opposite of &#x60;bubble&#x60;. The events are broadcasted all the way down to all
+    * child views too.
+    *
+    * @method broadcast
+    * @param {String} event
+    * @param {any} [args*] Zero or more objects to be passed along with the
+    * event
+    * @return {Object} this
+    **&#x2F;
+    broadcast: function() {
+      var args = _.toArray(arguments);
+      this.trigger.apply(this, args);
+      this.eachView(function(sel, view) {
+        view.broadcast.apply(view, args);
+      });
+      return this;
+    },
+
+    &#x2F;**
+     * Iterate each child view.
+     *
+     * @method eachView
+     * @param {Function} iterator
+     *   @param {String} iterator.selector CSS selector for the view container
+     *   @param {Object} iterator.view The view object
+     * @return {Object} this
+     **&#x2F;
+    eachView: function(fn) {
+      _.each(this._views, function(views, sel) {
+        _.each(views, function(view) {
+          fn(sel, view);
+        });
+      });
+    },
+
+
+    &#x2F;**
+     * Set a view or an array of views to a given view container.
+     *
+     * If previous set of views is replaced by a new set — the views not
+     * present in the new set will be discarded with &#x60;remove&#x60; on the next
+     * &#x60;refreshViews&#x60; call unless detached with &#x60;detach&#x60; method.
+     *
+     * If &#x60;views&#x60; parameter is a constructor function it will be instantiated
+     * with &#x60;model&#x60; and &#x60;collection&#x60; of the parent. This applies to
+     * &#x60;appendView&#x60;, &#x60;prependview&#x60; and &#x60;insertView&#x60; too.
+     *
+     * @protected
+     * @method setView
+     * @param {String} selector CSS selector for the view container
+     * @param {Object&#x2F;Constructor&#x2F;Array} view(s) One or array of view objects
+     * or Constructors
+     **&#x2F;
+    setView: function(sel, currentViews) {
+      var previousViews;
+      currentViews = this._prepareViews(currentViews);
+
+      if (previousViews = this._views[sel]) {
+        this._remove = this._remove.concat(
+          _.difference(previousViews, currentViews)
+        );
+      }
+
+      this._views[sel] = currentViews;
+      this._dirty[sel] = true;
+      return this;
+    },
+
+    &#x2F;**
+     * Insert views to specific index in the view array.
+     *
+     * @protected
+     * @method insertView
+     * @param {String} selector CSS selector for the view container
+     * @param {Number} index Index to insert view(s)
+     * @param {Object&#x2F;Constructor&#x2F;Array} view(s) Views to insert
+     **&#x2F;
+    insertView: function(sel, index, views) {
+      var current;
+      views = this._prepareViews(views);
+      if (current = this._views[sel]) {
+        current.slice().splice.apply(current, [index, 0].concat(views));
+      }
+      else {
+        this._views[sel] = views;
+      }
+
+      this._dirty[sel] = true;
+      return this;
+    },
+
+    &#x2F;**
+     * Append a views to a given view container.
+     *
+     * @protected
+     * @method appendView
+     * @param {String} selector CSS selector for the view container
+     * @param {Object&#x2F;Constructor&#x2F;Array} view(s) Views to append
+     **&#x2F;
+    appendView: function(sel, views) {
+      this._views[sel] = (this._views[sel] || []).concat(
+        this._prepareViews(views)
+      );
+
+      this._dirty[sel] = true;
+      return this;
+    },
+
+    &#x2F;**
+     * Prepend a views to a given view container.
+     *
+     * @protected
+     * @method prependView
+     * @param {String} selector CSS selector for the view container
+     * @param {Object&#x2F;Constructor&#x2F;Array} view(s) Views to prepend
+     **&#x2F;
+    prependView: function(sel, views) {
+      this._views[sel] = this._prepareViews(views).concat(
+        this._views[sel] || []
+      );
+
+      this._dirty[sel] = true;
+      return this;
+    },
+
+    &#x2F;**
+     * Return array of views for given container or null if the container have
+     * not been used.
+     *
+     * @protected
+     * @method getViews
+     * @param {String} selector container CSS selector
+     * @return {Array&#x2F;null} views
+     **&#x2F;
+    getViews: function(sel) {
+      var views;
+      if (views = this._views[sel]) return views.slice();
+      return null;
+    },
+
+    &#x2F;**
+     * Detaches view from its parent and DOM.
+     *
+     * @method detach
+     * @return {Object} this
+     **&#x2F;
+    detach: function() {
+      this._removeParent();
+      this.$el.detach();
+      return this;
+    },
+
+
+    &#x2F;**
+     * Discard this view and all its children for good. Clears all events bound
+     * for the view. Use &#x60;detach&#x60; instead if you need to use the view again
+     * some time later.
+     *
+     * @method remove
+     * @return {Object} this
+     **&#x2F;
+    remove: function() {
+      Backbone.View.prototype.remove.apply(this, arguments);
+      this._removeParent();
+      this.eachView(function(sel, view) {
+        view.remove();
+      });
+      return this;
+    }
+
+  });
+
+  Viewmaster.VERSION = VERSION;
+  if (typeof module !== &#x27;undefined&#x27;) {
+    module.exports = Backbone.Viewmaster;
+  }
+  else {
+    Backbone.Viewmaster = Backbone.ViewMaster = Viewmaster;
+  }
+
+})();
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="..&#x2F;assets/js/yui-prettify.js"></script>
+<script src="..&#x2F;assets/../api.js"></script>
+<script src="..&#x2F;assets/js/api-filter.js"></script>
+<script src="..&#x2F;assets/js/api-list.js"></script>
+<script src="..&#x2F;assets/js/api-search.js"></script>
+<script src="..&#x2F;assets/js/apidocs.js"></script>
+</body>
+</html>
