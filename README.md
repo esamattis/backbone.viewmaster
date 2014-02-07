@@ -407,6 +407,10 @@ afterTemplate: function(){
 
 # Changelog
 
+## 1.2.3
+
+  - README fix for npmjs.org
+
 ## 1.2.2
 
   - Backbone.Viewmaster is now prefed way to access the View.
