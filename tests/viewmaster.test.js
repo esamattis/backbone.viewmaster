@@ -59,6 +59,18 @@ describe("Viewmaster", function(){
   });
 
 
+  it("calls initialize() on new views", function() {
+    var called = false;
+    var V = Backbone.Viewmaster.extend({
+      initialize: function() {
+        called = true;
+      }
+    });
+
+    new V();
+    expect(called).to.be.ok;
+  });
+
   it("does not render child views twice", function(){
     var parent = new Backbone.Viewmaster();
     parent.template = function() {
