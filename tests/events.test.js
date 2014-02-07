@@ -9,7 +9,7 @@ describe("Event", function() {
     var model = new Backbone.Model();
 
     it("context is the view", function(done){
-      var view = new Backbone.ViewMaster();
+      var view = new Backbone.Viewmaster();
       var emitter = _.extend({}, Backbone.Events);
       view.listenTo(emitter, "test", function() {
         expect(this).to.eq(view);
@@ -21,7 +21,7 @@ describe("Event", function() {
 
     it("should be removed on view.remove()", function(){
       var model = new Backbone.Model();
-      var view = new Backbone.ViewMaster();
+      var view = new Backbone.Viewmaster();
       var spy = chai.spy();
 
       view.listenTo(model, "test", spy);
@@ -33,12 +33,12 @@ describe("Event", function() {
     });
 
     it("is unbound on parent.remove()", function(){
-      var child = new Backbone.ViewMaster();
+      var child = new Backbone.Viewmaster();
       child.template = function() {
         return "<p>child</p>";
       };
 
-      var parent = new Backbone.ViewMaster();
+      var parent = new Backbone.Viewmaster();
       parent.template = function() {
         return "<div class=container ></div>";
       };
@@ -57,12 +57,12 @@ describe("Event", function() {
     });
 
     it("is not unbound on view.detach()", function(){
-      var child = new Backbone.ViewMaster();
+      var child = new Backbone.Viewmaster();
       child.template = function() {
         return "<p>child</p>";
       };
 
-      var parent = new Backbone.ViewMaster();
+      var parent = new Backbone.Viewmaster();
       parent.template = function() {
         return "<div class=container ></div>";
       };
@@ -86,12 +86,12 @@ describe("Event", function() {
   describe("bubbling", function() {
 
     it("from children to parent", function(){
-      var child = new Backbone.ViewMaster();
+      var child = new Backbone.Viewmaster();
       child.template = function() {
         return "<p>child</p>";
       };
 
-      var parent = new Backbone.ViewMaster();
+      var parent = new Backbone.Viewmaster();
       parent.template = function() {
         return "<div class=container ></div>";
       };
@@ -109,12 +109,12 @@ describe("Event", function() {
     });
 
     it("passes options to parent", function(done){
-      var child = new Backbone.ViewMaster();
+      var child = new Backbone.Viewmaster();
       child.template = function() {
         return "<p>child</p>";
       };
 
-      var parent = new Backbone.ViewMaster();
+      var parent = new Backbone.Viewmaster();
       parent.template = function() {
         return "<div class=container ></div>";
       };
@@ -133,17 +133,17 @@ describe("Event", function() {
     });
 
     it("multiple levels", function(done){
-      var child = new Backbone.ViewMaster();
+      var child = new Backbone.Viewmaster();
       child.template = function() {
         return "<p>child</p>";
       };
 
-      var parent = new Backbone.ViewMaster();
+      var parent = new Backbone.Viewmaster();
       parent.template = function() {
         return "<div class=container ></div>";
       };
 
-      var grandparent = new Backbone.ViewMaster();
+      var grandparent = new Backbone.Viewmaster();
       grandparent.template = function() {
         return "<div class=container ></div>";
       };
@@ -163,12 +163,12 @@ describe("Event", function() {
     });
 
     it("dont break dom bubbling", function(){
-      var child = new Backbone.ViewMaster();
+      var child = new Backbone.Viewmaster();
       child.template = function() {
         return "<p>child</p>";
       };
 
-      var parent = new Backbone.ViewMaster();
+      var parent = new Backbone.Viewmaster();
       parent.template = function() {
         return "<div class=container ></div>";
       };
@@ -190,7 +190,7 @@ describe("Event", function() {
 
     _.each(["setView", "appendView", "prependView"], function(viewMethod) {
       it("to new parent after a parent change with " + viewMethod, function(){
-        var Parent = Backbone.ViewMaster.extend({
+        var Parent = Backbone.Viewmaster.extend({
           template: function() {
             return "<div class=container></div>";
           }
@@ -198,7 +198,7 @@ describe("Event", function() {
 
         var parent1 = new Parent();
         var parent2 = new Parent();
-        var child = new Backbone.ViewMaster();
+        var child = new Backbone.Viewmaster();
         child.template = function() {
           return "<span class=child>child</span>";
         };

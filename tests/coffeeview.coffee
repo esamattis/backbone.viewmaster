@@ -1,5 +1,5 @@
 
-class window.CoffeeView extends Backbone.ViewMaster
+class window.CoffeeView extends Backbone.Viewmaster
 
   constructor: ->
     super

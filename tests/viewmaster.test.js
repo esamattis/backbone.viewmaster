@@ -1,13 +1,13 @@
 /*global window:true,describe:true, it:true, expect: true, Backbone: true, beforeEach: true, chai:true, _:true*/
 /*jshint expr:true */
 
-describe("ViewMaster", function(){
+describe("Viewmaster", function(){
 
-  var Puppet = Backbone.ViewMaster.extend({
+  var Puppet = Backbone.Viewmaster.extend({
     name: "puppet",
 
     constructor: function(opts) {
-      Backbone.ViewMaster.prototype.constructor.apply(this, arguments);
+      Backbone.Viewmaster.prototype.constructor.apply(this, arguments);
       if (opts && opts.name) {
         this.name = opts.name;
       }
@@ -19,24 +19,25 @@ describe("ViewMaster", function(){
   });
 
 
-  var Master = Backbone.ViewMaster.extend({
+  var Master = Backbone.Viewmaster.extend({
     template: function(){
       return '<div class="container"></div>';
     }
   });
 
   it("is installed to Backbone namespace", function(){
-    expect(Backbone.ViewMaster).to.be.ok;
+    expect(Backbone.Viewmaster).to.be.ok;
+    expect(Backbone.Viewmaster).to.be.ok;
   });
 
   it("returns null for unknown view container", function() {
-    var view = new Backbone.ViewMaster();
+    var view = new Backbone.Viewmaster();
     expect(view.getViews("something")).to.eq(null);
   });
 
   it("Adds model to instance", function(){
     var model = new Backbone.Model();
-    var view = new Backbone.ViewMaster({
+    var view = new Backbone.Viewmaster({
       model: model
     });
     expect(view.model === model).to.be.ok;
@@ -59,12 +60,12 @@ describe("ViewMaster", function(){
 
 
   it("does not render child views twice", function(){
-    var parent = new Backbone.ViewMaster();
+    var parent = new Backbone.Viewmaster();
     parent.template = function() {
       return "<div class=container ></div>";
     };
 
-    var child = new Backbone.ViewMaster();
+    var child = new Backbone.Viewmaster();
     child.render = chai.spy(child.render);
     child.template = function() {
       return "<p>child</p>";
@@ -81,12 +82,12 @@ describe("ViewMaster", function(){
 
 
   it("refreshViews() does not detach child views if not needed", function() {
-    var parent = new Backbone.ViewMaster();
+    var parent = new Backbone.Viewmaster();
     parent.template = function() {
       return "<div class=container ></div>";
     };
 
-    var child = new Backbone.ViewMaster();
+    var child = new Backbone.Viewmaster();
     child.render = chai.spy(child.render);
     child.template = function() {
       return "<p>child</p>";
@@ -108,12 +109,12 @@ describe("ViewMaster", function(){
 
  it("new children do not cause previous to be rendered or detached again", function(){
 
-    var parent = new Backbone.ViewMaster();
+    var parent = new Backbone.Viewmaster();
     parent.template = function() {
       return "<div class=previousContainter ></div><div class=newContainer ></div>";
     };
 
-    var previousChild = new Backbone.ViewMaster();
+    var previousChild = new Backbone.Viewmaster();
     previousChild.render = chai.spy(previousChild.render);
     previousChild.$el.detach = chai.spy(previousChild.$el.detach);
     previousChild.template = function() {
@@ -124,7 +125,7 @@ describe("ViewMaster", function(){
     parent.setView(".previousContainter", previousChild);
     parent.render();
 
-    var newChild = new Backbone.ViewMaster();
+    var newChild = new Backbone.Viewmaster();
     newChild.render = chai.spy(newChild.render);
     newChild.template = function() {
       return "<p>newChild</p>";
@@ -139,7 +140,7 @@ describe("ViewMaster", function(){
   });
 
 
-  it("only new child views are rendered on ViewMaster#render()", function(){
+  it("only new child views are rendered on Viewmaster#render()", function(){
     var m = new Master();
     var first = new Puppet({ name: "first" });
     first.render = chai.spy(first.render);
@@ -312,7 +313,7 @@ describe("ViewMaster", function(){
   });
 
   it("child.detach() does not clear dom events", function(){
-    var child = new (Backbone.ViewMaster.extend({
+    var child = new (Backbone.Viewmaster.extend({
 
       template: function() {
         return "<button>child</button>";
@@ -326,7 +327,7 @@ describe("ViewMaster", function(){
 
     }))();
 
-    var parent = new Backbone.ViewMaster();
+    var parent = new Backbone.Viewmaster();
     parent.template = function() {
       return "<div class=container ></div>";
     };
@@ -341,11 +342,11 @@ describe("ViewMaster", function(){
 
   describe("afterTemplate", function(){
     beforeEach(function() {
-      this.parent = new Backbone.ViewMaster();
+      this.parent = new Backbone.Viewmaster();
       this.parent.template = function() {
         return "<h1>Foo</h1><div class=container ></div>";
       };
-      this.child = new Backbone.ViewMaster();
+      this.child = new Backbone.Viewmaster();
       this.child.template = function() {
         return "<div class=child >child</div>";
       };
@@ -385,12 +386,12 @@ describe("ViewMaster", function(){
   describe("creates child views from classes", function(){
     beforeEach(function() {
       this.model = new Backbone.Model({ title: "Title" });
-      this.parent = new Backbone.ViewMaster({ model: this.model });
+      this.parent = new Backbone.Viewmaster({ model: this.model });
       this.parent.template = function() {
         return "<div class=container></div>";
       };
 
-      this.View = Backbone.ViewMaster.extend({
+      this.View = Backbone.Viewmaster.extend({
         template: function(context) {
           return "<h1 class=child>" + context.title + "</h1>";
         }
@@ -431,13 +432,13 @@ describe("ViewMaster", function(){
 
   describe("with deeply nested views", function(){
 
-    var ViewList = Backbone.ViewMaster.extend({
+    var ViewList = Backbone.Viewmaster.extend({
       template: function() {
         return '<h1>List<h1><div class="items"></div>';
       }
     });
 
-    var Layout = Backbone.ViewMaster.extend({
+    var Layout = Backbone.Viewmaster.extend({
 
       template: function() {
         return '<h1>Title<h1><div class="container"></div>';
@@ -508,7 +509,7 @@ describe("ViewMaster", function(){
     });
 
     it("can move child to other parent", function(){
-      var Parent = Backbone.ViewMaster.extend({
+      var Parent = Backbone.Viewmaster.extend({
         template: function() {
           return "<div class=container></div>";
         }
@@ -516,7 +517,7 @@ describe("ViewMaster", function(){
 
       var parent1 = new Parent();
       var parent2 = new Parent();
-      var child = new Backbone.ViewMaster();
+      var child = new Backbone.Viewmaster();
       child.template = function() {
         return "<span class=child>child</span>";
       };

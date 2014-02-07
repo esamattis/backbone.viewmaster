@@ -18,6 +18,6 @@
 
     return CoffeeView;
 
-  })(Backbone.ViewMaster);
+  })(Backbone.Viewmaster);
 
 }).call(this);

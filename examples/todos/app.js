@@ -2,7 +2,7 @@
 /*jshint boss:true, browser:true */
 
 
-var AddTodoItem = Backbone.ViewMaster.extend({
+var AddTodoItem = Backbone.Viewmaster.extend({
 
   template: function(context){
     return $("#addview").html();
@@ -22,10 +22,10 @@ var AddTodoItem = Backbone.ViewMaster.extend({
 
 });
 
-var TodoItem = Backbone.ViewMaster.extend({
+var TodoItem = Backbone.Viewmaster.extend({
 
   constructor: function(){
-    Backbone.ViewMaster.prototype.constructor.apply(this, arguments);
+    Backbone.Viewmaster.prototype.constructor.apply(this, arguments);
     // Rerender view after edit
     this.listenTo(this.model, "change", this.render);
   },
@@ -52,10 +52,10 @@ var TodoItem = Backbone.ViewMaster.extend({
 
 });
 
-var TodoItemList = Backbone.ViewMaster.extend({
+var TodoItemList = Backbone.Viewmaster.extend({
 
   constructor: function(){
-    Backbone.ViewMaster.prototype.constructor.apply(this, arguments);
+    Backbone.Viewmaster.prototype.constructor.apply(this, arguments);
 
     // On load display all items
     this.setItems();
@@ -93,7 +93,7 @@ var TodoItemList = Backbone.ViewMaster.extend({
 
 });
 
-var Search = Backbone.ViewMaster.extend({
+var Search = Backbone.Viewmaster.extend({
 
   template: function() {
     return "<input type=text placeholder=Search >";
@@ -108,10 +108,10 @@ var Search = Backbone.ViewMaster.extend({
 
 });
 
-var TodoLayout = Backbone.ViewMaster.extend({
+var TodoLayout = Backbone.Viewmaster.extend({
 
   constructor: function(){
-    Backbone.ViewMaster.prototype.constructor.apply(this, arguments);
+    Backbone.Viewmaster.prototype.constructor.apply(this, arguments);
 
     // Nest AddTodoItem inside TodoLayout
     this.setView(".addview-container", AddTodoItem);

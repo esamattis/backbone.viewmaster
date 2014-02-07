@@ -9,19 +9,19 @@ Read the stable release documention <a href="http://epeli.github.com/backbone.vi
 
 </div>
 
-# Backbone.ViewMaster
+# Backbone.Viewmaster
 
 Few **tested** opinions on how to handle deeply nested views in [Backbone.js][]
 focusing on modularity. This is implemented after writing several Backbone.js
 applications and by carefully picking the recurring patterns seen on them.
 
-Backbone.ViewMaster is a single View extended from Backbone.View. Views
+Backbone.Viewmaster is a single View extended from Backbone.View. Views
 extended from it can be infinitely nested with each others using the four
 nesting methods [setView][], [appendView][], [prependView][] and
 [insertView][].  There is no separate concept of layouts or list views. It's
 just a humble Backbone View Class with versatile nesting capabilities.
 
-The main idea behind Backbone.ViewMaster is that views should be small and
+The main idea behind Backbone.Viewmaster is that views should be small and
 independent building blocks of application UI. Read the tutorial to see how
 it's encouraged.
 
@@ -47,13 +47,13 @@ or use from npm with [Browserify](http://browserify.org/)
 # Tutorial
 
 In this tutorial we build the classic TODO app and go through the most
-important features of Backbone.ViewMaster while discussing the ideas behind
+important features of Backbone.Viewmaster while discussing the ideas behind
 them.
 
 
 ## Basics
 
-`Backbone.ViewMaster` is a View extended from `Backbone.View`. You start by
+`Backbone.Viewmaster` is a View extended from `Backbone.View`. You start by
 extending your custom views from it. Lets define a layout for our app with some
 container elements for our nested views.
 
@@ -73,7 +73,7 @@ container elements for our nested views.
 ```
 
 ```javascript
-var TodoLayout = Backbone.ViewMaster.extend({
+var TodoLayout = Backbone.Viewmaster.extend({
 
   template: function(context){
     return _.template($("#layout").html(), context);
@@ -88,12 +88,12 @@ var TodoLayout = Backbone.ViewMaster.extend({
 });
 ```
 
-First thing you do for every ViewMaster view is set a [template][] function for
+First thing you do for every Viewmaster view is set a [template][] function for
 it.  It can be any function which takes a context object as the first argument
 and returns neither a HTML string or a DOM object. The context object is by
 default `this.model.toJSON()` or an empty object if your view does not have a
 model.  You can customize this behavior by overriding the [context][] method.
-There is no need to define the [render][] method. ViewMaster already defines it
+There is no need to define the [render][] method. Viewmaster already defines it
 and uses your template function to populate the `this.el` element.
 
 
@@ -109,7 +109,7 @@ Now we create a nested view for the `addview-container`.
 ```
 
 ```javascript
-var AddTodoItem = Backbone.ViewMaster.extend({
+var AddTodoItem = Backbone.Viewmaster.extend({
 
   template: function(context){
     return _.template($("#addview").html(), context);
@@ -129,8 +129,8 @@ var AddTodoItem = Backbone.ViewMaster.extend({
 });
 ```
 
-Nested views are also extended from `Backbone.ViewMaster`. Any ViewMaster view
-can be nested in any ViewMaster view and you can do as deep nesting as you
+Nested views are also extended from `Backbone.Viewmaster`. Any Viewmaster view
+can be nested in any Viewmaster view and you can do as deep nesting as you
 want.
 
 Since we wanted this to be the view for the `addview-container` and because
@@ -140,7 +140,7 @@ nest it.  We do that in its constructor using the [setView][] method.
 ```javascript
 // TodoLayout
 constructor: function(){
-  Backbone.ViewMaster.prototype.constructor.apply(this, arguments);
+  Backbone.Viewmaster.prototype.constructor.apply(this, arguments);
   // Nest AddTodoItem inside TodoLayout
   this.setView(".addview-container", new AddTodoItem({
     collection: this.collection
@@ -161,7 +161,7 @@ method for it to keep your views modular and maintainable.
 
 Backbone 0.9.9 and later has a [listenTo][] method on every event emitter
 object. This should be always used in views instead of the [on][] method. Using
-it Backbone and Backbone.ViewMaster can automatically remove your view related
+it Backbone and Backbone.Viewmaster can automatically remove your view related
 event bindings when you discard your views.
 
 ## Rendering
@@ -234,10 +234,10 @@ a parent to other views it will call remove on them also.
 ```
 
 ```javascript
-var TodoItem = Backbone.ViewMaster.extend({
+var TodoItem = Backbone.Viewmaster.extend({
 
   constructor: function(){
-    Backbone.ViewMaster.prototype.constructor.apply(this, arguments);
+    Backbone.Viewmaster.prototype.constructor.apply(this, arguments);
     // Rerender view after edit
     this.listenTo(this.model, "change", this.render);
   },
@@ -265,7 +265,7 @@ var TodoItem = Backbone.ViewMaster.extend({
 });
 ```
 
-Views can be also removed by replacing them with [setView][]. ViewMaster
+Views can be also removed by replacing them with [setView][]. Viewmaster
 automatically figures out which views were left out and calls [remove][] on
 them on the next [refreshViews][] call.
 
@@ -277,7 +277,7 @@ event callbacks and children untouched.
 
 In order to keep views decoupled and resusable their implementation should not
 assume too much about their children and especially about their parents.
-Backbone.ViewMaster helps with this by implementing event bubbling and
+Backbone.Viewmaster helps with this by implementing event bubbling and
 broadcasting.
 
 Event bubbling works exactly like in the DOM. Events triggered with the
@@ -290,7 +290,7 @@ Lets add search capabilities to our TODO app. We create a simple Search view
 which bubbles 'search' events up to its parents.
 
 ```javascript
-var Search = Backbone.ViewMaster.extend({
+var Search = Backbone.Viewmaster.extend({
 
   template: function() {
     return "<input type=text placeholder=Search >";
@@ -310,10 +310,10 @@ We'll abstract TodoItem listing to its own view and make it handle 'search'
 event broadcasts.
 
 ```javascript
-var TodoItemList = Backbone.ViewMaster.extend({
+var TodoItemList = Backbone.Viewmaster.extend({
 
   constructor: function(){
-    Backbone.ViewMaster.prototype.constructor.apply(this, arguments);
+    Backbone.Viewmaster.prototype.constructor.apply(this, arguments);
 
     // On load display all items
     this.setItems();
@@ -452,27 +452,27 @@ The MIT License. See LICENSE.
 [esa]: http://esa-matti.suuronen.org/
 [dev]: http://epeli.github.com/backbone.viewmaster/lib/backbone.viewmaster.js
 [production]: http://epeli.github.com/backbone.viewmaster/lib/backbone.viewmaster.min.js
-[api]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html
+[api]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html
 
 [listenTo]: http://backbonejs.org/#Events-listenTo
 [stopListening]: http://backbonejs.org/#Events-stopListening
 [on]: http://backbonejs.org/#Events-on
 
-[setView]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_setView
-[appendView]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_appendView
-[prependView]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_prependView
-[insertView]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_insertView
-[template]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_template
-[render]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_render
-[afterTemplate]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_afterTemplate
-[refreshViews]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_refreshViews
-[context]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_context
-[rendered]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#property_rendered
-[getViews]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_getViews
-[detach]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_detach
-[remove]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_remove
-[bubble]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_bubble
-[broadcast]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.ViewMaster.html#method_broadcast
+[setView]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html#method_setView
+[appendView]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html#method_appendView
+[prependView]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html#method_prependView
+[insertView]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html#method_insertView
+[template]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html#method_template
+[render]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html#method_render
+[afterTemplate]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html#method_afterTemplate
+[refreshViews]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html#method_refreshViews
+[context]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html#method_context
+[rendered]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html#property_rendered
+[getViews]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html#method_getViews
+[detach]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html#method_detach
+[remove]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html#method_remove
+[bubble]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html#method_bubble
+[broadcast]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html#method_broadcast
 
 
 [todo-example]: https://github.com/epeli/backbone.viewmaster/tree/master/examples/todos
