@@ -407,6 +407,10 @@ afterTemplate: function(){
 
 # Changelog
 
+## 1.2.1
+
+  - Define node module files
+
 ## 1.2.0
 
   - Add [afterTemplate][]
