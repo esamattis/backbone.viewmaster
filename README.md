@@ -459,28 +459,27 @@ The MIT License. See LICENSE.
 [esa]: http://esa-matti.suuronen.org/
 [dev]: http://epeli.github.com/backbone.viewmaster/lib/backbone.viewmaster.js
 [production]: http://epeli.github.com/backbone.viewmaster/lib/backbone.viewmaster.min.js
-[api]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html
+[api]: http://epeli.github.com/backbone.viewmaster/classes/Viewmaster.html
 
 [listenTo]: http://backbonejs.org/#Events-listenTo
 [stopListening]: http://backbonejs.org/#Events-stopListening
 [on]: http://backbonejs.org/#Events-on
 
-[setView]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html#method_setView
-[appendView]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html#method_appendView
-[prependView]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html#method_prependView
-[insertView]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html#method_insertView
-[template]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html#method_template
-[render]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html#method_render
-[afterTemplate]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html#method_afterTemplate
-[refreshViews]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html#method_refreshViews
-[context]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html#method_context
-[rendered]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html#property_rendered
-[getViews]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html#method_getViews
-[detach]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html#method_detach
-[remove]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html#method_remove
-[bubble]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html#method_bubble
-[broadcast]: http://epeli.github.com/backbone.viewmaster/classes/Backbone.Viewmaster.html#method_broadcast
-
+[setView]: http://epeli.github.com/backbone.viewmaster/classes/Viewmaster.html#method_setView
+[appendView]: http://epeli.github.com/backbone.viewmaster/classes/Viewmaster.html#method_appendView
+[prependView]: http://epeli.github.com/backbone.viewmaster/classes/Viewmaster.html#method_prependView
+[insertView]: http://epeli.github.com/backbone.viewmaster/classes/Viewmaster.html#method_insertView
+[template]: http://epeli.github.com/backbone.viewmaster/classes/Viewmaster.html#method_template
+[render]: http://epeli.github.com/backbone.viewmaster/classes/Viewmaster.html#method_render
+[afterTemplate]: http://epeli.github.com/backbone.viewmaster/classes/Viewmaster.html#method_afterTemplate
+[refreshViews]: http://epeli.github.com/backbone.viewmaster/classes/Viewmaster.html#method_refreshViews
+[context]: http://epeli.github.com/backbone.viewmaster/classes/Viewmaster.html#method_context
+[rendered]: http://epeli.github.com/backbone.viewmaster/classes/Viewmaster.html#property_rendered
+[getViews]: http://epeli.github.com/backbone.viewmaster/classes/Viewmaster.html#method_getViews
+[detach]: http://epeli.github.com/backbone.viewmaster/classes/Viewmaster.html#method_detach
+[remove]: http://epeli.github.com/backbone.viewmaster/classes/Viewmaster.html#method_remove
+[bubble]: http://epeli.github.com/backbone.viewmaster/classes/Viewmaster.html#method_bubble
+[broadcast]: http://epeli.github.com/backbone.viewmaster/classes/Viewmaster.html#method_broadcast
 
 [todo-example]: https://github.com/epeli/backbone.viewmaster/tree/master/examples/todos
 [todo-live]: http://epeli.github.com/backbone.viewmaster/examples/todos
