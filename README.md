@@ -407,6 +407,13 @@ afterTemplate: function(){
 
 # Changelog
 
+## 1.2.2
+
+  - Backbone.Viewmaster is now prefed way to access the View.
+    Backbone.ViewMaster is still available for backwards compatibility.
+  - Backbone namespace is not polluted when Viewmaster is loaded as node
+    module.
+
 ## 1.2.1
 
   - Define node module files
