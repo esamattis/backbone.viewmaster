@@ -407,6 +407,10 @@ afterTemplate: function(){
 
 # Changelog
 
+## 1.2.4
+
+  - Fix module.exports
+
 ## 1.2.3
 
   - README fix for npmjs.org
