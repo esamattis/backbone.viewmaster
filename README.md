@@ -5,7 +5,7 @@
 Read the stable release documention <a href="http://epeli.github.com/backbone.viewmaster/">here</a>.
 </div>
 
-[![Build Status](https://travis-ci.org/epeli/backbone.viewmaster.png?branch=master)](https://travis-ci.org/epeli/backbone.viewmaster)
+[![Build Status](https://travis-ci.org/mauron85/backbone.viewmaster.svg)](https://travis-ci.org/mauron85/backbone.viewmaster)
 
 </div>
 
@@ -405,7 +405,24 @@ afterTemplate: function(){
 }
 ```
 
+# Testing
+
+For testing you will need node v0.10.x. You can use [Node Version Manager](https://github.com/creationix/nvm) to install old version of node.
+There is .nvmrc file set to install working version of node. To install it, just invoke:
+
+```
+nvm use
+```
+
+and then run tests:
+
+`npm test`
+
 # Changelog
+
+## 1.2.5
+  - bower.json
+  - UMD module definition
 
 ## 1.2.4
 
