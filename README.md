@@ -5,7 +5,7 @@
 Read the stable release documention <a href="http://epeli.github.com/backbone.viewmaster/">here</a>.
 </div>
 
-[![Build Status](https://travis-ci.org/epeli/backbone.viewmaster.png?branch=master)](https://travis-ci.org/epeli/backbone.viewmaster)
+[![Build Status](https://travis-ci.org/epeli/backbone.viewmaster.png?branch=master)](https://travis-ci.org/epeli/backbone.viewmaster) [![Greenkeeper badge](https://badges.greenkeeper.io/epeli/backbone.viewmaster.svg)](https://greenkeeper.io/)
 
 </div>
 
